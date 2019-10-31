@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.0.0</Version>
+    <Authors>Derek Kowald</Authors>
+    <Product>KWD Core Utilities</Product>
+    <Description>A set of extensions to provvide a better development experiance for .NET Core</Description>
+    <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil</RepositoryUrl>
+  </PropertyGroup>
+  
+</Project>
