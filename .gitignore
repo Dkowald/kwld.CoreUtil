@@ -2,3 +2,5 @@
 /src/**/obj
 /src/**/bin
 /src/**/*.user
+
+/src/**/App_Data/
