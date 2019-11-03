@@ -64,3 +64,6 @@ Get child file inside directory.
 
 **GetFolder**
 Get child directory.
+
+**Prune**
+Recursive remove all child folders that have no files.

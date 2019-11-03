@@ -2,5 +2,6 @@
 /src/**/obj
 /src/**/bin
 /src/**/*.user
+.vscode/
 
 /src/**/App_Data/

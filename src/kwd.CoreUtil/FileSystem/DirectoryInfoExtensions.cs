@@ -70,7 +70,7 @@ namespace kwd.CoreUtil.FileSystem
         }
 
         /// <summary>
-        /// Copy <paramref name="srcDir"/> into <paramref name="dir"/>.
+        /// Copy <paramref name="srcDir"/> into <paramref name="outDir"/>.
         /// </summary>
         public static DirectoryInfo CopyTo(this DirectoryInfo srcDir, DirectoryInfo outDir, bool overwrite = true)
         {
