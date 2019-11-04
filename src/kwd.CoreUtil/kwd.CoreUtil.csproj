@@ -6,10 +6,14 @@
     <Version>1.0.0-alpha-1</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
+    <Title>KWD Core Utilities</Title>
     <Description>A set of extensions to provvide a better development experiance for .NET Core</Description>
     <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Tags>.NET Core;Utility</Tags>
   </PropertyGroup>
   
 </Project>
