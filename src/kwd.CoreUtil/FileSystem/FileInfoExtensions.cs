@@ -2,6 +2,9 @@ using System.IO;
 
 namespace kwd.CoreUtil.FileSystem
 {
+    /// <summary>
+    /// Set of extensions for <see cref="FileInfo"/>
+    /// </summary>
     public static class FileInfoExtensions
     {
         /// <summary>

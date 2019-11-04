@@ -67,3 +67,9 @@ Get child directory.
 
 **Prune**
 Recursive remove all child folders that have no files.
+
+## HandyPaths
+Helpers for oft used paths.
+
+**Home**
+Path for current user home folder. Windows and Linux friendly.

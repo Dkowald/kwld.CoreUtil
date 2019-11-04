@@ -9,6 +9,7 @@
     <Description>A set of extensions to provvide a better development experiance for .NET Core</Description>
     <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil</RepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   
 </Project>

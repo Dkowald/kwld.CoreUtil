@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace kwd.CoreUtil.FileSystem
 {
+    /// <summary>
+    /// Set of extensions for <see cref="DirectoryInfo"/>.
+    /// </summary>
     public static class DirectoryInfoExtensions
     {
         /// <summary>

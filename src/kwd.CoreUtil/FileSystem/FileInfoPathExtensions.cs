@@ -37,7 +37,7 @@ namespace kwd.CoreUtil.FileSystem
             new DirectoryInfo(Path.GetPathRoot(item?.FullName));
 
         /// <summary>
-        /// See <see cref="Path.HasExtension(string)"/> < br />
+        /// See <see cref="Path.HasExtension(string)"/> <br />
         /// Determines whether a path includes a file name extension.
         /// </summary>
         public static bool HasExtension(this FileInfo item) =>
