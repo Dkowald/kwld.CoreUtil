@@ -12,6 +12,54 @@ namespace kwd.CoreUtil.Tests.FileSystem
     public class DirectoryInfoExtensionsTests
     {
         [TestMethod]
+        public void Merge_WithUpdates()
+        {
+            var root = Files.AppData.GetFolder(nameof(Merge_WithUpdates))
+                .EnsureDelete();
+
+            var src = root.GetFolder("src");
+            var dest = root.GetFolder("dest");
+
+            src.GetFile("new.txt").EnsureCreate();
+
+            src.GetFile("updated.txt").EnsureCreate();
+
+            var oldDate = DateTime.UtcNow.AddDays(-1);
+            dest.GetFile("updated.txt").Touch(() => oldDate);
+
+            dest.Merge(src);
+            Assert.IsTrue(dest.GetFile("updated.txt").LastWriteTimeUtc > oldDate, 
+                "Got the updated file");
+        }
+
+        [TestMethod]
+        public void Merge_NewFilesOnly()
+        {
+            var root = Files.AppData.GetFolder(nameof(Merge_NewFilesOnly))
+                .EnsureDelete();
+
+            var src = root.GetFolder("src");
+            var dest = root.GetFolder("dest");
+
+            src.GetFile("newFile.txt").EnsureCreate();
+
+            src.GetFile("other", "same.txt").EnsureCreate();
+
+            var oldFileDate = DateTime.UtcNow.AddDays(-1);
+            dest.GetFile("other", "same.txt").Touch(() => oldFileDate);
+
+            dest.GetFile("existingFile.txt").EnsureCreate();
+            dest.Merge(src, false);
+
+            Assert.IsTrue(dest.GetFile("existingFile.txt").Exists, "Keeps my current file");
+
+            Assert.IsTrue(dest.GetFile("newFile.txt").Exists, "Got new file");
+
+            Assert.AreEqual(oldFileDate, dest.GetFile("other/same.txt").LastWriteTimeUtc,
+                "Keep my old copy");
+        }
+
+        [TestMethod]
         public void TreeCUD_Success()
         {
             var root = Files.AppData.GetFolder(nameof(TreeCUD_Success)).EnsureDelete();

@@ -130,5 +130,32 @@ namespace kwd.CoreUtil.FileSystem
 
             return (created, updated, deleted);
         }
+
+        /// <summary>
+        /// Merges new and (optionally) updated files from
+        /// <paramref name="src"/> to <paramref name="target"/>.
+        /// Returns <paramref name="target"/>.
+        /// </summary>
+        public static DirectoryInfo Merge(this DirectoryInfo target, DirectoryInfo src, bool copyUpdated = true)
+        {
+            var mapped = src.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(x => new
+                {
+                    src = x,
+                    dest = target.GetFile(x.GetRelativePath(src))
+                });
+            
+            var toCopy = mapped.Where(x => 
+                !x.dest.Exists ||
+                (copyUpdated &&
+                x.src.LastWriteTimeUtc > x.dest.LastWriteTimeUtc) );
+
+            foreach (var item in toCopy)
+            {
+                item.src.CopyTo(item.dest, true);
+            }
+
+            return target;
+        }
     }
 }
