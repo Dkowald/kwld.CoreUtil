@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -85,6 +86,49 @@ namespace kwd.CoreUtil.FileSystem
             }
 
             return outDir;
+        }
+
+        /// <summary>
+        /// Return the set of files in <paramref name="targetDir"/>
+        /// that have corresponding file (relative path) in <paramref name="srcDir"/>.
+        /// </summary>
+        public static IEnumerable<FileInfo> TreeSameFiles(this DirectoryInfo srcDir, DirectoryInfo targetDir)
+        {   
+            var mappedFiles = srcDir.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(x => targetDir.GetFile(x.GetRelativePath(srcDir)));
+
+            return mappedFiles.Where(x => x.Exists);
+        }
+
+        /// <summary>
+        /// Retrieve list of files from <paramref name="targetDir"/>
+        /// compared to files (relative path) in <paramref name="srcDir"/>.
+        /// </summary>
+        public static (IReadOnlyCollection<FileInfo> Created,
+            IReadOnlyCollection<FileInfo> Updated,
+            IReadOnlyCollection<FileInfo> Deleted ) TreeCUD(this DirectoryInfo srcDir, DirectoryInfo targetDir)
+        {
+            var mapped = srcDir.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(x => new {
+                    src = x,
+                    dest = targetDir.GetFile(x.GetRelativePath(srcDir))
+                }).ToArray();
+
+            var other = targetDir.EnumerateFiles("*", SearchOption.AllDirectories);
+
+            var created = other
+                .Where(o => !mapped.Any(s => s.dest.FullName == o.FullName))
+                .ToArray();
+
+            var updated = mapped.Where(x =>
+                x.src.Exists && x.dest.Exists &&
+                x.src.LastWriteTimeUtc != x.dest.LastWriteTimeUtc)
+                .Select(x => x.dest).ToArray();
+
+            var deleted = mapped.Where(x => x.src.Exists && !x.dest.Exists)
+                .Select(x => x.dest).ToArray();
+
+            return (created, updated, deleted);
         }
     }
 }
