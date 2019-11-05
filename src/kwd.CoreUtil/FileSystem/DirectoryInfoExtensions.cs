@@ -157,5 +157,26 @@ namespace kwd.CoreUtil.FileSystem
 
             return target;
         }
+
+        /// <summary>
+        /// All files in <paramref name="src"/> are copied to <paramref name="target"/>.
+        /// Keeping their relative paths.
+        /// </summary>
+        public static DirectoryInfo MergeForce(this DirectoryInfo target, DirectoryInfo src)
+        {
+            var mapped = src.EnumerateFiles("*", SearchOption.AllDirectories)
+                .Select(x => new
+                {
+                    src = x,
+                    dest = target.GetFile(x.GetRelativePath(src))
+                });
+
+            foreach (var item in mapped)
+            {
+                item.src.CopyTo(item.dest, true);
+            }
+
+            return target;
+        }
     }
 }
