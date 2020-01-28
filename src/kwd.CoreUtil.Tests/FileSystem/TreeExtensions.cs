@@ -1,6 +1,6 @@
 using System;
+using System.IO;
 using System.Linq;
-
 using kwd.CoreUtil.FileSystem;
 using kwd.CoreUtil.Tests.TestHelpers;
 
@@ -9,27 +9,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace kwd.CoreUtil.Tests.FileSystem
 {
     [TestClass]
-    public class DirectoryInfoExtensionsTests
+    public class TreeExtensions
     {
         [TestMethod]
         public void Merge_WithUpdates()
         {
             var root = Files.AppData.GetFolder(nameof(Merge_WithUpdates))
                 .EnsureDelete();
-
+            
             var src = root.GetFolder("src");
             var dest = root.GetFolder("dest");
 
-            src.GetFile("new.txt").EnsureCreate();
+            src.GetFile("sub1", "new.txt").EnsureExists();
 
-            src.GetFile("updated.txt").EnsureCreate();
+            src.GetFile("updated.txt").EnsureExists();
 
             var oldDate = DateTime.UtcNow.AddDays(-1);
             dest.GetFile("updated.txt").Touch(() => oldDate);
 
-            dest.Merge(src);
+            src.Merge(dest);
+
             Assert.IsTrue(dest.GetFile("updated.txt").LastWriteTimeUtc > oldDate, 
                 "Got the updated file");
+
+            Assert.IsTrue(dest.GetFile("sub1", "new.txt").Exists, "New file coped");
         }
 
         [TestMethod]
@@ -41,15 +44,15 @@ namespace kwd.CoreUtil.Tests.FileSystem
             var src = root.GetFolder("src");
             var dest = root.GetFolder("dest");
 
-            src.GetFile("newFile.txt").EnsureCreate();
+            src.GetFile("newFile.txt").EnsureExists();
 
-            src.GetFile("other", "same.txt").EnsureCreate();
+            src.GetFile("other", "same.txt").EnsureExists();
 
             var oldFileDate = DateTime.UtcNow.AddDays(-1);
             dest.GetFile("other", "same.txt").Touch(() => oldFileDate);
 
-            dest.GetFile("existingFile.txt").EnsureCreate();
-            dest.Merge(src, false);
+            dest.GetFile("existingFile.txt").EnsureExists();
+            src.Merge(dest, false);
 
             Assert.IsTrue(dest.GetFile("existingFile.txt").Exists, "Keeps my current file");
 
@@ -67,15 +70,15 @@ namespace kwd.CoreUtil.Tests.FileSystem
             var src = root.GetFolder("src");
             var other = root.GetFolder("other");
 
-            var same = src.GetFile("same.txt").EnsureCreate();
+            var same = src.GetFile("same.txt").EnsureExists();
             other.GetFile("same.txt").Touch(() => same.LastWriteTimeUtc);
 
             src.GetFile("updated.txt").Touch(() => DateTime.UtcNow.AddDays(-1));
-            other.GetFile("updated.txt").EnsureCreate();
+            other.GetFile("updated.txt").EnsureExists();
 
-            src.GetFile("deleted.txt").EnsureCreate();
+            src.GetFile("deleted.txt").EnsureExists();
 
-            other.GetFile("created.txt").EnsureCreate();
+            other.GetFile("created.txt").EnsureExists();
 
             var (created, updated, deleted) = src.TreeCUD(other);
 
@@ -92,17 +95,18 @@ namespace kwd.CoreUtil.Tests.FileSystem
             var dir1 = root.GetFolder("dir1");
             var dir2 = root.GetFolder("dir2");
 
-            dir1.GetFolder("same").GetFile("test.txt").EnsureCreate();
-            dir1.GetFile("removed.txt").EnsureCreate();
+            dir1.GetFolder("same").GetFile("test.txt").EnsureExists();
+            dir1.GetFile("removed.txt").EnsureExists();
 
-            dir2.GetFolder("same").GetFile("test.txt").EnsureCreate();
-            dir2.GetFolder("added").GetFile("added.txt").EnsureCreate();
+            dir2.GetFolder("same").GetFile("test.txt").EnsureExists();
+            dir2.GetFolder("added").GetFile("added.txt").EnsureExists();
 
             var matchedFiles = dir1.TreeSameFiles(dir2).ToList();
+
             Assert.AreEqual(1, matchedFiles.Count, "Found the single match");
+            
             var same = matchedFiles.Single();
             Assert.AreEqual("same\\test.txt", same.GetRelativePath(dir2));
-            
         }
 
         [TestMethod]
@@ -110,11 +114,11 @@ namespace kwd.CoreUtil.Tests.FileSystem
         {
             var target = Files.AppData.Get(nameof(Prune_Success));
 
-            target.EnsureDelete().EnsureCreate();
+            target.EnsureDelete().EnsureExists();
 
-            target.Get("sub1").EnsureCreate();
-            target.Get("sub2").EnsureCreate();
-            target.Get("keep").GetFile("test.txt").EnsureCreate();
+            target.Get("sub1").EnsureExists();
+            target.Get("sub2").EnsureExists();
+            target.Get("keep").GetFile("test.txt").EnsureExists();
 
             target.Prune();
 

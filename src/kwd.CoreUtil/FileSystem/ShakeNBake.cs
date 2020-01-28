@@ -1,13 +1,42 @@
 using System;
 using System.IO;
+using System.Linq;
 
 namespace kwd.CoreUtil.FileSystem
 {
     /// <summary>
-    /// Extension for <see cref="FileInfo"/>
+    /// Set of useful helpers for file system.
     /// </summary>
-    public static class FileSystemInfoExtensions
+    public static class HelperExtensions
     {
+        /// <summary>
+        /// Get child file info.
+        /// </summary>
+        public static FileInfo GetFile(this DirectoryInfo dir, params string[] subPath)
+        {
+            if (dir == null) {throw new ArgumentNullException(nameof(dir));}
+
+            if (subPath?.Any() != true) { throw new ArgumentNullException(nameof(subPath));}
+
+            var path = Path.Combine(dir.FullName, Path.Combine(subPath));
+
+            return new FileInfo(path);
+        }
+
+        /// <summary>
+        /// Get child folder.
+        /// </summary>
+        public static DirectoryInfo GetFolder(this DirectoryInfo dir, params string[] subPath)
+        {
+            if (dir == null) {throw new ArgumentNullException(nameof(dir));}
+
+            if (subPath?.Any() != true) { return dir; }
+
+            var path = Path.Combine(dir.FullName, Path.Combine(subPath));
+
+            return new DirectoryInfo(path);
+        }
+
         /// <summary>
         /// Set the file LastWrite to current time; creating the file if needed.
         /// </summary>
@@ -46,33 +75,6 @@ namespace kwd.CoreUtil.FileSystem
             return dir;
         }
         
-        /// <summary>
-        /// Removes the directory and all its content (files and directories).
-        /// </summary>
-        public static DirectoryInfo EnsureDelete(this DirectoryInfo dir)
-        {
-            if (dir == null) throw new ArgumentNullException(nameof(dir));
-
-            dir.Refresh();
-            if (dir.Exists) { dir.Delete(true);}
-
-            return dir;
-        }
-
-        /// <summary>
-        /// Remove a file.
-        /// </summary>
-        public static FileInfo EnsureDelete(this FileInfo file)
-        {
-            if(file == null) throw new ArgumentNullException(nameof(file));
-
-            file.Refresh();
-
-            if (file.Exists) { file.Delete(); file.Refresh();}
-
-            return file;
-        }
-
         /// <summary>
         /// Checks the file-system to determine if item exists.
         /// </summary>

@@ -7,7 +7,7 @@ namespace kwd.CoreUtil.FileSystem
     /// <summary>
     /// Extensions for <see cref="DirectoryInfo"/> to include missing functions from <see cref="Directory"/>.
     /// </summary>
-    public static class DirectoryInfoDirectoryExtensions
+    public static class FromDirectoryExtensions
     {
         /// <summary>Moves a <see cref="T:System.IO.DirectoryInfo"></see> instance and its contents to a new path.</summary>
         public static void MoveTo(this DirectoryInfo src, DirectoryInfo destDir) =>

@@ -6,7 +6,7 @@ namespace kwd.CoreUtil.FileSystem
     /// <summary>
     /// Extensions for <see cref="FileInfo"/> to include missing functions from <see cref="Path"/>.
     /// </summary>
-    public static class FileInfoPathExtensions
+    public static class FromPathExtensions
     {
         /// <summary>
         /// See <see cref="Path.ChangeExtension(string, string)"/> <br />

@@ -9,7 +9,7 @@ namespace kwd.CoreUtil.FileSystem
     /// <summary>
     /// Extensions for <see cref="FileInfo"/> to include missing function from <see cref="File"/>.
     /// </summary>
-    public static class FileInfoFileExtensions
+    public static class FromFileExtensions
     {
         ///<summary>
         /// See <see cref="File.AppendAllLines(string, IEnumerable{string})"/> <br />
@@ -57,14 +57,14 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.AppendAllTextAsync(string,string,System.Threading.CancellationToken)"/>
         /// </summary>
         public static Task AppendAllTextAsync(this FileInfo fileInfo, string contents,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.AppendAllTextAsync(fileInfo?.FullName, contents, cancellationToken);
 
         /// <summary>
         /// See <see cref="File.AppendAllTextAsync(string, string, Encoding, CancellationToken)"/>
         /// </summary>
         public static Task AppendAllTextAsync(this FileInfo fileInfo, string contents, Encoding encoding,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.AppendAllTextAsync(fileInfo?.FullName, contents, encoding, cancellationToken);
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.ReadAllBytesAsync(string, CancellationToken)"/>
         /// </summary>
         public static Task<byte[]> ReadAllBytesAsync(this FileInfo fileInfo,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.ReadAllBytesAsync(fileInfo?.FullName, cancellationToken);
 
         /// <summary>
@@ -105,14 +105,14 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.ReadAllLinesAsync(string, CancellationToken)"/>
         /// </summary>
         public static Task<string[]> ReadAllLinesAsync(this FileInfo fileInfo,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.ReadAllLinesAsync(fileInfo?.FullName, cancellationToken);
 
         /// <summary>
         /// See <see cref="File.ReadAllLinesAsync(string, Encoding, CancellationToken)"/>
         /// </summary>
         public static Task<string[]> ReadAllLinesAsync(this FileInfo fileInfo, Encoding encoding,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.ReadAllLinesAsync(fileInfo?.FullName, encoding, cancellationToken);
 
         /// <summary>
@@ -133,14 +133,14 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.ReadAllTextAsync(string, CancellationToken)"/>
         /// </summary>
         public static Task<string> ReadAllTextAsync(this FileInfo fileInfo,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.ReadAllTextAsync(fileInfo?.FullName, cancellationToken);
 
         /// <summary>
         /// See <see cref="File.ReadAllText(string, Encoding)"/>
         /// </summary>
         public static Task<string> ReadAllTextAsync(this FileInfo fileInfo, Encoding encoding,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.ReadAllTextAsync(fileInfo?.FullName, encoding, cancellationToken);
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.WriteAllBytesAsync(string, byte[], CancellationToken)"/>
         /// </summary>
         public static Task WriteAllBytesAsync(this FileInfo fileInfo, byte[] bytes,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.WriteAllBytesAsync(fileInfo?.FullName, bytes, cancellationToken);
 
         /// <summary>
@@ -203,14 +203,14 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.WriteAllLinesAsync(string, IEnumerable{string}, CancellationToken)"/>
         /// </summary>
         public static Task WriteAllLinesAsync(this FileInfo fileInfo, IEnumerable<string> contents,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.WriteAllLinesAsync(fileInfo?.FullName, contents, cancellationToken);
 
         /// <summary>
         /// See <see cref="File.WriteAllLinesAsync(string, IEnumerable{string}, Encoding, CancellationToken)"/>
         /// </summary>
         public static Task WriteAllLinesAsync(this FileInfo fileInfo, IEnumerable<string> contents, Encoding encoding,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.WriteAllLinesAsync(fileInfo?.FullName, contents, encoding, cancellationToken);
 
         /// <summary>
@@ -231,14 +231,14 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="File.WriteAllTextAsync(string, string, CancellationToken)"/>
         /// </summary>
         public static Task WriteAllTextAsync(this FileInfo fileInfo, string contents,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.WriteAllTextAsync(fileInfo?.FullName, contents, cancellationToken);
 
         /// <summary>
         /// See <see cref="File.WriteAllTextAsync(string,string, Encoding, CancellationToken)"/>
         /// </summary>
         public static Task WriteAllTextAsync(this FileInfo fileInfo, string contents, Encoding encoding,
-            CancellationToken cancellationToken = default(CancellationToken)) =>
+            CancellationToken cancellationToken = default) =>
             File.WriteAllTextAsync(fileInfo?.FullName, contents, encoding, cancellationToken);
     }
 }
