@@ -8,7 +8,7 @@ namespace kwd.CoreUtil.Streams
     /// <summary>
     /// Sugar for <see cref="TextReader"/>
     /// </summary>
-    public static class TextReaderExtensions
+     public static class TextReaderExtensions
     {
         /// <summary>
         /// Read lines from a stream using <see cref="TextReader.ReadLine"/>.

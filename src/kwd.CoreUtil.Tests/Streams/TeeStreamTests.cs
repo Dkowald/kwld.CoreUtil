@@ -83,20 +83,35 @@ namespace kwd.CoreUtil.Tests.Streams
         [TestMethod]
         public void DisposeAll()
         {
-            using var main = new MemoryStream();
-            using var other = new MemoryStream();
+            var main = new MemoryStream();
+            var other = new MemoryStream();
 
-            var target = new TeeStream(main, other);
+            using var target = new TeeStream(main, other);
             using var wr = new StreamWriter(target);
 
             wr.Dispose();
-
+            
             try
             {
                 Read(main);
                 Assert.Fail("Expected stream to be closed.");
             }catch(ObjectDisposedException){}
+        }
 
+        [TestMethod]
+        public void LeaveOpen()
+        {
+            var main = new MemoryStream();
+            var other = new MemoryStream();
+            
+            using var target = new TeeStream(main, other, true);
+
+            target.Dispose();
+
+            Assert.IsTrue(main.CanSeek, "Not disposed");
+            
+            main.Dispose();
+            other.Dispose();
         }
 
         private static string Read(MemoryStream stream)

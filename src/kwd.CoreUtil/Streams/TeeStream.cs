@@ -16,6 +16,8 @@ namespace kwd.CoreUtil.Streams
     /// </remarks>
     public class TeeStream : Stream
     {
+        private bool _disposed;
+        private readonly bool _leaveOpen;
         private readonly List<Stream> _out = new List<Stream>();
 
         /// <summary>
@@ -24,15 +26,17 @@ namespace kwd.CoreUtil.Streams
         /// </summary>
         /// <param name="mainStream">Main stream</param>
         /// <param name="otherStream">Other (branch) stream</param>
-        public TeeStream(Stream mainStream, Stream otherStream)
+        /// <param name="leaveOpen">If true, provided streams will not be closed when this is disposed.</param>
+        public TeeStream(Stream mainStream, Stream otherStream, bool leaveOpen = false)
         {
             if(!mainStream.CanWrite)
                 throw new ArgumentException
                     ("Must support write", nameof(mainStream));
-
+            
             if(!otherStream.CanWrite)
                 throw new ArgumentException
                     ("Must support write", nameof(otherStream));
+            _leaveOpen = leaveOpen;
 
             _out.Add(mainStream);
             _out.Add(otherStream);
@@ -53,15 +57,6 @@ namespace kwd.CoreUtil.Streams
         }
 
         #region Stream
-
-        /// <inheritdoc />
-        public override void Close()
-        {
-            foreach (var item in _out)
-            {
-                item.Close();
-            }
-        }
 
         /// <inheritdoc />
         public override void Flush()
@@ -157,5 +152,68 @@ namespace kwd.CoreUtil.Streams
         }
         #endregion
 
+        /// <inheritdoc />
+        protected override void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (!_leaveOpen && disposing)
+            { 
+                var errors = new List<Exception>();
+                var idx = 0;
+                foreach (var item in _out)
+                {
+                    try
+                    {
+                        item.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        errors.Add(new Exception($"Error disposing stream at index: {idx}", ex));
+                    }
+
+                    idx++;
+                }
+
+                if(errors.Any())
+                    throw new AggregateException(errors);
+            }
+
+            _disposed = true;
+            base.Dispose(disposing);
+        }
+
+        /// <inheritdoc />
+        public override async ValueTask DisposeAsync()
+        {
+            if(_disposed)return;
+
+            if (!_leaveOpen)
+            {
+                var errors = new List<Exception>();
+                var idx = 0;
+                foreach (var item in _out)
+                {
+                    try
+                    {
+                        await item.DisposeAsync();
+                    }
+                    catch (Exception error)
+                    {
+                        errors.Add(
+                            new Exception(
+                                $"Error disposing stream at index: {idx}", error));
+                    }
+
+                    idx++;
+                }
+
+                if (errors.Any())
+                    throw new AggregateException(errors);
+            }
+
+            _disposed = true;
+            await base.DisposeAsync();
+        }
     }
 }
