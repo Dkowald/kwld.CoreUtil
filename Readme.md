@@ -10,3 +10,9 @@ Maps all the System.IO.Path; System.IO.Directory and System.IO.File methods to
 extension methods on FileInfo and DirectoryInfo. 
 
 A handful of other often useful extensions, such as Prune and Touch.
+
+### Stream extensions
+
+A Tee stream; writing to multiple streams at once.
+
+Read / write lines extension.

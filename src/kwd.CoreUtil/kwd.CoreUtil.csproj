@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.0.0-alpha-1</Version>
+    <Version>1.0.0</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
@@ -15,6 +15,12 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <Tags>.NET Core;Utility</Tags>
+		<PackageReleaseNotes>
+      ## New set of helpers for Streams.
+      Tee for writing to multiple streams at once.
+
+      Helpers for reading / writing lines.
+		</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
