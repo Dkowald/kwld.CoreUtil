@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -106,8 +105,6 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static DirectoryInfo Prune(this DirectoryInfo dir)
         {
-            if (dir == null) throw new ArgumentNullException();
-
             static void RecursivePrune(DirectoryInfo subDir)
             {
                 subDir.Refresh();

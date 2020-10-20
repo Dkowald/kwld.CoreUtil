@@ -14,9 +14,10 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static FileInfo GetFile(this DirectoryInfo dir, params string[] subPath)
         {
-            if (dir == null) {throw new ArgumentNullException(nameof(dir));}
-
-            if (subPath?.Any() != true) { throw new ArgumentNullException(nameof(subPath));}
+            if (subPath.Any() != true)
+            {
+                throw new ArgumentException("Sub path cannot be empty", nameof(subPath));
+            }
 
             var path = Path.Combine(dir.FullName, Path.Combine(subPath));
 
@@ -28,9 +29,7 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static DirectoryInfo GetFolder(this DirectoryInfo dir, params string[] subPath)
         {
-            if (dir == null) {throw new ArgumentNullException(nameof(dir));}
-
-            if (subPath?.Any() != true) { return dir; }
+            if (!subPath.Any()) { return dir; }
 
             var path = Path.Combine(dir.FullName, Path.Combine(subPath));
 
@@ -42,8 +41,6 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static FileInfo Touch(this FileInfo file, Func<DateTime>? clock = null)
         {
-            if (file == null) throw new ArgumentNullException(nameof(file));
-
             file.Refresh();
 
             if (!file.Exists)
@@ -63,8 +60,6 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static DirectoryInfo Touch(this DirectoryInfo dir, Func<DateTime>? clock = null)
         {
-            if (dir == null) throw new ArgumentNullException(nameof(dir));
-            
             dir.Refresh();
 
             if (!dir.Exists) { dir.Create(); }
@@ -78,7 +73,7 @@ namespace kwd.CoreUtil.FileSystem
         /// <summary>
         /// Checks the file-system to determine if item exists.
         /// </summary>
-        public static bool Exists(this FileSystemInfo item)
+        public static bool Exists(this FileSystemInfo? item)
         {
             if (item is null) return false;
 

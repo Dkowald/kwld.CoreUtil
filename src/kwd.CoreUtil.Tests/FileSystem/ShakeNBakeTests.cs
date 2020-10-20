@@ -14,7 +14,7 @@ namespace kwd.CoreUtil.Tests.FileSystem
         {
             var file = Files.AppData.GetFile(nameof(ShakeNBakeTests), "touch.txt");
             var when = new DateTime(2000, 10, 01, 0, 0, 0, DateTimeKind.Utc);
-
+            
             file.Touch(() => when);
 
             var lastWrite = File.GetLastWriteTimeUtc(file.FullName);

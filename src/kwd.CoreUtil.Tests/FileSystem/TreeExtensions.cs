@@ -1,6 +1,6 @@
 using System;
-using System.IO;
 using System.Linq;
+
 using kwd.CoreUtil.FileSystem;
 using kwd.CoreUtil.Tests.TestHelpers;
 

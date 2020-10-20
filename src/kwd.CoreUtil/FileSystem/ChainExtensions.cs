@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace kwd.CoreUtil.FileSystem
@@ -40,8 +39,6 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static DirectoryInfo EnsureDelete(this DirectoryInfo dir)
         {
-            if (dir == null) throw new ArgumentNullException(nameof(dir));
-
             dir.Refresh();
             if (dir.Exists)
             {
@@ -57,8 +54,6 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static FileInfo EnsureDelete(this FileInfo file)
         {
-            if(file == null) throw new ArgumentNullException(nameof(file));
-
             file.Refresh();
 
             if (file.Exists)

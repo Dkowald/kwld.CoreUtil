@@ -32,7 +32,11 @@ namespace kwd.CoreUtil.FileSystem
         {
             destination.Directory?.Create();
 
-            if (overwrite) source.MoveTo(destination.FullName, true);
+            if (overwrite)
+            {
+                destination.EnsureDelete();
+                source.MoveTo(destination.FullName);
+            }
             else source.MoveTo(destination.FullName);
 
             destination.Refresh();
@@ -79,16 +83,13 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static FileInfo MoveTo(this FileInfo file, DirectoryInfo dir, bool overwrite = false)
         {
-            if (file == null) throw new ArgumentNullException(nameof(file));
-            if (dir == null) throw new ArgumentNullException(nameof(dir));
-
             var result = new FileInfo(Path.Combine(dir.FullName, file.Name));
 
             if (result.Exists && overwrite) { result.Delete(); }
 
             result.Directory?.Create();
-
-            file.MoveTo(result.FullName, overwrite);
+            
+            file.MoveTo(result, overwrite);
 
             return result;
         }
@@ -98,11 +99,8 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static FileInfo CopyTo(this FileInfo file, DirectoryInfo dir, bool overwrite = false)
         {
-            if (file == null) throw new ArgumentNullException(nameof(file));
-            if (dir == null) throw new ArgumentNullException(nameof(dir));
-         
             if(!file.Exists())
-                throw new ArgumentException(nameof(file), "Source files must exist");
+                throw new ArgumentException("Source files must exist", nameof(file));
 
             var result = new FileInfo(Path.Combine(dir.FullName, file.Name));
          
