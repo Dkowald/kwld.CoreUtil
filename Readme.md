@@ -1,18 +1,9 @@
 ## Overview
 Core library holding various extensions to improve code development and readability.
 
-## Summary
+1. Easier to use Extensions for FileInfo and DirectoryInfo
+2. Touch and Tree helpers for file system.
+2. Stream extensions, such as Tee
+3. String split and join helpers.
 
-### File system extensions
-A set of extensions to improve development with FileInfo and DirectoryInfo.
-
-Maps all the System.IO.Path; System.IO.Directory and System.IO.File methods to 
-extension methods on FileInfo and DirectoryInfo. 
-
-A handful of other often useful extensions, such as Prune and Touch.
-
-### Stream extensions
-
-A Tee stream; writing to multiple streams at once.
-
-Read / write lines extension.
+See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details
