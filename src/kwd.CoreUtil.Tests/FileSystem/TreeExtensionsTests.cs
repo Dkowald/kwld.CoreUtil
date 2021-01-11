@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace kwd.CoreUtil.Tests.FileSystem
 {
     [TestClass]
-    public class TreeExtensions
+    public class TreeExtensionsTests
     {
         [TestMethod]
         public void Merge_WithUpdates()

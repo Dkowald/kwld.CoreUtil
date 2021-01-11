@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace kwd.CoreUtil.Tests.FileSystem
 {
     [TestClass]
-    public class HandyPathsTests
+    public class DirectoriesTests
     {
         [TestMethod]
         public void Home_PreferHomeEnvironmentVariable()
@@ -14,8 +14,8 @@ namespace kwd.CoreUtil.Tests.FileSystem
             var tmp = new DirectoryInfo("c:/temp/test");
             Environment.SetEnvironmentVariable("USERPROFILE", tmp.GetFile("other").FullName);
             Environment.SetEnvironmentVariable("HOME", tmp.FullName);
-
-            var home = HandyPaths.Home();
+            
+            var home = Directories.Home();
             Assert.AreEqual(tmp.FullName, home.FullName, "Use $HOME");
         }
     }

@@ -7,12 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace kwd.CoreUtil.Tests.FileSystem
 {
     [TestClass]
-    public class ShakeNBakeTests
+    public class HelperExtensionsTests
     {
         [TestMethod]
         public void Touch_CustomDate()
         {
-            var file = Files.AppData.GetFile(nameof(ShakeNBakeTests), "touch.txt");
+            var file = Files.AppData.GetFile(nameof(HelperExtensionsTests), "touch.txt");
             var when = new DateTime(2000, 10, 01, 0, 0, 0, DateTimeKind.Utc);
             
             file.Touch(() => when);
