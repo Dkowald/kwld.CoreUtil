@@ -12,7 +12,7 @@ namespace kwd.CoreUtil.Strings
         /// </summary>
         /// <remarks>Uses span to avoid memory allocation</remarks>
         /// <returns>True if the strings are the same, ignoring case.</returns>
-        public static bool Same(this string lhs, string rhs)
+        public static bool Same(this string? lhs, string? rhs)
             => lhs.AsSpan().Trim().Equals(rhs.AsSpan().Trim(), StringComparison.OrdinalIgnoreCase);
         
         /// <summary>
@@ -20,7 +20,7 @@ namespace kwd.CoreUtil.Strings
         /// Words are compared case-ignorant (See <see cref="Same"/>).
         /// </summary>
         /// <returns></returns>
-        public static bool SamePhrase(this string lhs, string rhs, Func<char, bool>? isDelimiter = null)
+        public static bool SamePhrase(this string? lhs, string? rhs, Func<char, bool>? isDelimiter = null)
         {
             var lhsRest = lhs.AsSpan();
             var rhsRest = rhs.AsSpan();
@@ -38,15 +38,15 @@ namespace kwd.CoreUtil.Strings
         }
 
         /// <summary>
-        /// Shorthand for <see cref="System.String.IsNullOrWhiteSpace"/>
+        /// Shorthand for <see cref="IsNullOrWhiteSpace"/>
         /// </summary>
-        public static bool IsNullOrWhiteSpace(this string lhs)
+        public static bool IsNullOrWhiteSpace(this string? lhs)
             => string.IsNullOrWhiteSpace(lhs);
 
         /// <summary>
-        /// Shorthand for <see cref="System.String.IsNullOrEmpty"/>
+        /// Shorthand for <see cref="IsNullOrEmpty"/>
         /// </summary>
-        public static bool IsNullOrEmpty(this string lhs)
+        public static bool IsNullOrEmpty(this string? lhs)
             => string.IsNullOrEmpty(lhs);
     }
 }

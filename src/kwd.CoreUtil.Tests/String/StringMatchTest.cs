@@ -1,4 +1,5 @@
 ﻿using kwd.CoreUtil.Strings;
+
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace kwd.CoreUtil.Tests.String
@@ -6,6 +7,17 @@ namespace kwd.CoreUtil.Tests.String
     [TestClass]
     public class StringMatchTest
     {
+        [TestMethod]
+        public void Same_WithNulls()
+        {
+            string lhs = null;
+            string rhs = null;
+
+            Assert.IsTrue(lhs.Same(rhs));
+            Assert.IsFalse(lhs.Same("Fred"));
+            Assert.IsFalse("Fred".Same(rhs));
+        }
+
         [TestMethod]
         public void SamePhrase_()
         {
