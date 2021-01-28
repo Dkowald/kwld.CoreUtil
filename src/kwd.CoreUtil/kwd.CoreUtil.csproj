@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.1.0</Version>
+    <Version>1.2.0-local</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
-    <Description>A set of extensions to provvide a better development experiance for .NET Core</Description>
+    <Description>A set of extensions to provide a better development experiance for .NET Core</Description>
     <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

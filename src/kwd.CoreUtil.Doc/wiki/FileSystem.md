@@ -105,21 +105,11 @@ A set of **DirectoryInfo** extensions, to help resolve path to a File System obj
 
 | Extension | Description |
 | --------- | ----------- |
+| IsCaseSensitive| Test for case-sensitivity for the given test folder.|
 | CaseMatchDir | Navigate a sub path; replacing each path segment with same-case as found on file system (if found). |
 | CaseMatchFile| CaseMatchDir, and include last item as a file name|
 | ResolveDir | Resolve a path, replacing environment variables (if any) and matching file-system case. |
 | ResolveFile | Resolve a file path, replacing environment variables, and matching file-system case. |
-
-The **CaseSensitiveTest** can be used to check case sensitivity for a given folder, e.g
-```cs
-  kwd.CoreUtil.FileSystem;
-
-  var home = Directories.Home();
-  ICaseSensitiveTest caseTest = new CaseSensitiveTest("/home/me");
-
-  var homeMessage = caseTest.IsCaseSensitive ? "case insensitive" : "case sensitive";
-  Console.WriteLine($"Your home directory is {homeMessage}");
-```
 
 ## Directories
 Helpers for oft used paths.

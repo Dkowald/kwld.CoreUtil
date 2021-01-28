@@ -17,6 +17,30 @@ namespace kwd.CoreUtil.FileSystem
         };
 
         /// <summary>
+        /// Test if <see cref="DirectoryInfo"/> is case-sensitive.
+        /// </summary>
+        /// <exception cref="ArgumentException">
+        /// Raised if provided <paramref name="dir"/> doesn't exist,
+        /// or doesn't contain a letter.
+        /// </exception>
+        public static bool IsCaseSensitive(this DirectoryInfo dir)
+        {
+            var fullPath = dir.FullName;
+
+            dir.Refresh();
+            if (!dir.Exists || fullPath.Any(char.IsLetter))
+            {
+                throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
+            }
+
+            var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
+
+            var result = !Directory.Exists(altPath);
+
+            return result;
+        }
+        
+        /// <summary>
         /// Path to a directory, sub path matches file system case.
         /// using first sub-path match for case sensitive file systems.
         /// FullName always ends with a trailing <see cref="Path.DirectorySeparatorChar"/>
@@ -69,7 +93,7 @@ namespace kwd.CoreUtil.FileSystem
         /// <summary>
         /// Locate file, matching the file-system case as best as possible.
         /// Last entry in <paramref name="subPathAndFilename"/> is the file name.
-        /// <seealso cref="CaseMatchDir"/>.
+        /// <seealso cref="CaseMatchDir(DirectoryInfo,string)"/>.
         /// </summary>
         public static FileInfo CaseMatchFile(this DirectoryInfo root, params string[] subPathAndFilename)
         {
@@ -93,7 +117,7 @@ namespace kwd.CoreUtil.FileSystem
         /// Resolve a full path with given root.
         /// Expands environment variables.
         /// Expands relative paths.
-        /// Uses <see cref="CaseMatchDir"/> to match result to file system.
+        /// Uses <see cref="CaseMatchDir(DirectoryInfo,string)"/> to match result to file system.
         /// </summary>
         public static DirectoryInfo ResolveDir(this DirectoryInfo root, params string[] path)
         {
