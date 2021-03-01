@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.2.0-local</Version>
+    <Version>1.2.0-beta</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
@@ -16,8 +16,8 @@
     <PackageIcon>icon.png</PackageIcon>
     <Tags>.NET Core;Utility</Tags>
 		<PackageReleaseNotes>
-      ## New helpers for strings.
-		</PackageReleaseNotes>
+      ## Case ignorant file access.
+    </PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

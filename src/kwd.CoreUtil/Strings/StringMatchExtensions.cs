@@ -8,7 +8,7 @@ namespace kwd.CoreUtil.Strings
     public static class StringMatchExtensions
     {
         /// <summary>
-        /// Case-ignorant string compare, also ignores lading and trailing white space.
+        /// Case-ignorant string compare, also ignores leading and trailing white space.
         /// </summary>
         /// <remarks>Uses span to avoid memory allocation</remarks>
         /// <returns>True if the strings are the same, ignoring case.</returns>

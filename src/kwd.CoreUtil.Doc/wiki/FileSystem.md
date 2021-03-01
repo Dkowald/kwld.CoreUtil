@@ -106,16 +106,16 @@ A set of **DirectoryInfo** extensions, to help resolve path to a File System obj
 | Extension | Description |
 | --------- | ----------- |
 | IsCaseSensitive| Test for case-sensitivity for the given test folder.|
-| CaseMatchDir | Navigate a sub path; replacing each path segment with same-case as found on file system (if found). |
-| CaseMatchFile| CaseMatchDir, and include last item as a file name|
-| ResolveDir | Resolve a path, replacing environment variables (if any) and matching file-system case. |
-| ResolveFile | Resolve a file path, replacing environment variables, and matching file-system case. |
+| PathSplit | Split a file system path string into its segments |
+| FindFolder | Navigate a sub path; replacing each path segment with same-case as found on file system (if found). |
+| FindFile | FindFolder, and include last item as a file name |
 
 ## Directories
 Helpers for oft used paths.
+
 | Extension | Description |
-| --- | --- |
+| --------- | ----------- |
 | Current | Process Current directory |
-| Home          | Current user home path (windows or linux)  |
-| Temp | Users temporary folder.|
+| Home    | Current user home path (windows or linux)  |
+| Temp    | Users temporary folder.|
 | AssemblyFolder| Folder containing assembly for a type |

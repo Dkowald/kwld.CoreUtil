@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using kwd.CoreUtil.Strings;
 
 namespace kwd.CoreUtil.FileSystem
 {
@@ -39,6 +40,12 @@ namespace kwd.CoreUtil.FileSystem
 
             return result;
         }
+
+        /// <summary>
+        /// Splits the given string into a set of path segments.
+        /// </summary>
+        public static string[] PathSplit(string path)
+            => path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         
         /// <summary>
         /// Path to a directory, sub path matches file system case.
@@ -47,43 +54,32 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         /// <param name="root">Start point, is Not mapped to match-case.</param>
         /// <param name="path">path segments, attempt to match each segment to existing items case</param>
-        public static DirectoryInfo CaseMatchDir(this DirectoryInfo root, string path)
-            => root.CaseMatchDir(path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
-
-        /// <summary>
-        /// Path to a directory, sub path matches file system case.
-        /// using first sub-path match for case sensitive file systems.
-        /// FullName always ends with a trailing <see cref="Path.DirectorySeparatorChar"/>
-        /// </summary>
-        /// <param name="root">Start point, is Not mapped to match-case.</param>
-        /// <param name="path">path segments, attempt to match each segment to existing items case</param>
-        public static DirectoryInfo CaseMatchDir(this DirectoryInfo root, params string[] path)
+        public static DirectoryInfo FindFolder(this DirectoryInfo root, params string[] path)
         {
             if (path.Length == 0) { return root; }
 
             var cur = root.FullName;
 
-            var segments = new Queue<string>(path);
+            var segments = new Queue<string>(path.SelectMany(PathSplit));
 
             while (segments.Count > 0)
             {
                 if (!Directory.Exists(cur)) { break; }
 
                 var part = segments.Dequeue();
-                
-                //assume next is simple combine.
-                var next = Path.GetFullPath(Path.Combine(cur, part));
+
+                var subPath = Directory.EnumerateDirectories(cur)
+                    .FirstOrDefault(x => Path.GetFileName(x).Equals(part, StringComparison.OrdinalIgnoreCase));
 
                 //get path that matches, or just next.
-                cur = Directory.GetDirectories(cur, part, CaseIgnorantOptions)
-                        .FirstOrDefault() ?? next;
+                cur = Path.Combine(cur, subPath ?? part);
             }
 
             //current doesn't exist, just use the rest as-is
-            if(segments.Any())
-            { cur = Path.GetFullPath(
-                Path.Combine(new[] { cur }.Union(segments).ToArray())); }
+            cur = Path.GetFullPath(
+                Path.Combine(new[] { cur }.Union(segments).ToArray()));
 
+            //normalize a directory to end with trailing /
             if (!cur.EndsWith(Path.DirectorySeparatorChar))
             { cur += Path.DirectorySeparatorChar; }
 
@@ -93,50 +89,27 @@ namespace kwd.CoreUtil.FileSystem
         /// <summary>
         /// Locate file, matching the file-system case as best as possible.
         /// Last entry in <paramref name="subPathAndFilename"/> is the file name.
-        /// <seealso cref="CaseMatchDir(DirectoryInfo,string)"/>.
+        /// <seealso cref="FindFolder(DirectoryInfo, string[])"/>.
         /// </summary>
-        public static FileInfo CaseMatchFile(this DirectoryInfo root, params string[] subPathAndFilename)
+        public static FileInfo FindFile(this DirectoryInfo root, params string[] subPathAndFilename)
         {
-            if (subPathAndFilename.Length == 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(subPathAndFilename), "Must have at-least file name");
-            }
-            var dir = root.CaseMatchDir(subPathAndFilename.SkipLast(1).ToArray());
-            var fileName = subPathAndFilename.Last();
+            var subPaths = subPathAndFilename.SelectMany(PathSplit).ToArray();
 
+            if(subPaths.Length == 0)
+                throw new ArgumentOutOfRangeException(nameof(subPathAndFilename), "Must have at-least file name");
+
+            var dir = root.FindFolder(subPaths.SkipLast(1).ToArray());
+            var fileName = subPaths.Last();
+            
             var path = Directory.Exists(dir.FullName)
-                ? dir.GetFiles(fileName, CaseIgnorantOptions).FirstOrDefault()?.FullName
+                ? Directory.EnumerateFiles(dir.FullName)
+                    .FirstOrDefault(x => Path.GetFileName(x)
+                        .Equals(fileName, StringComparison.OrdinalIgnoreCase))
                 : null;
             
             path ??= Path.Combine(dir.FullName, fileName);
 
             return new FileInfo(path);
-        }
-
-        /// <summary>
-        /// Resolve a full path with given root.
-        /// Expands environment variables.
-        /// Expands relative paths.
-        /// Uses <see cref="CaseMatchDir(DirectoryInfo,string)"/> to match result to file system.
-        /// </summary>
-        public static DirectoryInfo ResolveDir(this DirectoryInfo root, params string[] path)
-        {
-            var segments = path.Select(Environment.ExpandEnvironmentVariables)
-                .ToArray();
-
-            return CaseMatchDir(root, segments);
-        }
-
-        /// <summary>
-        /// Resolve file path. Expanding environment variables,
-        /// and matching file system case.
-        /// </summary>
-        public static FileInfo ResolveFile(this DirectoryInfo root, params string[] pathAndFilename)
-        {
-            var segments = pathAndFilename.Select(Environment.ExpandEnvironmentVariables)
-                .ToArray();
-
-            return CaseMatchFile(root, segments);
         }
     }
 }
