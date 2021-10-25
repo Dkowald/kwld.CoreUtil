@@ -29,7 +29,7 @@ namespace kwd.CoreUtil.FileSystem
             var fullPath = dir.FullName;
 
             dir.Refresh();
-            if (!dir.Exists || fullPath.Any(char.IsLetter))
+            if (!dir.Exists || !fullPath.Any(char.IsLetter))
             {
                 throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
             }

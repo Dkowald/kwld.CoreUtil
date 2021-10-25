@@ -11,6 +11,15 @@ namespace kwd.CoreUtil.Tests.FileSystem
     public class ResolvePathExtensionsTests
     {
         [TestMethod]
+        public void IsCaseSensitive_()
+        {
+            var dir = Files.Project;
+
+            dir.IsCaseSensitive();
+            Assert.IsTrue(true, "Can call");
+        }
+        
+        [TestMethod]
         public void FindFolder_()
         {
             var testDir = Files.AppData.Get(nameof(ResolvePathExtensionsTests));
