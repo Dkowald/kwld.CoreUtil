@@ -119,3 +119,4 @@ Helpers for oft used paths.
 | Home    | Current user home path (windows or linux)  |
 | Temp    | Users temporary folder.|
 | AssemblyFolder| Folder containing assembly for a type |
+| Project| Codes standard source project folder |

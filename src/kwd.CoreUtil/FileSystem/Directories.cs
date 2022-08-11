@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace kwd.CoreUtil.FileSystem
 {
@@ -54,5 +55,20 @@ namespace kwd.CoreUtil.FileSystem
         public static DirectoryInfo AssemblyFolder(Type type)
             => new DirectoryInfo(
                 Path.GetDirectoryName(type.Assembly.Location) ?? "");
+
+        /// <summary>
+        /// Returns the standard folder when a .net project file would exist for
+        /// the calling assembly.
+        /// </summary>
+        public static DirectoryInfo Project()
+        {
+            var callerPath =
+                Path.GetFullPath(
+                Path.Combine(
+                    Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) ?? "",
+                    "../../../"));
+
+            return new DirectoryInfo(callerPath);
+        }
     }
 }

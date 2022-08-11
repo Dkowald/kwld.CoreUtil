@@ -16,8 +16,9 @@
     <PackageIcon>icon.png</PackageIcon>
     <Tags>.NET Core;Utility</Tags>
 		<PackageReleaseNotes>
-      ## Case ignorant file access.
-    </PackageReleaseNotes>
+		## Case ignorant file access.
+		## Alow nullability for various extensions.
+		</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
