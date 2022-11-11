@@ -15,10 +15,11 @@ Extensions to help compare strings.
 
 | Name  | Description |
 | ---  | :---: |
-|Same| Compare two strings ignoring case and any leading / trailing white space. |
-|SamePhrase| Compare the words in 2 strings; with optional custom delimiter check function. |
+|Same              | Compare two strings ignoring case and any leading / trailing white space.|
+|SamePhrase        | Compare the words in 2 strings; with optional custom delimiter check function.|
 |IsNullOrWhiteSpace| Extension to check if given string is null or only white space|
-|IsNullOrEmpty| Extension to check if given string is null or empty string|
+|IsNullOrEmpty     | Extension to check if given string is null or empty string|
+|IsEmptyOrEqual    | True if the string is null / empty or equal to given value|
 
 ## Find
 Extensions to extract sub strings.
@@ -37,6 +38,9 @@ Extensions to combine sub strings.
 | ---  | :---: |
 |Combine| Use a seperator to Join string fragments|
 |AsASCII| Remve any non ASCII characters |
+|EnsurePrefix| Ensures the string startes with a given prefix |
+|EnsurePostfix| Ensures the string ends with a given prefix |
+|DefaultTo|Returning a default value if string is null or whitespace, else self. |
 
 ## Stream
 

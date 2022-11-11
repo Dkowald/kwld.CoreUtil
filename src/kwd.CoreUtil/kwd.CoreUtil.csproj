@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.2.1-beta</Version>
+    <Version>1.2.2-beta</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
-    <Description>A set of extensions to provide a better development experiance for .NET Core</Description>
+    <Description>A set of extensions to provide a better development experience for .NET Core</Description>
     <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -16,8 +16,10 @@
     <PackageIcon>icon.png</PackageIcon>
     <Tags>.NET Core;Utility</Tags>
 		<PackageReleaseNotes>
-		## Case ignorant file access.
-		## Alow nullability for various extensions.
+			## Case ignorant file access.
+			## Alow nullability for various extensions.
+			## Adds support for System.IO.Abstractions
+            ## Add some IDictionary helpers.
 		</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -26,7 +28,11 @@
     <None Include="icon.svg" Pack="false" />
   </ItemGroup>
 
-  <!--PAck and push to nuget.-->
+  <ItemGroup>
+    <PackageReference Include="System.IO.Abstractions" Version="17.2.3" />
+  </ItemGroup>
+
+  <!--Pack and push to nuget.-->
   <Target Name="PushPack">
     <PropertyGroup>
       <PackageFile>$(PackageOutputPath)$(PackageId).$(Version).nupkg</PackageFile>
@@ -35,6 +41,5 @@
     <Message Importance="high" Text="Pushing $(PackageFile) to default source" />
     <Exec Command="dotnet nuget push $(PackageFile)" />
   </Target>
-
 
 </Project>

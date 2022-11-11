@@ -112,20 +112,20 @@ namespace kwd.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void Prune_Success()
         {
-            var target = Files.AppData.Get(nameof(Prune_Success));
+            var target = Files.AppData.GetFolder(nameof(Prune_Success));
 
             target.EnsureDelete().EnsureExists();
 
-            target.Get("sub1").EnsureExists();
-            target.Get("sub2").EnsureExists();
-            target.Get("keep").GetFile("test.txt").EnsureExists();
+            target.GetFolder("sub1").EnsureExists();
+            target.GetFolder("sub2").EnsureExists();
+            target.GetFile("keep","test.txt").EnsureExists();
 
             target.Prune();
 
             var remainingFolder = target.EnumerateDirectories().ToList()
                 .Single();
 
-            Assert.AreEqual("keep", remainingFolder.Name, 
+            Assert.AreEqual("keep", remainingFolder.Name,
                 "Keeps the single folder with a file");
         }
     }

@@ -22,7 +22,7 @@ namespace kwd.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void FindFolder_()
         {
-            var testDir = Files.AppData.Get(nameof(ResolvePathExtensionsTests));
+            var testDir = Files.AppData.GetFolder(nameof(ResolvePathExtensionsTests));
             testDir.EnsureDelete().EnsureExists();
 
             var path = nameof(ResolvePathExtensionsTests).ToLower();
@@ -37,7 +37,7 @@ namespace kwd.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void FindFile_()
         {
-            var testDir = Files.AppData.Get(nameof(ResolvePathExtensionsTests));
+            var testDir = Files.AppData.GetFolder(nameof(ResolvePathExtensionsTests));
             var testFile = testDir.GetFile("Test.txt");
             
             testFile.EnsureDelete().EnsureExists();

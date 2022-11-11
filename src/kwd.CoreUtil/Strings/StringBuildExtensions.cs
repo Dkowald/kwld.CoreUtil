@@ -104,5 +104,26 @@ namespace kwd.CoreUtil.Strings
 
             return new string(lhs.Where(c => c <= 127).ToArray());
         }
+
+        /// <summary>
+        /// Ensures the string ends with <paramref name="postfix"/>,
+        /// appending if need.
+        /// </summary>
+        public static string EnsurePostfix(this string target, char postfix)
+            => target.EndsWith(postfix) ? target : target + postfix;
+
+        /// <summary>
+        /// Ensures the string starts with <paramref name="prefix"/>,
+        /// pre-pending if need.
+        /// </summary>
+        public static string EnsurePrefix(this string target, char prefix)
+            => target.StartsWith(prefix) ? target : prefix + target;
+
+        /// <summary>
+        /// Checks a string is not empty or whitespace, returning <paramref name="default"/>
+        /// if it is.
+        /// </summary>
+        public static string DefaultTo(this string? source, string @default)
+            => string.IsNullOrWhiteSpace(source) ? @default : source;
     }
 }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
-using kwd.CoreUtil.Strings;
 
 namespace kwd.CoreUtil.FileSystem
 {
@@ -11,12 +11,6 @@ namespace kwd.CoreUtil.FileSystem
     /// </summary>
     public static class ResolvePathExtensions
     {
-        private static readonly EnumerationOptions CaseIgnorantOptions = new EnumerationOptions
-        {
-            MatchCasing = MatchCasing.CaseInsensitive,
-            AttributesToSkip = 0,
-        };
-
         /// <summary>
         /// Test if <see cref="DirectoryInfo"/> is case-sensitive.
         /// </summary>
@@ -36,9 +30,23 @@ namespace kwd.CoreUtil.FileSystem
 
             var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
 
-            var result = !Directory.Exists(altPath);
+            return !Directory.Exists(altPath);
+        }
 
-            return result;
+        /// <inheritdoc cref="IsCaseSensitive(DirectoryInfo)"/>
+        public static bool IsCaseSensitive(this IDirectoryInfo dir)
+        {
+            var fullPath = dir.FullName;
+
+            dir.Refresh();
+            if (!dir.Exists || !fullPath.Any(char.IsLetter))
+            {
+                throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
+            }
+
+            var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
+            
+            return !Directory.Exists(altPath);
         }
 
         /// <summary>
@@ -86,6 +94,39 @@ namespace kwd.CoreUtil.FileSystem
             return new DirectoryInfo(cur);
         }
 
+        /// <inheritdoc cref="FindFolder(DirectoryInfo,string[])"/>
+        public static IDirectoryInfo FindFolder(this IDirectoryInfo root, params string[] path)
+        {
+            if (path.Length == 0) { return root; }
+
+            var cur = root.FullName;
+
+            var segments = new Queue<string>(path.SelectMany(PathSplit));
+
+            while (segments.Count > 0)
+            {
+                if (!Directory.Exists(cur)) { break; }
+
+                var part = segments.Dequeue();
+
+                var subPath = Directory.EnumerateDirectories(cur)
+                    .FirstOrDefault(x => root.FileSystem.Path.GetFileName(x).Equals(part, StringComparison.OrdinalIgnoreCase));
+
+                //get path that matches, or just next.
+                cur = root.FileSystem.Path.Combine(cur, subPath ?? part);
+            }
+
+            //current doesn't exist, just use the rest as-is
+            cur = root.FileSystem.Path.GetFullPath(
+                root.FileSystem.Path.Combine(new[] { cur }.Union(segments).ToArray()));
+
+            //normalize a directory to end with trailing /
+            if (!cur.EndsWith(root.FileSystem.Path.DirectorySeparatorChar))
+            { cur += root.FileSystem.Path.DirectorySeparatorChar; }
+
+            return root.FileSystem.DirectoryInfo.FromDirectoryName(cur);
+        }
+
         /// <summary>
         /// Locate file, matching the file-system case as best as possible.
         /// Last entry in <paramref name="subPathAndFilename"/> is the file name.
@@ -110,6 +151,28 @@ namespace kwd.CoreUtil.FileSystem
             path ??= Path.Combine(dir.FullName, fileName);
 
             return new FileInfo(path);
+        }
+
+        /// <inheritdoc cref="FindFile(DirectoryInfo,string[])"/>
+        public static IFileInfo FindFile(this IDirectoryInfo root, params string[] subPathAndFilename)
+        {
+            var subPaths = subPathAndFilename.SelectMany(PathSplit).ToArray();
+
+            if (subPaths.Length == 0)
+                throw new ArgumentOutOfRangeException(nameof(subPathAndFilename), "Must have at-least file name");
+
+            var dir = root.FindFolder(subPaths.SkipLast(1).ToArray());
+            var fileName = subPaths.Last();
+
+            var path = Directory.Exists(dir.FullName)
+                ? Directory.EnumerateFiles(dir.FullName)
+                    .FirstOrDefault(x => root.FileSystem.Path.GetFileName(x)
+                        .Equals(fileName, StringComparison.OrdinalIgnoreCase))
+                : null;
+
+            path ??= root.FileSystem.Path.Combine(dir.FullName, fileName);
+
+            return root.FileSystem.FileInfo.FromFileName(path);
         }
     }
 }

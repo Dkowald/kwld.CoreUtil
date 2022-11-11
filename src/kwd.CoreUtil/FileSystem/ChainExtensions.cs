@@ -1,4 +1,5 @@
 using System.IO;
+using System.IO.Abstractions;
 
 namespace kwd.CoreUtil.FileSystem
 {
@@ -24,6 +25,21 @@ namespace kwd.CoreUtil.FileSystem
             return file;
         }
 
+        /// <inheritdoc cref="EnsureExists(FileInfo)"/>
+        public static IFileInfo EnsureExists(this IFileInfo file)
+        {
+            file.Refresh();
+
+            if (!file.Exists)
+            {
+                file.Directory?.Create();
+                file.Create().Dispose();
+                file.Refresh();
+            }
+
+            return file;
+        }
+
         /// <summary>
         /// Create Directory if not exist.
         /// </summary>
@@ -33,11 +49,32 @@ namespace kwd.CoreUtil.FileSystem
             dir.Refresh();
             return dir;
         }
-        
+
+        /// <inheritdoc cref="EnsureExists(DirectoryInfo)"/>
+        public static IDirectoryInfo EnsureExists(this IDirectoryInfo dir)
+        {
+            dir.Create();
+            dir.Refresh();
+            return dir;
+        }
+
         /// <summary>
         /// Removes the directory and all its content (files and directories).
         /// </summary>
         public static DirectoryInfo EnsureDelete(this DirectoryInfo dir)
+        {
+            dir.Refresh();
+            if (dir.Exists)
+            {
+                dir.Delete(true);
+                dir.Refresh();
+            }
+
+            return dir;
+        }
+
+        /// <inheritdoc cref="EnsureDelete(DirectoryInfo)"/>
+        public static IDirectoryInfo EnsureDelete(this IDirectoryInfo dir)
         {
             dir.Refresh();
             if (dir.Exists)
@@ -63,6 +100,56 @@ namespace kwd.CoreUtil.FileSystem
             }
 
             return file;
+        }
+
+        /// <inheritdoc cref="EnsureDelete(FileInfo)"/>
+        public static IFileInfo EnsureDelete(this IFileInfo file)
+        {
+            file.Refresh();
+
+            if (file.Exists)
+            {
+                file.Delete();
+                file.Refresh();
+            }
+
+            return file;
+        }
+
+        /// <inheritdoc cref="EnsureEmpty(IDirectoryInfo)"/>
+        public static DirectoryInfo EnsureEmpty(this DirectoryInfo dir)
+        {
+            dir.EnsureDelete();
+            dir.EnsureExists();
+            return dir;
+        }
+
+        /// <summary>
+        /// Ensure the directory exists, and is empty.
+        /// </summary>
+        public static IDirectoryInfo EnsureEmpty(this IDirectoryInfo dir)
+        {
+            dir.EnsureDelete();
+            dir.EnsureExists();
+            return dir;
+        }
+
+        /// <summary>
+        /// Ensure the file exists and is empty
+        /// </summary>
+        public static FileInfo EnsureEmpty(this FileInfo dir)
+        {
+            dir.EnsureDelete();
+            dir.EnsureExists();
+            return dir;
+        }
+
+        /// <inheritdoc cref="EnsureEmpty(FileInfo)"/>
+        public static IFileInfo EnsureEmpty(this IFileInfo dir)
+        {
+            dir.EnsureDelete();
+            dir.EnsureExists();
+            return dir;
         }
     }
 }

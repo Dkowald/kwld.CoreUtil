@@ -48,5 +48,14 @@ namespace kwd.CoreUtil.Strings
         /// </summary>
         public static bool IsNullOrEmpty(this string? lhs)
             => string.IsNullOrEmpty(lhs);
+
+        /// <summary>
+        /// True if the string is null / whitespace or equal to <paramref name="value"/>.
+        /// (By default uses ordinal, case-ignorant compare)
+        /// </summary>
+        public static bool IsEmptyOrEqual(this string target, string value, StringComparison comparisonType = StringComparison.OrdinalIgnoreCase)
+        {
+            return string.IsNullOrWhiteSpace(target) || target.Equals(value, comparisonType);
+        }
     }
 }

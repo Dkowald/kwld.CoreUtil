@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
 
     <WikiRepositoryPath>../../../kwd.CoreUtil.wiki/</WikiRepositoryPath>
   </PropertyGroup>
@@ -13,11 +13,10 @@
   <ItemGroup>
     <WikiFile Include="wiki/*.md" />
   </ItemGroup>
-
+  
   <Target Name="WikiLocalPublish" AfterTargets="Build" Inputs="@(WikiFile)" Outputs="$(WikiRepositoryPath)%(Filename)%(Extension)">
     
-    <Error Condition="!Exists('$(WikiRepositoryPath)')" 
-           Text="Expected wiki folder $(WikiRepositoryPath) not found. Clone wiki first." />
+    <Error Condition="!Exists('$(WikiRepositoryPath)')" Text="Expected wiki folder $(WikiRepositoryPath) not found. Clone wiki first." />
 
     <Copy SourceFiles="@(WikiFile)" DestinationFolder="$(WikiRepositoryPath)" />
   </Target>

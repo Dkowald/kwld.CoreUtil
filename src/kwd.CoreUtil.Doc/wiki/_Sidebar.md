@@ -2,3 +2,4 @@
   * [[FileSystem|FileSystem]]
   * [[Streams|Streams]]
   * [[Strings|Strings]]
+  * [[Dictionary|Dictionary]]
