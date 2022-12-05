@@ -8,24 +8,26 @@
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
     <Description>A set of extensions to provide a better development experience for .NET Core</Description>
-    <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
+	  <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
     <Tags>.NET Core;Utility</Tags>
-		<PackageReleaseNotes>
-			## Case ignorant file access.
-			## Alow nullability for various extensions.
-			## Adds support for System.IO.Abstractions
-            ## Add some IDictionary helpers.
-		</PackageReleaseNotes>
+	<PackageReleaseNotes>
+		## Case ignorant file access.
+		## Alow nullability for various extensions.
+		## Adds support for System.IO.Abstractions
+		## Add some IDictionary helpers.
+	</PackageReleaseNotes>
+	<PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="icon.png" Pack="true" PackagePath="\" />
     <None Include="icon.svg" Pack="false" />
+    <None Include="../../Readme.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <ItemGroup>
