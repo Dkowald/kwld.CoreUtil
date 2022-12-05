@@ -18,7 +18,7 @@ namespace kwd.CoreUtil.FileSystem
 
         /// <inheritdoc cref="Current()"/>
         public static IDirectoryInfo Current(this IFileSystem files)
-            => files.DirectoryInfo.FromDirectoryName(files.Directory.GetCurrentDirectory());
+            => files.DirectoryInfo.New(files.Directory.GetCurrentDirectory());
 
         /// <summary>
         /// Use environment to determine current user home folder
@@ -42,7 +42,7 @@ namespace kwd.CoreUtil.FileSystem
             var home = Environment.GetEnvironmentVariable("HOME") ??
                        Environment.GetEnvironmentVariable("USERPROFILE") ??
                        throw new Exception("Cannot determine user home folder");
-            return files.DirectoryInfo.FromDirectoryName(home);
+            return files.DirectoryInfo.New(home);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace kwd.CoreUtil.FileSystem
 
         /// <inheritdoc cref="Temp()"/>
         public static IDirectoryInfo Temp(this IFileSystem files)
-            => files.DirectoryInfo.FromDirectoryName(files.Path.GetTempPath());
+            => files.DirectoryInfo.New(files.Path.GetTempPath());
 
         /// <summary>
         /// Get directory for assembly containing type <typeparamref name="T"/>.
@@ -74,7 +74,8 @@ namespace kwd.CoreUtil.FileSystem
 
         /// <inheritdoc cref="AssemblyFolder(Type)"/>
         public static IDirectoryInfo AssemblyFolder(this IFileSystem files, Type type)
-            => files.DirectoryInfo.FromDirectoryName(files.Path.GetDirectoryName(type.Assembly.Location));
+            => files.DirectoryInfo.New(files.Path.GetDirectoryName(type.Assembly.Location) ??
+                                       throw new Exception("Assembly has no Directory"));
 
         /// <summary>
         /// Returns the standard folder when a .net sdk project file would exist for
@@ -100,7 +101,7 @@ namespace kwd.CoreUtil.FileSystem
                         files.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) ?? "",
                         "../../../"));
 
-            return files.DirectoryInfo.FromDirectoryName(callerPath);
+            return files.DirectoryInfo.New(callerPath);
         }
     }
 }

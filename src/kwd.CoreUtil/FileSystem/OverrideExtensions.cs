@@ -90,7 +90,7 @@ namespace kwd.CoreUtil.FileSystem
         /// <inheritdoc cref="Replace(FileInfo,FileInfo,FileInfo?,bool)"/>
         public static IFileInfo Replace(this IFileInfo source, IFileInfo destination, IFileInfo? destinationBackup, bool ignoreErrors = true)
         {
-            destination.Directory.Create();
+            destination.Directory?.Create();
 
             source.Replace(destination.FullName, destinationBackup?.FullName, ignoreErrors);
 
@@ -149,7 +149,7 @@ namespace kwd.CoreUtil.FileSystem
         /// <inheritdoc cref="MoveTo(FileInfo,DirectoryInfo,bool)"/>
         public static IFileInfo MoveTo(this IFileInfo file, IDirectoryInfo dir, bool overwrite = false)
         {
-            var result = file.FileSystem.FileInfo.FromFileName(
+            var result = file.FileSystem.FileInfo.New(
                 file.FileSystem.Path.Combine(dir.FullName, file.Name));
 
             if (result.Exists && overwrite) { result.Delete(); }
@@ -184,7 +184,7 @@ namespace kwd.CoreUtil.FileSystem
             if (!file.Exists())
                 throw new ArgumentException("Source files must exist", nameof(file));
 
-            var result = file.FileSystem.FileInfo.FromFileName(
+            var result = file.FileSystem.FileInfo.New(
                 file.FileSystem.Path.Combine(dir.FullName, file.Name));
 
             result.Directory?.Create();

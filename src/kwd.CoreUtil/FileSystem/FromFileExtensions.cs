@@ -53,7 +53,7 @@ namespace kwd.CoreUtil.FileSystem
             CancellationToken cancellationToken = default) =>
             File.AppendAllLinesAsync(fileInfo.FullName, contents, encoding, cancellationToken);
 
-        /// <inheritdoc cref="AppendAllLinesAsync(FileInfo,IEnumerable{string}, CancellationToken, Encoding)"/>
+        /// <inheritdoc cref="AppendAllLinesAsync(FileInfo,IEnumerable{string}, Encoding, CancellationToken)"/>
         public static Task AppendAllLinesAsync(this IFileInfo fileInfo, IEnumerable<string> contents, Encoding encoding,
             CancellationToken cancellationToken = default) 
             => fileInfo.FileSystem.File.AppendAllLinesAsync(fileInfo.FullName, contents, encoding, cancellationToken);

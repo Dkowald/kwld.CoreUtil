@@ -17,7 +17,7 @@ namespace kwd.CoreUtil.FileSystem
 
         /// <inheritdoc cref="ChangeExtension(FileInfo,string)"/>
         public static IFileInfo ChangeExtension(this IFileInfo item, string extension) =>
-            item.FileSystem.FileInfo.FromFileName(
+            item.FileSystem.FileInfo.New(
                 item.FileSystem.Path.ChangeExtension(item.FullName, extension));
         
         /// <summary>

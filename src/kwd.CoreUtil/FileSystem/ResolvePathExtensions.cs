@@ -124,7 +124,7 @@ namespace kwd.CoreUtil.FileSystem
             if (!cur.EndsWith(root.FileSystem.Path.DirectorySeparatorChar))
             { cur += root.FileSystem.Path.DirectorySeparatorChar; }
 
-            return root.FileSystem.DirectoryInfo.FromDirectoryName(cur);
+            return root.FileSystem.DirectoryInfo.New(cur);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace kwd.CoreUtil.FileSystem
 
             path ??= root.FileSystem.Path.Combine(dir.FullName, fileName);
 
-            return root.FileSystem.FileInfo.FromFileName(path);
+            return root.FileSystem.FileInfo.New(path);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace kwd.CoreUtil.FileSystem
                 throw new ArgumentException("Sub path cannot be empty", nameof(subPath));
             
             var path = dir.FileSystem.Path.Combine(dir.FullName, Path.Combine(subPath));
-            return dir.FileSystem.FileInfo.FromFileName(path);
+            return dir.FileSystem.FileInfo.New(path);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace kwd.CoreUtil.FileSystem
 
             var path = dir.FileSystem.Path.Combine(dir.FullName, dir.FileSystem.Path.Combine(subPath));
 
-            return dir.FileSystem.DirectoryInfo.FromDirectoryName(path);
+            return dir.FileSystem.DirectoryInfo.New(path);
         }
 
         /// <summary>
