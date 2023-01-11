@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.2.3-beta</Version>
+    <Version>1.2.3</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
