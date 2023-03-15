@@ -72,8 +72,8 @@ namespace kwd.CoreUtil.FileSystem
         }
 
         /// <summary>
-        /// Move <paramref name="source"/> to <paramref name="destination"/> with
-        /// optional <paramref name="destinationBackup"/> backup file and optional
+        /// Replace <paramref name="destination"/> with the content of <paramref name="source"/>.
+        /// Create an optional backup of <paramref name="destination"/> at <paramref name="destinationBackup"/>.
         /// <paramref name="ignoreErrors"/>.
         /// </summary>
         /// <returns><paramref name="destination"/></returns>
@@ -99,7 +99,7 @@ namespace kwd.CoreUtil.FileSystem
         }
 
         /// <summary>
-        /// Move <paramref name="source"/> to <paramref name="destination"/> with
+        /// Replace content of <paramref name="destination"/> with content of <paramref name="source"/> with
         /// optional <paramref name="ignoreErrors"/>.
         /// </summary>
         /// <returns><paramref name="destination"/></returns>
