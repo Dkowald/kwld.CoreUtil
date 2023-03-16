@@ -104,5 +104,16 @@ namespace kwd.CoreUtil.FileSystem
         /// <inheritdoc cref="GetRelativePath(DirectoryInfo,DirectoryInfo)"/>
         public static string GetRelativePath(this IDirectoryInfo item, IDirectoryInfo relativeTo) =>
             item.FileSystem.Path.GetRelativePath(relativeTo.FullName, item.FullName);
+
+        /// <summary>
+        /// Return absolute path for a root-relative path;
+        /// using the specified root directory.
+        /// </summary>
+        /// <remarks>
+        /// The inbuilt <see cref="FileSystemInfo.FullName"/> will
+        /// resolve using <see cref="Directories.Current()"/>
+        /// </remarks>
+        public static FileInfo GetFullPath(this FileInfo file, DirectoryInfo root) =>
+            new FileInfo(Path.GetFullPath(file.ToString(), root.ToString()));
     }
 }

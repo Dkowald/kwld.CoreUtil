@@ -1,10 +1,11 @@
+using System;
 using System.IO;
 using System.IO.Abstractions;
 
 namespace kwd.CoreUtil.FileSystem
 {
     /// <summary>
-    /// Set of extensions for <see cref="FileInfo"/>
+    /// Set of chainable extensions for some common operations.
     /// </summary>
     public static class ChainExtensions
     {
