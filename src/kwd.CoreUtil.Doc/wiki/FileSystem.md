@@ -90,6 +90,7 @@ Assert.IsTrue(f.Exists);
 |EnsureDelete| Delete file / directory; return refreshed object       |
 |EnsureExists| Create file / directory; return refreshed object       |
 |EnsureEmpty | Ensures file or directory exists as is currently empty |
+|EnsureDirectory| Ensures the directory for a file exists |
 
 ## TreeExtensions
 Some extensions that operate on items in a Directory

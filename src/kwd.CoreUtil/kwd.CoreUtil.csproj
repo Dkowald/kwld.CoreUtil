@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <Version>1.2.3</Version>
+    <Version>1.2.4</Version>
     <Authors>Derek Kowald</Authors>
     <Product>KWD Core Utilities</Product>
     <Title>KWD Core Utilities</Title>
@@ -16,10 +16,8 @@
     <PackageIcon>icon.png</PackageIcon>
     <Tags>.NET Core;Utility</Tags>
 	<PackageReleaseNotes>
-		## Case ignorant file access.
-		## Alow nullability for various extensions.
-		## Adds support for System.IO.Abstractions
-		## Add some IDictionary helpers.
+        ## Add Path expansion helpers.
+		## Add EnsureDirectory chainable helper.
 	</PackageReleaseNotes>
 	<PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
