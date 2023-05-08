@@ -1,0 +1,9 @@
+﻿<Project>
+	<PropertyGroup>
+		<kwd-CoreUtil>true</kwd-CoreUtil>
+
+		<!--Default run target in design-time build-->
+		<!--see https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md-->
+		<TriggerDownloadFileTarget>CollectPackageDownloads</TriggerDownloadFileTarget>
+	</PropertyGroup>
+</Project>

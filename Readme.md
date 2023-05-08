@@ -1,11 +1,41 @@
 ## Overview
 Core library holding various extensions to improve code development and readability.
 
-1. Easier to use Extensions for FileInfo and DirectoryInfo.
-2. Also supports extensions for [System.IO.Abstractions](https://github.com/TestableIO/System.IO.Abstractions)
-3. Touch and Tree helpers for file system.
-4. Stream extensions, such as Tee
-5. String split and join helpers.
-6. Dictionary helpers.
+### Helpers for file system.
+
+Mapping from static file system methods, such as _Path.ChangeExtension()_
+to corresponding FileInfo (and DirectoryInfo) extensions, 
+such as _FileInfo.ChangeExtension()_
+
+Includes set of extensions for [System.IO.Abstractions](https://github.com/TestableIO/System.IO.Abstractions)
+such as _IFileInfo.ChangeExtension()_
+
+A number of other file-system goodies like Touch(); EnsureExists()
+
+### Stream helpers
+
+Simpler Read/Write lines to text stream.
+
+A stream Tee.
+
+### String helpers
+String split and join helpers.
+
+Split on whitespace (find words)
+
+Compare case-ignorant, and white-space ignorant (Same).
+
+### Dictionary helpers.
+Add or merge 2 dictonaries.
+
+Ensure an item exists (DefaultTo)
+
+### Build tooling.
+
+A number of msbuild helpers, including:
+
+Download file as part of the build.
+
+
 
 See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details

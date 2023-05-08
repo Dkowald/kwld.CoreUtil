@@ -1,45 +1,47 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>enable</Nullable>
-    <Version>1.2.4</Version>
-    <Authors>Derek Kowald</Authors>
-    <Product>KWD Core Utilities</Product>
-    <Title>KWD Core Utilities</Title>
-    <Description>A set of extensions to provide a better development experience for .NET Core</Description>
-	  <PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>icon.png</PackageIcon>
-    <Tags>.NET Core;Utility</Tags>
-	<PackageReleaseNotes>
-        ## Add Path expansion helpers.
-		## Add EnsureDirectory chainable helper.
-	</PackageReleaseNotes>
-	<PackageReadmeFile>Readme.md</PackageReadmeFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<Nullable>enable</Nullable>
+		<Version>1.2.4-beta</Version>
+		<Authors>Derek Kowald</Authors>
+		<Product>KWD Core Utilities</Product>
+		<Title>KWD Core Utilities</Title>
+		<Description>A set of extensions to provide a better development experience for .NET Core</Description>
+		<PackageProjectUrl>https://github.com/Dkowald/kwd.CoreUtil</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/Dkowald/kwd.CoreUtil.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>icon.png</PackageIcon>
+		<Tags>.NET Core;Utility</Tags>
+		<PackageReleaseNotes>
+			## Add Path expansion helpers.
+			## Add EnsureDirectory chainable helper.
+			## Add DownloadFile build item.
+		</PackageReleaseNotes>
+		<PackageReadmeFile>Readme.md</PackageReadmeFile>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="icon.png" Pack="true" PackagePath="\" />
-    <None Include="icon.svg" Pack="false" />
-    <None Include="../../Readme.md" Pack="true" PackagePath="" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="\" />
+		<None Include="icon.svg" Pack="false" />
+		<None Include="../../Readme.md" Pack="true" PackagePath="" />
+		<Content Include="build\**" target="build" Pack="true" PackagePath="%(Identity)" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.IO.Abstractions" Version="19.2.22" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.IO.Abstractions" Version="19.2.22" />
+	</ItemGroup>
 
-  <!--Pack and push to nuget.-->
-  <Target Name="PushPack">
-    <PropertyGroup>
-      <PackageFile>$(PackageOutputPath)$(PackageId).$(Version).nupkg</PackageFile>
-    </PropertyGroup>
+	<!--Pack and push to nuget.-->
+	<Target Name="PushPack">
+		<PropertyGroup>
+			<PackageFile>$(PackageOutputPath)$(PackageId).$(Version).nupkg</PackageFile>
+		</PropertyGroup>
 
-    <Message Importance="high" Text="Pushing $(PackageFile) to default source" />
-    <Exec Command="dotnet nuget push $(PackageFile)" />
-  </Target>
+		<Message Importance="high" Text="Pushing $(PackageFile) to default source" />
+		<Exec Command="dotnet nuget push $(PackageFile)" />
+	</Target>
 
 </Project>

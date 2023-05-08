@@ -1,0 +1,19 @@
+﻿<Project>
+	
+	<ItemDefinitionGroup>
+		<!--Download assets via url.-->
+		<DownloadFile>
+			<OutFolder>$(MSBuildProjectDirectory)</OutFolder>
+			<OutFileName>%(Filename)%(Extension)</OutFileName>
+		</DownloadFile>
+	</ItemDefinitionGroup>
+	
+	<!-- Download missing files (if any) -->
+	<Target Name="DownloadMissingFiles"
+			Inputs="@(DownloadFile)" Outputs="%(OutFolder)/%(OutFileName)" BeforeTargets="$(TriggerDownloadFileTarget)">
+		<DownloadFile Condition="!Exists('%(OutFolder)/%(OutFileName)')" SourceUrl="%(DownloadFile.Identity)" DestinationFolder="%(OutFolder)" DestinationFileName="%(OutFileName)">
+			<Output TaskParameter="DownloadedFile" ItemName="Content" />
+		</DownloadFile>
+	</Target>
+
+</Project>
