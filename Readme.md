@@ -1,6 +1,11 @@
 ## Overview
 Core library holding various extensions to improve code development and readability.
 
+### Framework support 
+To leverage new language features, this now targets multiple frameworks.
+
+Some features are only available for newer frameworks.
+
 ### Helpers for file system.
 
 Mapping from static file system methods, such as _Path.ChangeExtension()_
@@ -35,7 +40,6 @@ Ensure an item exists (DefaultTo)
 A number of msbuild helpers, including:
 
 Download file as part of the build.
-
 
 
 See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details

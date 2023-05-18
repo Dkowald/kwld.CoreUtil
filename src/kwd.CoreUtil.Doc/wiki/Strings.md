@@ -10,6 +10,25 @@ Where applicable, Span\<char\> overrides are provided to avoid string allocation
 | String Build | (re)Combine strings  |
 | String Stream| Strings as streams |
 
+## (NET6 or greater) DataString 
+Implement pattern to wrap a string as DataString
+
+Use a DataString pattern to create small classes that encapsulate parsing and generating strings.
+
+A DatString class should be a relativly straight forward drop-in replacement for a string.
+
+The pattern also supports STJ Json serialization.
+
+To create a DataString implement IDataString (or IDataString<T> for .net 7+)
+The interface includes a list of expectations for the DataString:
+1. Should be a record type (immutable)
+2. MUST provide a TryParse static member
+3. MUST overload ToString() to return a value that could be used by TryParse
+4. Should provide a constructor that takes ony a string.
+5. Should provide an implicit cast to string.
+
+To serialize a DataString (with STJ) include the DataStringConverterFactory
+
 ## Match
 Extensions to help compare strings.
 
