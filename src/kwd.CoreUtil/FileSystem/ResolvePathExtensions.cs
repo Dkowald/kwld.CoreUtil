@@ -45,7 +45,7 @@ namespace kwd.CoreUtil.FileSystem
             }
 
             var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
-            
+
             return !Directory.Exists(altPath);
         }
 
@@ -54,7 +54,7 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static string[] PathSplit(string path)
             => path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-        
+
         /// <summary>
         /// Path to a directory, sub path matches file system case.
         /// using first sub-path match for case sensitive file systems.
@@ -136,18 +136,18 @@ namespace kwd.CoreUtil.FileSystem
         {
             var subPaths = subPathAndFilename.SelectMany(PathSplit).ToArray();
 
-            if(subPaths.Length == 0)
+            if (subPaths.Length == 0)
                 throw new ArgumentOutOfRangeException(nameof(subPathAndFilename), "Must have at-least file name");
 
             var dir = root.FindFolder(subPaths.SkipLast(1).ToArray());
             var fileName = subPaths.Last();
-            
+
             var path = Directory.Exists(dir.FullName)
                 ? Directory.EnumerateFiles(dir.FullName)
                     .FirstOrDefault(x => Path.GetFileName(x)
                         .Equals(fileName, StringComparison.OrdinalIgnoreCase))
                 : null;
-            
+
             path ??= Path.Combine(dir.FullName, fileName);
 
             return new FileInfo(path);
@@ -185,9 +185,11 @@ namespace kwd.CoreUtil.FileSystem
         public static IFileInfo Expand(this IFileInfo item, IDirectoryInfo root,
             bool replaceEnvironment = true)
         {
+            var name = item.ToString() ?? string.Empty;
+
             var itemPath = replaceEnvironment ?
-                Environment.ExpandEnvironmentVariables(item.ToString()) :
-                item.ToString();
+                Environment.ExpandEnvironmentVariables(name) :
+                name;
 
             var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
             return item.FileSystem.FileInfo.New(expandedPath);
@@ -222,12 +224,13 @@ namespace kwd.CoreUtil.FileSystem
         public static IDirectoryInfo Expand(this IDirectoryInfo item, IDirectoryInfo root,
             bool replaceEnvironment = true)
         {
-                var itemPath = replaceEnvironment ?
-                    Environment.ExpandEnvironmentVariables(item.ToString()) :
-                    item.ToString();
+            var name = item.ToString() ?? string.Empty;
 
-                var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
-                return item.FileSystem.DirectoryInfo.New(expandedPath);
+            var itemPath = replaceEnvironment ?
+                Environment.ExpandEnvironmentVariables(name) : name;
+
+            var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
+            return item.FileSystem.DirectoryInfo.New(expandedPath);
         }
 
         /// <inheritdoc cref="Expand(IFileInfo,bool)"/>
