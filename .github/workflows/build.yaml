@@ -50,3 +50,9 @@ jobs:
         name: package
         path: bin/*.nupkg
         if-no-files-found: error
+
+    - name: Register github nuget packages
+      run: dotnet nuget add source --username dkowald --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/dkowald/index.json"
+
+    - name: Publish
+      run: dotnet nuget push "./bin/*.nupkg" --source "github"
