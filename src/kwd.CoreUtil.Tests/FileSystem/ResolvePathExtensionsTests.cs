@@ -19,10 +19,10 @@ namespace kwd.CoreUtil.Tests.FileSystem
             //Volume name on windows, '/' on linux.
             var sysRoot = files.Current().Root.FullName;
 
-            Environment.SetEnvironmentVariable("Test", "MyPlace");
+            Environment.SetEnvironmentVariable("TEST", "MyPlace");
             var target = files.FileInfo.New("./%TEST%/config.data");
             
-            files.DirectoryInfo.New(sysRoot +"/etc").SetCurrentDirectory();
+            files.DirectoryInfo.New(sysRoot +"etc").SetCurrentDirectory();
 
             var rootWithCurrent = target.Expand();
 

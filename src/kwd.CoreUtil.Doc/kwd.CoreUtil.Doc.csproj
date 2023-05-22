@@ -14,15 +14,4 @@
     <WikiFile Include="wiki/*.md" />
   </ItemGroup>
   
-  <Target Name="WikiLocalPublish" AfterTargets="Build" Inputs="@(WikiFile)" Outputs="$(WikiRepositoryPath)%(Filename)%(Extension)">
-    
-    <Error Condition="!Exists('$(WikiRepositoryPath)')" Text="Expected wiki folder $(WikiRepositoryPath) not found. Clone wiki first." />
-
-    <Copy SourceFiles="@(WikiFile)" DestinationFolder="$(WikiRepositoryPath)" />
-  </Target>
-
-  <Target Name="WikiLocalPublish_Clean" AfterTargets="Clean">
-    <Message Importance="High" Text="@(WikiFile -> '$(WikiRepositoryPath)%(Filename)%(Extension)')" />
-    <Delete Files="@(WikiFile -> '$(WikiRepositoryPath)%(Filename)%(Extension)')" />
-  </Target>
 </Project>

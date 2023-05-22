@@ -24,7 +24,7 @@ namespace kwd.CoreUtil.Streams
         }
 
         /// <summary>
-        /// Read lines from a stream using <see cref="TextReader.ReadLineAsync"/>.
+        /// Read lines from a stream using <see cref="TextReader.ReadLineAsync()"/>.
         /// </summary>
         public static async IAsyncEnumerable<string> 
             ReadLinesAsync(this TextReader rd, 
