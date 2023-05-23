@@ -55,4 +55,4 @@ jobs:
 
     - name: Publish
       run: dotnet nuget push "./bin/*.nupkg" --source "github"
-      if: success() && github.ref == 'refs/head/development'
+      if: success() && github.ref == 'refs/head/Development'
