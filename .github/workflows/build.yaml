@@ -2,8 +2,7 @@ name: build
 
 on:
   push:
-    branches: [ "Development", "wip/publish" ]
-
+    branches-ignore: ["master"]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -56,3 +55,4 @@ jobs:
 
     - name: Publish
       run: dotnet nuget push "./bin/*.nupkg" --source "github"
+      if: success() && github.ref == 'refs/head/development'
