@@ -10,8 +10,8 @@ namespace kwd.CoreUtil.Tests.String
         [TestMethod]
         public void Same_WithNulls()
         {
-            string lhs = null;
-            string rhs = null;
+            string? lhs = null;
+            string? rhs = null;
 
             Assert.IsTrue(lhs.Same(rhs));
             Assert.IsFalse(lhs.Same("Fred"));

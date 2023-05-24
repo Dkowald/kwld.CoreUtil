@@ -1,0 +1,58 @@
+name: build
+
+on:
+  push:
+    branches-ignore: ["master"]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: "Build and test"
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: |
+          6.0.x
+          7.0.x
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+    
+    - name: Restore dependencies
+      run: dotnet restore src/
+
+    - name: Build
+      run: dotnet build --no-restore -c Release src/
+
+    - name: Test
+      run: dotnet test --no-build -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
+    
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: TestResults
+      if: ${{ always() }}
+
+    - name: Pack
+      run: dotnet pack --no-build -c Release -o ./bin src/kwd.CoreUtil
+
+    - name: Keep package artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: bin/*.nupkg
+        if-no-files-found: error
+
+    - name: Register github nuget packages
+      run: dotnet nuget add source --username dkowald --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/dkowald/index.json"
+
+    - name: Publish
+      run: dotnet nuget push "./bin/*.nupkg" --source "github"
+      if: success() && github.ref == 'refs/heads/Development'

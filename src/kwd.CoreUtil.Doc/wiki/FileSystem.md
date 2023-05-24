@@ -90,6 +90,7 @@ Assert.IsTrue(f.Exists);
 |EnsureDelete| Delete file / directory; return refreshed object       |
 |EnsureExists| Create file / directory; return refreshed object       |
 |EnsureEmpty | Ensures file or directory exists as is currently empty |
+|EnsureDirectory| Ensures the directory for a file exists |
 
 ## TreeExtensions
 Some extensions that operate on items in a Directory
@@ -103,16 +104,24 @@ Some extensions that operate on items in a Directory
 | MergeForce | Merge that copies all files from source to target directory. |
 
 ## Resolve Path
-Case awareness for file system. 
+Things to help with path strings inside file system elements.
 
-A set of **DirectoryInfo** extensions, to help resolve path to a File System object.
+Includes an appraoch to determine if the file system is cases sensitive
 
-| Extension | Description |
-| --------- | ----------- |
+| Extension      | Description |
+| -------------- | ----------- |
 | IsCaseSensitive| Test for case-sensitivity for the given test folder.|
-| PathSplit | Split a file system path string into its segments |
-| FindFolder | Navigate a sub path; replacing each path segment with same-case as found on file system (if found). |
-| FindFile | FindFolder, and include last item as a file name |
+| PathSplit      | Split a file system path string into its segments |
+| FindFolder     | Navigate a sub path; replacing each path segment with same-case as found on file system (if found). |
+| FindFile       | FindFolder, and include last item as a file name |
+| Expand         | Expand the path, resolving relative path segments, and replacing environment variables. |
+
+### case sensitive checking
+The case sensitive check is not fancy. 
+You provide a directory path that exists and has a letter in it.
+It then creates either an all upper case or all lower case path based on 
+if the test path has an upper case character.
+If that path exists.. then its (like 99%) a case-ignorant file system.
 
 ## Directories
 Helpers for oft used paths.

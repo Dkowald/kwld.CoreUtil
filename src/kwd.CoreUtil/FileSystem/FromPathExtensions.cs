@@ -24,22 +24,22 @@ namespace kwd.CoreUtil.FileSystem
         /// See <see cref="Path.GetExtension(string)"/>
         /// Returns the extension of the specified path string.
         /// </summary>
-        public static string? GetExtension(this FileInfo item) =>
+        public static string GetExtension(this FileInfo item) =>
             Path.GetExtension(item.FullName);
 
         /// <inheritdoc cref="GetExtension(FileInfo)"/>
-        public static string? GetExtension(this IFileInfo item) =>
+        public static string GetExtension(this IFileInfo item) =>
             item.FileSystem.Path.GetExtension(item.FullName);
 
         /// <summary>
         /// See <see cref="Path.GetFileNameWithoutExtension(string)"/>
         /// Returns the file name of the specified path string without the extension.
         /// </summary>
-        public static string? GetFileNameWithoutExtension(this FileInfo item) =>
+        public static string GetFileNameWithoutExtension(this FileInfo item) =>
             Path.GetFileNameWithoutExtension(item.FullName);
 
         /// <inheritdoc cref="GetFileNameWithoutExtension(FileInfo)"/>
-        public static string? GetFileNameWithoutExtension(this IFileInfo item) =>
+        public static string GetFileNameWithoutExtension(this IFileInfo item) =>
             item.FileSystem.Path.GetFileNameWithoutExtension(item.FullName);
         
         /// <summary>
@@ -104,5 +104,16 @@ namespace kwd.CoreUtil.FileSystem
         /// <inheritdoc cref="GetRelativePath(DirectoryInfo,DirectoryInfo)"/>
         public static string GetRelativePath(this IDirectoryInfo item, IDirectoryInfo relativeTo) =>
             item.FileSystem.Path.GetRelativePath(relativeTo.FullName, item.FullName);
+
+        /// <summary>
+        /// Return absolute path for a root-relative path;
+        /// using the specified root directory.
+        /// </summary>
+        /// <remarks>
+        /// The inbuilt <see cref="FileSystemInfo.FullName"/> will
+        /// resolve using <see cref="Directories.Current()"/>
+        /// </remarks>
+        public static FileInfo GetFullPath(this FileInfo file, DirectoryInfo root) =>
+            new FileInfo(Path.GetFullPath(file.ToString(), root.ToString()));
     }
 }

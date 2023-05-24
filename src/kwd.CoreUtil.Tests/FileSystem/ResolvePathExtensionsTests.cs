@@ -1,5 +1,6 @@
+using System;
 using System.IO;
-
+using System.IO.Abstractions.TestingHelpers;
 using kwd.CoreUtil.FileSystem;
 using kwd.CoreUtil.Tests.TestHelpers;
 
@@ -10,6 +11,35 @@ namespace kwd.CoreUtil.Tests.FileSystem
     [TestClass]
     public class ResolvePathExtensionsTests
     {
+        [TestMethod]
+        public void Expand_()
+        {
+            var files = new MockFileSystem();
+
+            //Volume name on windows, '/' on linux.
+            var sysRoot = files.Current().Root.FullName;
+
+            Environment.SetEnvironmentVariable("TEST", "MyPlace");
+            var target = files.FileInfo.New("./%TEST%/config.data");
+            
+            files.DirectoryInfo.New(sysRoot +"etc").SetCurrentDirectory();
+
+            var rootWithCurrent = target.Expand();
+
+            var expected = sysRoot + "etc/MyPlace/config.data".Replace('/', Path.DirectorySeparatorChar);
+            Assert.AreEqual(expected, rootWithCurrent.FullName, "Expand and use current dir");
+
+            var otherRoot = files.DirectoryInfo.New(sysRoot + "myapp/user-data/");
+
+            expected = sysRoot + "myapp/user-data/MyPlace/config.data".Replace('/', Path.DirectorySeparatorChar);
+            Assert.AreEqual(expected, target.Expand(otherRoot).ToString(), "Expand with custom root");
+
+            var dirTarget = files.DirectoryInfo.New("../settings/general/");
+
+            expected = sysRoot + "myapp/settings/general/".Replace('/', Path.DirectorySeparatorChar);
+            Assert.AreEqual(expected, dirTarget.Expand(otherRoot).ToString());
+        }
+
         [TestMethod]
         public void IsCaseSensitive_()
         {

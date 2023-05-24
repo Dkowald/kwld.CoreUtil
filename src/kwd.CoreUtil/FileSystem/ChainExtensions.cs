@@ -4,12 +4,14 @@ using System.IO.Abstractions;
 namespace kwd.CoreUtil.FileSystem
 {
     /// <summary>
-    /// Set of extensions for <see cref="FileInfo"/>
+    /// Set of chainable extensions for some common operations.
     /// </summary>
     public static class ChainExtensions
     {
         /// <summary>
         /// Create file if it doesn't exist.
+        /// Similar to <see cref="HelperExtensions.Touch(FileInfo, System.Func{System.DateTime}?)"/>,
+        /// but without setting last modified date.
         /// </summary>
         public static FileInfo EnsureExists(this FileInfo file)
         {
@@ -39,6 +41,16 @@ namespace kwd.CoreUtil.FileSystem
 
             return file;
         }
+
+        /// <summary>
+        /// Ensures the <paramref name="file"/> directory exists.
+        /// </summary>
+        public static IFileInfo EnsureDirectory(this IFileInfo file)
+        { file.Directory?.EnsureExists(); return file; }
+
+        /// <inheritdoc cref="EnsureDirectory(IFileInfo)"/>
+        public static FileInfo EnsureDirectory(this FileInfo file)
+        { file.Directory?.EnsureExists(); return file; }
 
         /// <summary>
         /// Create Directory if not exist.

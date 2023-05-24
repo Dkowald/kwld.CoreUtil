@@ -28,3 +28,10 @@ Find / Split / Merge helpers to work with strings more naturally.
 Helper to convert a string to a stream.
 
 See [[Strings|Strings]] for details.
+
+## Build
+Helpers for msbuild.
+
+Download file as part of build.
+
+See [[Build|Build]] for details.

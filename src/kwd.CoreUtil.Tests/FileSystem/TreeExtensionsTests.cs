@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 
 using kwd.CoreUtil.FileSystem;
@@ -106,7 +107,7 @@ namespace kwd.CoreUtil.Tests.FileSystem
             Assert.AreEqual(1, matchedFiles.Count, "Found the single match");
             
             var same = matchedFiles.Single();
-            Assert.AreEqual("same\\test.txt", same.GetRelativePath(dir2));
+            Assert.AreEqual(Path.Combine("same", "test.txt"), same.GetRelativePath(dir2));
         }
 
         [TestMethod]

@@ -45,7 +45,7 @@ namespace kwd.CoreUtil.FileSystem
             }
 
             var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
-            
+
             return !Directory.Exists(altPath);
         }
 
@@ -54,7 +54,7 @@ namespace kwd.CoreUtil.FileSystem
         /// </summary>
         public static string[] PathSplit(string path)
             => path.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-        
+
         /// <summary>
         /// Path to a directory, sub path matches file system case.
         /// using first sub-path match for case sensitive file systems.
@@ -136,18 +136,18 @@ namespace kwd.CoreUtil.FileSystem
         {
             var subPaths = subPathAndFilename.SelectMany(PathSplit).ToArray();
 
-            if(subPaths.Length == 0)
+            if (subPaths.Length == 0)
                 throw new ArgumentOutOfRangeException(nameof(subPathAndFilename), "Must have at-least file name");
 
             var dir = root.FindFolder(subPaths.SkipLast(1).ToArray());
             var fileName = subPaths.Last();
-            
+
             var path = Directory.Exists(dir.FullName)
                 ? Directory.EnumerateFiles(dir.FullName)
                     .FirstOrDefault(x => Path.GetFileName(x)
                         .Equals(fileName, StringComparison.OrdinalIgnoreCase))
                 : null;
-            
+
             path ??= Path.Combine(dir.FullName, fileName);
 
             return new FileInfo(path);
@@ -174,5 +174,83 @@ namespace kwd.CoreUtil.FileSystem
 
             return root.FileSystem.FileInfo.New(path);
         }
+
+        /// <summary>
+        /// Expand a given path; resolving environment variables;
+        /// and relative path.
+        /// </summary>
+        /// <param name="item">The target file system item</param>
+        /// <param name="root">The root folder to expand relative paths with</param>
+        /// <param name="replaceEnvironment">True to expand all %ENVIRONMENT_VARIABLE%s</param>
+        public static IFileInfo Expand(this IFileInfo item, IDirectoryInfo root,
+            bool replaceEnvironment = true)
+        {
+            var name = item.ToString() ?? string.Empty;
+
+            var itemPath = replaceEnvironment ?
+                Environment.ExpandEnvironmentVariables(name) :
+                name;
+
+            var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
+            return item.FileSystem.FileInfo.New(expandedPath);
+        }
+
+        /// <summary>
+        /// Expand a given path; resolving environment variables;
+        /// and relative path. Uses current directory as root path
+        /// </summary>
+        /// <param name="item">The target file system item</param>
+        /// <param name="replaceEnvironment">True to expand all %ENVIRONMENT_VARIABLE%s</param>
+        public static IFileInfo Expand(this IFileInfo item, bool replaceEnvironment = true)
+            => Expand(item, item.FileSystem.Current(), replaceEnvironment);
+
+        /// <inheritdoc cref="Expand(IFileInfo,IDirectoryInfo,bool)"/>
+        public static FileInfo Expand(this FileInfo item, DirectoryInfo root,
+            bool replaceEnvironment = true)
+        {
+            var itemPath = replaceEnvironment ?
+                Environment.ExpandEnvironmentVariables(item.ToString()) :
+                item.ToString();
+
+            var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
+            return new FileInfo(expandedPath);
+        }
+
+        /// <inheritdoc cref="Expand(IFileInfo,bool)"/>
+        public static FileInfo Expand(this FileInfo item, bool replaceEnvironment = true)
+            => Expand(item, new DirectoryInfo(Directory.GetCurrentDirectory()), replaceEnvironment);
+
+        /// <inheritdoc cref="Expand(IFileInfo,IDirectoryInfo,bool)"/>
+        public static IDirectoryInfo Expand(this IDirectoryInfo item, IDirectoryInfo root,
+            bool replaceEnvironment = true)
+        {
+            var name = item.ToString() ?? string.Empty;
+
+            var itemPath = replaceEnvironment ?
+                Environment.ExpandEnvironmentVariables(name) : name;
+
+            var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
+            return item.FileSystem.DirectoryInfo.New(expandedPath);
+        }
+
+        /// <inheritdoc cref="Expand(IFileInfo,bool)"/>
+        public static IDirectoryInfo Expand(this IDirectoryInfo item, bool replaceEnvironment = true)
+            => Expand(item, item.FileSystem.Current(), replaceEnvironment);
+
+        /// <inheritdoc cref="Expand(IFileInfo,IDirectoryInfo,bool)"/>
+        public static DirectoryInfo Expand(this DirectoryInfo item, DirectoryInfo root,
+            bool replaceEnvironment = true)
+        {
+            var itemPath = replaceEnvironment ?
+                Environment.ExpandEnvironmentVariables(item.ToString()) :
+                item.ToString();
+
+            var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
+            return new DirectoryInfo(expandedPath);
+        }
+
+        /// <inheritdoc cref="Expand(IFileInfo,bool)"/>
+        public static DirectoryInfo Expand(this DirectoryInfo item, bool replaceEnvironment = true)
+            => Expand(item, new DirectoryInfo(Directory.GetCurrentDirectory()), replaceEnvironment);
     }
 }
