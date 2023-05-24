@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
-		<Version>1.2.4</Version>
+		<Version>1.2.5-prep</Version>
 		<Authors>Derek Kowald</Authors>
 		<Product>KWD Core Utilities</Product>
 		<Title>KWD Core Utilities</Title>
@@ -15,12 +15,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
 		<Tags>.NET Core;Utility</Tags>
-		<PackageReleaseNotes>
-			## Add Path expansion helpers.
-			## Add EnsureDirectory chainable helper.
-			## Add DownloadFile build item.
-			## Adding target framework(s).
-			## Add DataString 
+		<PackageReleaseNotes> 
 		</PackageReleaseNotes>
 		<PackageReadmeFile>Readme.md</PackageReadmeFile>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
