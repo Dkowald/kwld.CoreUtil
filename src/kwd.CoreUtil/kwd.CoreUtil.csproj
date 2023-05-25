@@ -15,7 +15,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
 		<Tags>.NET Core;Utility</Tags>
-		<PackageReleaseNotes> 
+		<PackageReleaseNotes>
+		# Adding a RecordArray implementation
 		</PackageReleaseNotes>
 		<PackageReadmeFile>Readme.md</PackageReadmeFile>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>

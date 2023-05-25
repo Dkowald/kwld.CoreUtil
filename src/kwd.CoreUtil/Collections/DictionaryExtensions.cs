@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace kwd.CoreUtil.Dictionary
+namespace kwd.CoreUtil.Collections
 {
     /// <summary>
     /// A set of helpers for some dictionary sugar
@@ -27,12 +27,12 @@ namespace kwd.CoreUtil.Dictionary
         public static IDictionary<TKey, TValue> AddRange<TKey, TValue>(this IDictionary<TKey, TValue> lhs,
             IDictionary<TKey, TValue> rhs)
             => lhs.AddRange((IEnumerable<KeyValuePair<TKey, TValue>>)rhs);
-        
+
         /// <inheritdoc cref="AddRange{TKey,TValue}(IDictionary{TKey,TValue},IEnumerable{KeyValuePair{TKey,TValue}})"/>
         public static IDictionary<TKey, TValue> AddRange<TKey, TValue>(this IDictionary<TKey, TValue> lhs,
             params (TKey Key, TValue Value)[] rhs)
             => lhs.AddRange(rhs.Select(x => KeyValuePair.Create(x.Key, x.Value)));
-        
+
         /// <summary>
         /// Merge items from <paramref name="rhs"/> into <paramref name="lhs"/>;
         /// Any existing items are updated.
@@ -66,9 +66,9 @@ namespace kwd.CoreUtil.Dictionary
             where TKey : notnull => new Dictionary<TKey, TValue>(data);
 
         /// <inheritdoc cref="ToDictionary{TKey,TValue}(IEnumerable{KeyValuePair{TKey,TValue}})"/>
-        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value) > data)
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> data)
             where TKey : notnull => new Dictionary<TKey, TValue>(data.Select(x => KeyValuePair.Create(x.Key, x.Value)));
-        
+
         /// <summary>
         /// If <paramref name="key"/> is null, assign <paramref name="value"/>
         /// </summary>
