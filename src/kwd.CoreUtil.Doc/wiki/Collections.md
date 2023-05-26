@@ -22,8 +22,25 @@ collection of objects.
 When using this, you will still need to provide a 
 copy constructor in the owning record type.
 
-Includes a STJ converter to serialize a RecordArray as a 
-JSON array.
+Simple example:
+``` cs
+public record AThing(string Name);
 
-To use the serializer, add a __RecordArrayConverterFactory__
-as a converter.
+public record SomeThings(RecordArray<AThing> Items)
+{
+   protected SomeThings(SomeThings copy)
+   {
+     Items = copy.Items.Copy(x => x with {});
+   }
+}
+
+var a = new SomeThings(RecordArray.Create(new AThing("1")));
+var b = new SomeThings(RecordArray.Create(new AThing("1")));
+
+Asser.AreEqual(a, b, "The RecordArray provides value-equality")
+```
+
+Use the __RecordArrayConverterFactory__
+ [STJ](https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/overview)
+converter to serialize a RecordArray as a JSON array.
+
