@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-
-using kwd.CoreUtil.Dictionary;
-
+using kwd.CoreUtil.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace kwd.CoreUtil.Tests.Dictionary
+namespace kwd.CoreUtil.Tests.Collections
 {
     [TestClass]
     public class DictionaryExtensionsTests
@@ -27,7 +25,7 @@ namespace kwd.CoreUtil.Tests.Dictionary
                 target.AddRange(new[] { new KeyValuePair<string, string>("B", "2") });
                 Assert.Fail("Already has the 'B' key");
             }
-            catch (ArgumentException){}
+            catch (ArgumentException) { }
         }
 
         [TestMethod]

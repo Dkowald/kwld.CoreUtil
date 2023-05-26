@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
-		<Version>1.2.5-prep</Version>
+		<Version>1.3.0-alpha</Version>
 		<Authors>Derek Kowald</Authors>
 		<Product>KWD Core Utilities</Product>
 		<Title>KWD Core Utilities</Title>
@@ -15,7 +15,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageIcon>icon.png</PackageIcon>
 		<Tags>.NET Core;Utility</Tags>
-		<PackageReleaseNotes> 
+		<PackageReleaseNotes>
+		# Adding a RecordArray implementation
 		</PackageReleaseNotes>
 		<PackageReadmeFile>Readme.md</PackageReadmeFile>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>

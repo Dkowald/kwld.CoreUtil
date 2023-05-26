@@ -29,6 +29,16 @@ Helper to convert a string to a stream.
 
 See [[Strings|Strings]] for details.
 
+## Collections
+Utilities for coding with collection.
+
+Includes some IDictionary helpers, such as Merge.
+
+And specialized collections, such as RecordArray,
+to help with collections of record types.
+
+See [[Collections|Collections]] for details.
+
 ## Build
 Helpers for msbuild.
 
