@@ -128,5 +128,22 @@ public class RecordArrayTests
         var subSet = a.Items[1..^1];
         Assert.AreEqual(3, subSet.Length);
     }
+
+    [TestMethod]
+    public void Copy_()
+    {
+        var item0 = new AThing("A");
+
+        var target = RecordArray.Create(
+            item0,
+            new AThing("B"),
+            new AThing("1"),
+            new AThing("2"),
+            new AThing("C"));
+        
+        var copy =  target.Copy(x => x with { });
+        
+        Assert.IsFalse(ReferenceEquals(item0, copy[0]));
+    }
 }
 #endif
