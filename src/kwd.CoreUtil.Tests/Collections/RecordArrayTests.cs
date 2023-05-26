@@ -68,24 +68,7 @@ public class RecordArrayTests
         Assert.AreEqual(a, cloned, "Has value-equality");
         Assert.AreEqual(a.GetHashCode(), cloned.GetHashCode(), "Hashes should match for value-equality");
     }
-
-    [TestMethod]
-    public void ANewSetOfThings_CanSerialize()
-    {
-        var cfg = new JsonSerializerOptions();
-        cfg.Converters.Add(new RecordArrayConverterFactory());
-
-        var a = new ANewSetOfThings(new(new AThing("A")));
-
-        var json = JsonSerializer.Serialize(a, cfg);
-        var b = JsonSerializer.Deserialize<ANewSetOfThings>(json, cfg);
-        
-        Assert.IsNotNull(b);
-        Assert.IsFalse(ReferenceEquals(a.Items, b.Items), "different lists");
-        Assert.AreEqual(a, b, "Should be value-equality");
-        Assert.AreEqual(a.GetHashCode(), b.GetHashCode(), "Hashes should match for value-equality");
-    }
-
+    
     [TestMethod]
     public void ABetterSetOfThings()
     {
@@ -102,6 +85,48 @@ public class RecordArrayTests
 
         Assert.AreEqual(a, cloned, "Has value-equality");
         Assert.AreEqual(a.GetHashCode(), cloned.GetHashCode(), "Hashes should match for value-equality");
+    }
+
+    [TestMethod]
+    public void SupportSerialize()
+    {
+        var cfg = new JsonSerializerOptions();
+        cfg.Converters.Add(new RecordArrayConverterFactory());
+
+        var a = new ANewSetOfThings(new(new AThing("A")));
+
+        var json = JsonSerializer.Serialize(a, cfg);
+        var b = JsonSerializer.Deserialize<ANewSetOfThings>(json, cfg);
+
+        Assert.IsNotNull(b);
+        Assert.IsFalse(ReferenceEquals(a.Items, b.Items), "different lists");
+        Assert.AreEqual(a, b, "Should be value-equality");
+        Assert.AreEqual(a.GetHashCode(), b.GetHashCode(), "Hashes should match for value-equality");
+    }
+
+    [TestMethod]
+    public void SupportRangeExpressions()
+    {
+        var item1 = new AThing("A");
+        var itemLast = new AThing("C");
+        var a = new ANewSetOfThings(new(
+            item1,
+            new AThing("B"),
+            new AThing("1"),
+            new AThing("2"),
+            itemLast));
+        
+        //use index to get element at index.
+        var first = a.Items[0];
+        Assert.AreEqual(item1.Name, first.Name);
+
+        //use from-end index.
+        var last = a.Items[^1];
+        Assert.AreEqual(itemLast.Name, last.Name);
+
+        //can use range to slice.
+        var subSet = a.Items[1..^1];
+        Assert.AreEqual(3, subSet.Length);
     }
 }
 #endif

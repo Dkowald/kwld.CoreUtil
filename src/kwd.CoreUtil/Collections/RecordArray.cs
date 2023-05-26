@@ -10,14 +10,30 @@ namespace kwd.CoreUtil.Collections;
 /// An array-like collection of record's
 /// <list type="bullet">
 /// <item>Implements value-equality over items</item>
+/// <item>ONLY use with objects that support value-equality.</item>
+/// <item>Containing record MUST implement copy constructor</item>
 /// </list>
 /// </summary>
 /// <remarks>
-/// ONLY use with objects that support value-equality.
+/// copy collection using record clone: <br/>
+///   new(copy.Items.Select(x => x with { }));
 /// </remarks>
 public sealed class RecordArray<T> : IEquatable<RecordArray<T>>, IReadOnlyList<T>
 {
     private readonly T[] _data;
+
+    /// <summary>
+    /// Create empty<br/>
+    /// <inheritdoc cref="RecordArray{T}"/>
+    /// </summary>
+    /// <remarks>
+    /// Shorthand for RecordArray(Array.Empty&lt;T&gt;)<br/><br/>
+    /// <inheritdoc cref="RecordArray{T}"/>
+    /// </remarks>
+    public RecordArray()
+    {
+        _data = Array.Empty<T>();
+    }
 
     /// <inheritdoc cref="RecordArray{T}"/>
     public RecordArray(params T[] data)
@@ -77,6 +93,30 @@ public sealed class RecordArray<T> : IEquatable<RecordArray<T>>, IReadOnlyList<T
     /// <inheritdoc />
     public T this[int index] => _data[index];
     #endregion
+
+    /// <summary>
+    /// Get the total number of elements in the collection.
+    /// </summary>
+    /// <remarks>Same as <see cref="Count"/>;
+    /// included to make easier factoring when replacing a standard T[] type</remarks>
+    public int Length => _data.Length;
+
+    /// <summary>
+    /// Select a sub-set of the items (supports range operator).
+    /// </summary>
+    public T[] Slice(int start, int length)
+    {
+        if (start < 0) 
+            throw new ArgumentOutOfRangeException(nameof(start), start, "Non-negative number required");
+
+        if (length + start > _data.Length)
+            throw new ArgumentOutOfRangeException(nameof(length), length,
+                "Specified argument was out of the range of valid values.");
+
+        var slice = new T[length];
+        Array.Copy(_data, start, slice, 0, length);
+        return slice;
+    }
 }
 
 #endif
