@@ -1,5 +1,4 @@
 ﻿#if NET6_0_OR_GREATER
-using System.Linq;
 using kwd.CoreUtil.Collections;
 
 namespace kwd.CoreUtil.Tests.Collections.samples;
@@ -9,7 +8,7 @@ public record ANewSetOfThings(RecordArray<AThing> Items)
 {
     protected ANewSetOfThings(ANewSetOfThings copy)
     {
-        Items = new(copy.Items.Select(x => x with { }));
+        Items = copy.Items.Copy(x => x with { });
     }
 }
 #endif
