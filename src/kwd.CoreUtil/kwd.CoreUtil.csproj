@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.IO.Abstractions" Version="19.2.22" />
+		<PackageReference Include="System.IO.Abstractions" Version="19.2.29" />
 	</ItemGroup>
 
 	<!--Pack and push to nuget.-->
