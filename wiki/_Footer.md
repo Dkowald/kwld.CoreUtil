@@ -1,0 +1,1 @@
+kwd.CoreUtil v1.2.5: [Git](https://github.com/Dkowald/kwd.CoreUtil) / [Nuget](https://www.nuget.org/packages/kwd.CoreUtil/1.25)
