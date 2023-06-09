@@ -1,0 +1,19 @@
+﻿<!--
+Dummy project to include additional repository files
+-->
+<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Remove="src\**" />
+		<EmbeddedResource Remove="src\**" />
+		<None Remove="src\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include=".github/**" />
+	</ItemGroup>
+
+</Project>

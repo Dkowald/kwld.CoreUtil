@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
-		<Version>1.3.0-alpha</Version>
+		<VersionPrefix>1.3.0</VersionPrefix>
 		<Authors>Derek Kowald</Authors>
 		<Product>KWD Core Utilities</Product>
 		<Title>KWD Core Utilities</Title>
@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.IO.Abstractions" Version="19.2.22" />
+		<PackageReference Include="System.IO.Abstractions" Version="19.2.29" />
 	</ItemGroup>
 
 	<!--Pack and push to nuget.-->
