@@ -1,7 +1,9 @@
-/src/**/.vs/
-/src/**/obj
-/src/**/bin
-/src/**/*.user
+.vs/
 .vscode/
+
+obj/
+bin/
+
+*.user
 
 /src/**/App_Data/
