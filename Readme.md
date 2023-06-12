@@ -30,10 +30,14 @@ Split on whitespace (find words)
 
 Compare case-ignorant, and white-space ignorant (Same).
 
-### Dictionary helpers.
-Add or merge 2 dictonaries.
+### Collections.
 
-Ensure an item exists (DefaultTo)
+Dictionary extensions to:
+1.  Add a range, or merge.
+2.  Ensure an item exists (DefaultTo)
+
+A RecordArray for value-equality of a set of records.
+(with array-like serialization)
 
 ### Build tooling.
 
