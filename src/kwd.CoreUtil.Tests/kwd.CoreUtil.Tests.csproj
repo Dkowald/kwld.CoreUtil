@@ -20,8 +20,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\kwd.CoreUtil\kwd.CoreUtil.csproj" />
 	</ItemGroup>
-
-
 	<Import Project="..\kwd.CoreUtil\build\kwd.CoreUtil.props" />
 	<Import Project="..\kwd.CoreUtil\build\kwd.CoreUtil.targets" />
 

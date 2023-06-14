@@ -82,11 +82,11 @@
       },
       "System.IO.Abstractions": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "G6Cv4Uf3aAE5Idcec1GUHMhqaKmzdrYfAZsxnRE+aW8yIrDs/qTC7yxG2FUDxuIMOYOuhaWJWaUfxpTjCenWZA==",
+        "resolved": "19.0.1",
+        "contentHash": "UVM412UWKjs07esf5bnfAxJ8Bj/0srrFzNXit0mbY6kFoC8M3gHsFF28KLfI4rSnfRj0wbQ/LCvkGZ/hHiTA1Q==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29",
-          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.0.1",
+          "TestableIO.System.IO.Abstractions.Wrappers": "19.0.1"
         }
       },
       "System.Reflection.Metadata": {
@@ -119,7 +119,7 @@
       "kwd.coreutil": {
         "type": "Project",
         "dependencies": {
-          "System.IO.Abstractions": "[19.2.29, )"
+          "System.IO.Abstractions": "[19.0.1, )"
         }
       }
     },
@@ -204,11 +204,11 @@
       },
       "System.IO.Abstractions": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "G6Cv4Uf3aAE5Idcec1GUHMhqaKmzdrYfAZsxnRE+aW8yIrDs/qTC7yxG2FUDxuIMOYOuhaWJWaUfxpTjCenWZA==",
+        "resolved": "19.0.1",
+        "contentHash": "UVM412UWKjs07esf5bnfAxJ8Bj/0srrFzNXit0mbY6kFoC8M3gHsFF28KLfI4rSnfRj0wbQ/LCvkGZ/hHiTA1Q==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29",
-          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.0.1",
+          "TestableIO.System.IO.Abstractions.Wrappers": "19.0.1"
         }
       },
       "System.Reflection.Metadata": {
@@ -241,7 +241,7 @@
       "kwd.coreutil": {
         "type": "Project",
         "dependencies": {
-          "System.IO.Abstractions": "[19.2.29, )"
+          "System.IO.Abstractions": "[19.0.1, )"
         }
       }
     }

@@ -1,7 +1,7 @@
 #default: 
 # restore --> build --> test --> pack
 #For update master || Development
-# + nuget-publish
+# + nuget-publish (-beta for development)
 #If wip/**
 # do nothing
 
@@ -32,10 +32,10 @@ jobs:
           ${{ runner.os }}-nuget
     
     - name: Restore dependencies
-      run: dotnet restore src/
+      run: dotnet restore --locked-mode src/
 
     - name: Build
-      run: dotnet build --no-restore -c Release src/
+      run: dotnet build --no-restore -c Release src/ -p:ContinuousIntegrationBuild=true
 
     - name: Test
       run: dotnet test --no-build -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
@@ -59,7 +59,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: package
-        path: bin/*.nupkg
+        path: bin/*.*pkg
         if-no-files-found: error
     
   publish:
@@ -76,7 +76,12 @@ jobs:
         path: bin/
 
      - name: Prep github push source
-       run: dotnet nuget add source --username dkowald --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/dkowald/index.json"
+       run: > 
+         dotnet nuget add source 
+         --username dkowald 
+         --password ${{ secrets.GITHUB_TOKEN }} 
+         --store-password-in-clear-text 
+         --name github "https://nuget.pkg.github.com/dkowald/index.json"
        
      - name: Push package to github
-       run: dotnet nuget push "./bin/*.nupkg" --source "github"      
+       run: dotnet nuget push "./bin/*.*pkg" --source "github"      
