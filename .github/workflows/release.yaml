@@ -20,7 +20,8 @@ jobs:
     name: 'check is valid branch'
     runs-on: ubuntu-latest
     outputs:
-      valid_branch: ${{steps.check_branch.outputs.valid_branch}}
+      build_version: ${{steps.check_branch.outputs.build_version}}
+      is_preview: ${{steps.check_branch.outputs.is_preview}}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -34,20 +35,30 @@ jobs:
           
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
-              $relVersion = "${{github.ref_name}}".Substring(2);    
-              echo valid_branch=$relVersion >> $env:GITHUB_OUTPUT
-              echo Allow building release - $relVersion
+              $relVersion = "${{github.ref_name}}".Substring(2);
+              
+              $isPreview = if($relVersion.Contains("-")){'true'}else{'false'};
+
+              echo build_version=$relVersion >> $env:GITHUB_OUTPUT
+              echo is_preview=$isPreview >> $env:GITHUB_OUTPUT
+              
+              echo "Allow building release - $relVersion"
+              echo "Is Preview $isPreview"
               return;
             }
           }
-          echo valid_branch="" >> $env:GITHUB_OUTPUT
+          echo build_version="" >> $env:GITHUB_OUTPUT
           echo Deny
-        
+      
+      - name: results
+        run: |
+          echo BuildVersion - ${{steps.check_branch.outputs.build_version}}
+          echo IsPreview - ${{steps.check_branch.outputs.is_preview}}
   build:
     runs-on: ubuntu-latest
     name: "Build release package"
     needs: ["check"]
-    if: ${{needs.check.valid_branch != ''}}
+    if: ${{needs.check.build_version != ''}}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -66,21 +77,23 @@ jobs:
         --include-symbols
         $PackTarget
         -p:ContinuousIntegrationBuild=true 
-        -p PackageVersion= ${{needs.check.valid_branch}}
+        -p PackageVersion= ${{needs.check.build_version}}
         -o packages
     
-    - name: Keep package artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: package
-        path: package/*.*pkg
-        if-no-files-found: error
+    - name: Prep github push source
+      run: > 
+        dotnet nuget add source 
+        --username dkowald 
+        --password ${{ secrets.GITHUB_TOKEN }} 
+        --store-password-in-clear-text 
+        --name github "https://nuget.pkg.github.com/dkowald/index.json"
 
-    - name: Publish to github packages
-      shell: pwsh  
-      run: echo "TODO"
-      
-    # todo create release with artifacts.
-    - name: Create github release
-      shell: pwsh
-      run: echo "TODO"
+    - name: Push package to github
+      run: dotnet nuget push "./packages/*.*pkg" --source "github"
+
+    - uses: ncipollo/release-action@v1
+      with:
+        draft: true
+        prerelease: ${{needs.check.is_preview}}
+        artifacts: "./packages/*"
+   
