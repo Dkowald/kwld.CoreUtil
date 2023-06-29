@@ -2,12 +2,12 @@
 # Build and publish to github
 # using the provided tag as the version.
 #
-# Only works on master and development branches
+# Only works on selected branches
 #
 on:
   push:
     tags:
-      - "*"
+      - "v-*"
 env:
   PackTarget: src/kwd.CoreUtil
   PackBranches: "master,Development,build"
@@ -20,6 +20,11 @@ jobs:
       valid_branch: ${{steps.check_branch.outputs.valid_branch}}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: info
+        run: |
+         git show -s
       - name: check_branch
         id: check_branch
         shell: pwsh
