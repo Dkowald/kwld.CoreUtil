@@ -22,6 +22,7 @@ jobs:
     outputs:
       valid_branch: ${{steps.check_branch.outputs.valid_branch}}
     steps:
+      - uses: actions/checkout@v3
       - name: check_branch
         id: check_branch
         shell: pwsh
@@ -44,21 +45,33 @@ jobs:
     needs: ["check"]
     if: ${{needs.check.valid_branch}}
     steps:
-    
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: |
+          6.0.x
+          7.0.x
     - name: Restore dependencies
       run: dotnet restore --locked-mode src/
 
     - name: Pack
-      run: echo "TODO pack $PackTarget"
-      #run: >
-      #  dotnet pack 
-      #  -c Release 
-      #  --include-symbols
-      #  $PackTarget
-      #  -p:ContinuousIntegrationBuild=true 
-      #  -p PackageVersion= ${{github.ref_name}}
-      #  -o packages
+      run: >
+        dotnet pack 
+        -c Release 
+        --include-symbols
+        $PackTarget
+        -p:ContinuousIntegrationBuild=true 
+        -p PackageVersion= ${{github.ref_name}}
+        -o packages
     
+    - name: Keep package artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: package/*.*pkg
+        if-no-files-found: error
+
     - name: Publish to github packages
       shell: pwsh  
       run: echo "TODO"
