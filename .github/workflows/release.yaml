@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
         run: |
           $tagBranches = "$(git branch --contains ${{github.ref_name}})"
-          $allowed = ${{PackBranches}} -split ','
+          $allowed = ${{env.PackBranches}} -split ','
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
               echo valid_branch=true >> $GITHUB_OUTPUT
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Build release package"
     needs: ["check"]
-    if: $${{needs.check.valid_branch}}
+    if: ${{needs.check.valid_branch}}
     steps:
     
     - name: Restore dependencies
