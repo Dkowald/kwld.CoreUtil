@@ -57,8 +57,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: "Build release package"
-    needs: ["check"]
-    if: needs.check.build_version == ''
+    needs: "check"
+    if: needs.check.outputs.build_version != ''
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -77,7 +77,7 @@ jobs:
         --include-symbols
         $PackTarget
         -p:ContinuousIntegrationBuild=true 
-        -p PackageVersion= ${{needs.check.build_version}}
+        -p PackageVersion= ${{needs.check.outputs.build_version}}
         -o packages
     
     - name: Prep github push source
@@ -94,6 +94,6 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         draft: true
-        prerelease: ${{needs.check.is_preview}}
+        prerelease: ${{needs.check.outputs.is_preview}}
         artifacts: "./packages/*"
    
