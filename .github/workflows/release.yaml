@@ -25,11 +25,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      
-      - name: info
-        run: |
-         git show -s
-         git branch --contains ${{github.ref_name}}
       - name: check_branch
         id: check_branch
         shell: pwsh
@@ -40,12 +35,12 @@ jobs:
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
               $relVersion = "${{github.ref_name}}".Substring(2);    
-              echo valid_branch=$relVersion >> $GITHUB_OUTPUT
-              echo Allow 
+              echo valid_branch=$relVersion >> $env:GITHUB_OUTPUT
+              echo Allow building release - $relVersion
               return;
             }
           }
-          echo valid_branch="" >> $GITHUB_OUTPUT
+          echo valid_branch="" >> $env:GITHUB_OUTPUT
           echo Deny
         
   build:
@@ -86,3 +81,6 @@ jobs:
       run: echo "TODO"
       
     # todo create release with artifacts.
+    - name: Create github release
+      shell: pwsh
+      run: echo "TODO"
