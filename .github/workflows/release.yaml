@@ -1,5 +1,6 @@
 ﻿# Tag based release.
 # Build and publish to github
+# Publish to nuget
 # using the provided tag as the version.
 #
 # Only works on selected branches
@@ -13,7 +14,7 @@ on:
       - "v-*"
 env:
   PackTarget: src/kwd.CoreUtil
-  PackBranches: "master,Development,build"
+  PackBranches: "master,build,development"
 
 jobs:
   check:
@@ -70,6 +71,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore --locked-mode src/
 
+    - name: Test
+      run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
+    
     - name: Pack
       run: >
         dotnet pack 
@@ -80,6 +84,13 @@ jobs:
         -p PackageVersion=${{needs.check.outputs.build_version}}
         -o packages
     
+    - name: Keep package artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: packages/
+        if-no-files-found: error
+
     - name: Prep github push source
       run: > 
         dotnet nuget add source 
@@ -89,7 +100,16 @@ jobs:
         --name github "https://nuget.pkg.github.com/dkowald/index.json"
 
     - name: Push package to github
-      run: dotnet nuget push packages/*.nupkg --source "github"
+      run: dotnet nuget push packages/*.nupkg --source "github" --apiKey ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Setup Nuget
+      uses: NuGet/setup-nuget@v1.0.5
+    
+    - name: Nuget publish
+      run: nuget push packages/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGETPUSH}}
+      
+    - name: Wiki update
+      run: echo "TODO wiki files into repo"
 
     - name: Create release
       uses: ncipollo/release-action@v1      
