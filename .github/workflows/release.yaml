@@ -10,7 +10,7 @@ on:
       - "*"
 env:
   PackTarget: src/kwd.CoreUtil
-  PackBranches: "master,Development"
+  PackBranches: "master,Development,build"
 
 jobs:
   check:
