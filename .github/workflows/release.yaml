@@ -91,23 +91,31 @@ jobs:
         path: packages/
         if-no-files-found: error
 
-    - name: Prep github push source
-      run: > 
-        dotnet nuget add source 
-        --username dkowald 
-        --password ${{ secrets.GITHUB_TOKEN }} 
-        --store-password-in-clear-text 
-        --name github "https://nuget.pkg.github.com/dkowald/index.json"
+    #- name: Prep github push source
+    #  run: > 
+    #    dotnet nuget add source 
+    #    --username dkowald 
+    #    --password ${{ secrets.GITHUB_TOKEN }} 
+    #    --store-password-in-clear-text 
+    #    --name github "https://nuget.pkg.github.com/dkowald/index.json"
 
     - name: Push package to github
-      run: dotnet nuget push packages/*.nupkg --source "github" --apiKey ${{ secrets.GITHUB_TOKEN }}
+      run: > 
+        dotnet nuget push 
+        packages/*.nupkg 
+        --source https://nuget.pkg.github.com/dkowald/index.json
+        --api-key ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Setup Nuget
-      uses: NuGet/setup-nuget@v1.0.5
+    #- name: Setup Nuget
+    #  uses: NuGet/setup-nuget@v1.0.5
     
     - name: Nuget publish
-      run: nuget push packages/*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGETPUSH}}
-      
+      run: >
+        dotnet nuget push
+        "packages/*.*"
+        --api-key ${{secrets.NUGETPUSH}}
+        --source https://api.nuget.org/v3/index.json
+        
     - name: Wiki update
       run: echo "TODO wiki files into repo"
 
