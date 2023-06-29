@@ -23,22 +23,25 @@ jobs:
       valid_branch: ${{steps.check_branch.outputs.valid_branch}}
     steps:
       - uses: actions/checkout@v3
-      - run:  git fetch --all
+        with:
+          fetch-depth: 0
+      
       - name: info
         run: |
          git show -s
+         git branch --contains ${{github.ref_name}}
       - name: check_branch
         id: check_branch
         shell: pwsh
         run: |
-          $tagBranches = "$(git branch --contains ${{github.ref_name}})"
+          $tagBranches = "$(git branch -r --contains ${{github.ref}})"
           $allowed = "${{env.PackBranches}}" -split ','
           
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
-              $relVersion = "${{github.ref_name}}".Substring(2);
+              $relVersion = "${{github.ref_name}}".Substring(2);    
               echo valid_branch=$relVersion >> $GITHUB_OUTPUT
-              echo Allow
+              echo Allow 
               return;
             }
           }
@@ -49,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Build release package"
     needs: ["check"]
-    if: ${{needs.check.valid_branch}} != ''
+    if: ${{needs.check.valid_branch != ''}}
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
