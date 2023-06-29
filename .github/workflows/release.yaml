@@ -4,6 +4,9 @@
 #
 # Only works on selected branches
 #
+
+name: release via tag
+
 on:
   push:
     tags:
@@ -20,8 +23,7 @@ jobs:
       valid_branch: ${{steps.check_branch.outputs.valid_branch}}
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - run:  git fetch --all
       - name: info
         run: |
          git show -s
@@ -31,21 +33,23 @@ jobs:
         run: |
           $tagBranches = "$(git branch --contains ${{github.ref_name}})"
           $allowed = "${{env.PackBranches}}" -split ','
+          
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
-              echo valid_branch=true >> $GITHUB_OUTPUT
+              $relVersion = "${{github.ref_name}}".Substring(2);
+              echo valid_branch=$relVersion >> $GITHUB_OUTPUT
               echo Allow
               return;
             }
           }
-          echo valid_branch=false >> $GITHUB_OUTPUT
+          echo valid_branch="" >> $GITHUB_OUTPUT
           echo Deny
         
   build:
     runs-on: ubuntu-latest
     name: "Build release package"
     needs: ["check"]
-    if: ${{needs.check.valid_branch}}
+    if: ${{needs.check.valid_branch}} != ''
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -64,7 +68,7 @@ jobs:
         --include-symbols
         $PackTarget
         -p:ContinuousIntegrationBuild=true 
-        -p PackageVersion= ${{github.ref_name}}
+        -p PackageVersion= ${{needs.check.valid_branch}}
         -o packages
     
     - name: Keep package artifact
@@ -78,4 +82,4 @@ jobs:
       shell: pwsh  
       run: echo "TODO"
       
-    
+    # todo create release with artifacts.
