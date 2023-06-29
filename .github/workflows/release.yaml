@@ -90,25 +90,14 @@ jobs:
         name: package
         path: packages/
         if-no-files-found: error
-
-    #- name: Prep github push source
-    #  run: > 
-    #    dotnet nuget add source 
-    #    --username dkowald 
-    #    --password ${{ secrets.GITHUB_TOKEN }} 
-    #    --store-password-in-clear-text 
-    #    --name github "https://nuget.pkg.github.com/dkowald/index.json"
-
+        
     - name: Push package to github
       run: > 
         dotnet nuget push 
         packages/*.nupkg 
         --source https://nuget.pkg.github.com/dkowald/index.json
         --api-key ${{ secrets.GITHUB_TOKEN }}
-
-    #- name: Setup Nuget
-    #  uses: NuGet/setup-nuget@v1.0.5
-    
+        
     - name: Nuget publish
       run: >
         dotnet nuget push
@@ -116,9 +105,23 @@ jobs:
         --api-key ${{secrets.NUGETPUSH}}
         --source https://api.nuget.org/v3/index.json
         
-    - name: Wiki update
-      run: echo "TODO wiki files into repo"
+    
+    - name: Clone wiki
+      uses: actions/checkout@v3
+      with:
+       repository: 'https://github.com/Dkowald/kwd.CoreUtil.wiki.git'
+       ref: 'build' #todo: swap to master when works.
+       path: 'w'
 
+    - name: Publish wiki files
+      run: |
+       rm -r w/*
+       cp -r wiki/* w/
+       cd w
+       git add -A
+       git commit -m "release ${{needs.check.outputs.build_version}}"
+       git push
+    
     - name: Create release
       uses: ncipollo/release-action@v1      
       with:
