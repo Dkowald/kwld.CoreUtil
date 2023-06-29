@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     name: "Build release package"
     needs: ["check"]
-    if: ${{!(needs.check.build_version == '')}}
+    if: needs.check.build_version == ''
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
