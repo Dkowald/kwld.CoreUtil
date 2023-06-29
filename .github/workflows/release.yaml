@@ -89,7 +89,7 @@ jobs:
         --name github "https://nuget.pkg.github.com/dkowald/index.json"
 
     - name: Push package to github
-      run: dotnet nuget push "./packages/*.*pkg" --source "github"
+      run: dotnet nuget push packages/ --source "github"
 
     - name: Create release
       uses: ncipollo/release-action@v1      
