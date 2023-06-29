@@ -13,7 +13,7 @@ on:
       - "*"
 env:
   PackTarget: src/kwd.CoreUtil
-  PackBranches: master,Development
+  PackBranches: "master,Development"
 
 jobs:
   check:
@@ -27,7 +27,7 @@ jobs:
         shell: pwsh
         run: |
           $tagBranches = "$(git branch --contains ${{github.ref_name}})"
-          $allowed = ${{env.PackBranches}} -split ','
+          $allowed = "${{env.PackBranches}}" -split ','
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
               echo valid_branch=true >> $GITHUB_OUTPUT
