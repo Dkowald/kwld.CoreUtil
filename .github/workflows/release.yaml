@@ -6,9 +6,6 @@
 #
 on:
   push:
-    #todo: remove, this here to help develop  
-    branches:
-     - build
     tags:
       - "*"
 env:
