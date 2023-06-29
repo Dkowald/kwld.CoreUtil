@@ -9,7 +9,7 @@ name: build
 
 on:
   push:
-    branches-ignore: ["wip/**"]
+    branches-ignore: ["wip/**", "build"]
 jobs:
   build:
     runs-on: ubuntu-latest
