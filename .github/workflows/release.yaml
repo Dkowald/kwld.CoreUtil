@@ -1,8 +1,9 @@
 ﻿# Tag based release.
-# Build and publish to github
+# Build and publish to github.
 # Publish to nuget
-# using the provided tag as the version.
+# Uses the provided tag as the version.
 #
+# Tag must start with v
 # Only works on selected branches
 #
 
@@ -11,7 +12,7 @@ name: release via tag
 on:
   push:
     tags:
-      - "v-*"
+      - "v*"
 env:
   PackTarget: src/kwd.CoreUtil
   PackBranches: "master,build,development"
@@ -71,59 +72,59 @@ jobs:
         dotnet-version: |
           6.0.x
           7.0.x
-    #- name: Restore dependencies
-    #  run: dotnet restore --locked-mode src/
+    - name: Restore dependencies
+      run: dotnet restore --locked-mode src/
 
-    #- name: Test
-    #  run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
+    - name: Test
+      run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
     
-    #- name: Pack
-    #  run: >
-    #    dotnet pack 
-    #    -c Release 
-    #    --include-symbols
-    #    ${{env.PackTarget}}
-    #    -p:ContinuousIntegrationBuild=true 
-    #    -p PackageVersion=${{needs.check.outputs.build_version}}
-    #    -o packages
+    - name: Pack
+      run: >
+        dotnet pack 
+        -c Release 
+        --include-symbols
+        ${{env.PackTarget}}
+        -p:ContinuousIntegrationBuild=true 
+        -p PackageVersion=${{needs.check.outputs.build_version}}
+        -o packages
     
-    #- name: Keep package artifact
-    #  uses: actions/upload-artifact@v3
-    #  with:
-    #    name: package
-    #    path: packages/
-    #    if-no-files-found: error
+    - name: Keep package artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: packages/
+        if-no-files-found: error
         
-    #- name: Push package to github
-    #  run: > 
-    #    dotnet nuget push 
-    #    packages/*.nupkg 
-    #    --source https://nuget.pkg.github.com/dkowald/index.json
-    #    --api-key ${{ secrets.GITHUB_TOKEN }}
+    - name: Push package to github
+      run: > 
+        dotnet nuget push 
+        packages/*.nupkg 
+        --source https://nuget.pkg.github.com/dkowald/index.json
+        --api-key ${{ secrets.GITHUB_TOKEN }}
         
-    #- name: Nuget publish
-    #  run: >
-    #    dotnet nuget push
-    #    "packages/*.*"
-    #    --api-key ${{secrets.NUGETPUSH}}
-    #    --source https://api.nuget.org/v3/index.json
+    - name: Nuget publish
+      run: >
+        dotnet nuget push
+        "packages/*.*"
+        --api-key ${{secrets.NUGETPUSH}}
+        --source https://api.nuget.org/v3/index.json
     
+    - name: Setup git
+      run: |
+        git config --global user.name "dkowald"
+        git config --global user.email "derek@kowald.id.au"
+
     - name: Clone wiki
       uses: actions/checkout@v3
       with:
        repository: 'Dkowald/kwd.CoreUtil.wiki.git'
-       ref: 'build' #todo: swap to master when works.
+       ref: 'master'
        path: 'w'
 
     - name: Copy updated wiki files
       run: |
        rm -r w/*
        cp -r wiki/* w/
-    
-    - name: Setup git
-      run: |
-        git config --global user.name "dkowald"
-        git config --global user.email "derek@kowald.id.au"
 
     - name: Publish wiki files
       run: |
@@ -132,10 +133,10 @@ jobs:
        git commit -m "release ${{needs.check.outputs.build_version}}"
        git push
     
-    #- name: Create release
-    #  uses: ncipollo/release-action@v1      
-    #  with:
-    #    draft: true
-    #    prerelease: ${{needs.check.outputs.is_preview}}
-    #    artifacts: "./packages/*"
+    - name: Create release
+      uses: ncipollo/release-action@v1      
+      with:
+        draft: false
+        prerelease: ${{needs.check.outputs.is_preview}}
+        artifacts: "./packages/*"
    

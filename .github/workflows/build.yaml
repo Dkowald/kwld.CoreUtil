@@ -1,6 +1,6 @@
 # Default CI build
 # restore --> build --> test --> pack
-#
+# Triggers on PR's to protected branches.
 # Artifact to preserve packages.
 #
 name: build
