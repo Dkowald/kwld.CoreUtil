@@ -61,6 +61,8 @@ jobs:
     name: "Build release package"
     needs: "check"
     if: needs.check.outputs.build_version != ''
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -113,10 +115,18 @@ jobs:
        ref: 'build' #todo: swap to master when works.
        path: 'w'
 
-    - name: Publish wiki files
+    - name: Copy updated wiki files
       run: |
        rm -r w/*
        cp -r wiki/* w/
+    
+    - name: Setup git
+      run: |
+        git config --global user.name "dkowald"
+        git config --global user.email "derek@kowald.id.au"
+
+    - name: Publish wiki files
+      run: |
        cd w
        git add -A
        git commit -m "release ${{needs.check.outputs.build_version}}"
