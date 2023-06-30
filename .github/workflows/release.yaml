@@ -109,7 +109,7 @@ jobs:
     - name: Clone wiki
       uses: actions/checkout@v3
       with:
-       repository: 'https://github.com/Dkowald/kwd.CoreUtil.wiki.git'
+       repository: 'Dkowald/kwd.CoreUtil.wiki.git'
        ref: 'build' #todo: swap to master when works.
        path: 'w'
 
