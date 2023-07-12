@@ -10,7 +10,7 @@ Using this you can download a file as part of the build.
 ```xml
 <ItemGroup>
   <DownloadFile OutFolder="App_Data" Include="https://raw.githubusercontent.com/Dkowald/kwd.CoreUtil/master/Readme.md"/>
-<ItemGroup>
+</ItemGroup>
 ```
 
 The above will download the readme.md for this project from git-hub,
