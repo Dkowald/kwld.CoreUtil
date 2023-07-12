@@ -49,4 +49,4 @@ Download file as part of the build.
 See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details
 
 ---
-^ v1.3 [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)
+^ [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)
