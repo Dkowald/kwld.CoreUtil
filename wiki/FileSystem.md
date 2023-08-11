@@ -46,17 +46,18 @@ A mixed bag of simple helpers.
 | Extension | Description |
 | --------- | ----------- |
 | **DirectoryInfo**|
-|Touch    | Update the LastWriteTime of a directory |
-|GetFile  | Get a file using a series of sub-path strings |
+|Touch    | Update the LastWriteTime of a directory         |
+|GetFile  | Get a file using a series of sub-path strings   |
 |GetFolder| Get a folder using a series of sub path strings |
+|MoveTo   | Overloads for MoveTo                            |
 | **FileInfo**|
 |Touch | Update the LastWriteTime of a file |
 | **FileSystemInfo**|
 |Exists() | Calls refresh, then returns result from Exist |
 |AsUri    | Converts item to Uri. Directories have a trailing '/'  |
 
-## Override Extensions
-These provide override on standard FileInfo / Directory info
+## Overload Extensions
+These provide overload's on standard FileInfo / Directory info
 methods so they take FileInfo or DirectoryInfo objects rather than 
 strings.
 
@@ -124,12 +125,21 @@ if the test path has an upper case character.
 If that path exists.. then its (like 99%) a case-ignorant file system.
 
 ## Directories
-Helpers for oft used paths.
+Helpers for commonly used paths.
 
 | Extension | Description |
 | --------- | ----------- |
-| Current | Exceuting Process' Current directory |
-| Home    | Current user home path (windows or linux)  |
-| Temp    | Users temporary folder.|
+| Current       | Exceuting Process' Current directory |
+| Home          | Current user home path (windows or linux)  |
+| Temp          | Users temporary folder.|
+| TempFile      | Create a temporary File  |
 | AssemblyFolder| Folder containing assembly for a type |
-| Project| Codes standard source project folder |
+| Project       | Codes standard source project folder |
+
+## Disposable
+Small disposable wrappers.
+
+|Class | Description |
+|----|----|
+|PushD | Set the current directory, reverting on dispose. |
+|TempFile | Define a file or folder as temporary, deleting on dispose.|

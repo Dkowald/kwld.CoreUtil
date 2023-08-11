@@ -55,6 +55,14 @@ namespace kwd.CoreUtil.FileSystem
         public static IDirectoryInfo Temp(this IFileSystem files)
             => files.DirectoryInfo.New(files.Path.GetTempPath());
 
+        /// <inheritdoc cref="Path.GetTempFileName"/>
+        public static FileInfo TempFile() =>
+            new FileInfo(Path.GetTempFileName());
+
+        /// <inheritdoc cref="Path.GetTempFileName"/>
+        public static IFileInfo TempFile(this IFileSystem files)
+            => files.FileInfo.New(files.Path.GetTempFileName());
+
         /// <summary>
         /// Get directory for assembly containing type <typeparamref name="T"/>.
         /// </summary>
@@ -100,8 +108,8 @@ namespace kwd.CoreUtil.FileSystem
                     files.Path.Combine(
                         files.Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) ?? "",
                         "../../../"));
-
+            
             return files.DirectoryInfo.New(callerPath);
         }
-    }
+  }
 }

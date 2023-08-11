@@ -7,7 +7,7 @@ namespace kwd.CoreUtil.FileSystem
     /// <summary>
     /// Extension for overloads on FileSystemInfo types.
     /// </summary>
-    public static class OverrideExtensions
+    public static class OverloadExtensions
     {
         /// <summary>
         /// Copy <paramref name="source"/> to <paramref name="destination"/>,

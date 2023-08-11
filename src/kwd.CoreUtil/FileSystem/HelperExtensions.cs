@@ -47,7 +47,7 @@ namespace kwd.CoreUtil.FileSystem
             return new DirectoryInfo(path);
         }
 
-        /// <inheritdoc cref="GetFolder(System.IO.DirectoryInfo,string[])"/>
+        /// <inheritdoc cref="GetFolder(DirectoryInfo,string[])"/>
         public static IDirectoryInfo GetFolder(this IDirectoryInfo dir, params string[] subPath)
         {
             if (!subPath.Any()) { return dir; }

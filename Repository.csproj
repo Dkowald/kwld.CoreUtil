@@ -16,4 +16,7 @@ Dummy project to include additional repository files
 		<None Include=".github/**" />
 	</ItemGroup>
 
+  <ItemGroup>
+    <None Include="src/.*" />
+  </ItemGroup>
 </Project>

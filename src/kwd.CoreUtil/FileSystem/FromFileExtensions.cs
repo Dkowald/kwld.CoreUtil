@@ -10,7 +10,7 @@ namespace kwd.CoreUtil.FileSystem
     /// <summary>
     /// Extensions for <see cref="FileInfo"/> to include missing function from <see cref="File"/>.
     /// </summary>
-    public static class FromFileExtensions
+    public static partial class FromFileExtensions
     {
         ///<summary>
         /// See <see cref="File.AppendAllLines(string, IEnumerable{string})"/> <br />
@@ -55,7 +55,7 @@ namespace kwd.CoreUtil.FileSystem
 
         /// <inheritdoc cref="AppendAllLinesAsync(FileInfo,IEnumerable{string}, Encoding, CancellationToken)"/>
         public static Task AppendAllLinesAsync(this IFileInfo fileInfo, IEnumerable<string> contents, Encoding encoding,
-            CancellationToken cancellationToken = default) 
+            CancellationToken cancellationToken = default)
             => fileInfo.FileSystem.File.AppendAllLinesAsync(fileInfo.FullName, contents, encoding, cancellationToken);
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace kwd.CoreUtil.FileSystem
         public static Task AppendAllTextAsync(this IFileInfo fileInfo, string contents, Encoding encoding,
             CancellationToken cancellationToken = default) =>
             fileInfo.FileSystem.File.AppendAllTextAsync(fileInfo.FullName, contents, encoding, cancellationToken);
-        
+
         /// <summary>
         /// See <see cref="File.AppendText(string)"/> <br />
         /// Creates a <see cref="T:System.IO.StreamWriter"></see> that appends UTF-8 encoded text to an existing file, or to a new file if the specified file does not exist.
@@ -138,26 +138,17 @@ namespace kwd.CoreUtil.FileSystem
             fileInfo.FileSystem.File.ReadAllBytesAsync(fileInfo.FullName, cancellationToken);
 
         /// <summary>
-        /// See <see cref="File.ReadAllLines(string)"/> <br />
-        /// Opens a text file, reads all lines of the file, and then closes the file.
-        /// </summary>
-        public static string[] ReadAllLines(this FileInfo fileInfo) =>
-            File.ReadAllLines(fileInfo.FullName);
-
-        /// <inheritdoc cref="ReadAllLines(FileInfo)"/>
-        public static string[] ReadAllLines(this IFileInfo fileInfo) =>
-            fileInfo.FileSystem.File.ReadAllLines(fileInfo.FullName);
-
-        /// <summary>
         /// See <see cref="File.ReadAllLines(string, Encoding)"/> <br />
         /// Opens a file, reads all lines of the file with the specified encoding, and then closes the file.
         /// </summary>
-        public static string[] ReadAllLines(this FileInfo fileInfo, Encoding encoding) =>
-            File.ReadAllLines(fileInfo.FullName, encoding);
+        public static string[] ReadAllLines(this FileInfo fileInfo, Encoding? encoding = null) =>
+            encoding is null ? File.ReadAllLines(fileInfo.FullName) : File.ReadAllLines(fileInfo.FullName, encoding);
 
-        /// <inheritdoc cref="ReadAllLines(FileInfo, Encoding)"/>
-        public static string[] ReadAllLines(this IFileInfo fileInfo, Encoding encoding) =>
-            fileInfo.FileSystem.File.ReadAllLines(fileInfo.FullName, encoding);
+        /// <inheritdoc cref="File.ReadAllLines(string)"/>
+        public static string[] ReadAllLines(this IFileInfo fileInfo, Encoding? encoding = null) =>
+            encoding is null
+                ? fileInfo.FileSystem.File.ReadAllLines(fileInfo.FullName)
+                : fileInfo.FileSystem.File.ReadAllLines(fileInfo.FullName, encoding);
 
         /// <summary>
         /// See <see cref="File.ReadAllLinesAsync(string, CancellationToken)"/>
@@ -223,33 +214,21 @@ namespace kwd.CoreUtil.FileSystem
         public static Task<string> ReadAllTextAsync(this FileInfo fileInfo, Encoding encoding,
             CancellationToken cancellationToken = default) =>
             File.ReadAllTextAsync(fileInfo.FullName, encoding, cancellationToken);
-        
+
         /// <inheritdoc cref="ReadAllTextAsync(FileInfo,Encoding,CancellationToken)"/>
         public static Task<string> ReadAllTextAsync(this IFileInfo fileInfo, Encoding encoding,
             CancellationToken cancellationToken = default) =>
             File.ReadAllTextAsync(fileInfo.FullName, encoding, cancellationToken);
+        
+        /// <inheritdoc cref="File.ReadLines(string,Encoding)"/>
+        public static IEnumerable<string> ReadLines(this FileInfo fileInfo, Encoding? encoding = null) =>
+            encoding is null ? File.ReadLines(fileInfo.FullName) : File.ReadLines(fileInfo.FullName, encoding);
 
-        /// <summary>
-        /// See <see cref="File.ReadAllLines(string)"/><br/>
-        /// Reads the lines of a file.
-        /// </summary>
-        public static IEnumerable<string> ReadLines(this FileInfo fileInfo) =>
-            File.ReadLines(fileInfo.FullName);
-
-        /// <inheritdoc cref="ReadLines(FileInfo)"/>
-        public static IEnumerable<string> ReadLines(this IFileInfo fileInfo) =>
-            fileInfo.FileSystem.File.ReadLines(fileInfo.FullName);
-
-        /// <summary>
-        /// See <see cref="File.ReadAllLines(string, Encoding)"/> <br/>
-        /// Read the lines of a file that has a specified encoding.
-        /// </summary>
-        public static IEnumerable<string> ReadLines(this FileInfo fileInfo, Encoding encoding) =>
-            File.ReadLines(fileInfo.FullName, encoding);
-
-        /// <inheritdoc cref="ReadLines(FileInfo,Encoding)"/>
-        public static IEnumerable<string> ReadLines(this IFileInfo fileInfo, Encoding encoding) =>
-            fileInfo.FileSystem.File.ReadLines(fileInfo.FullName, encoding);
+        /// <inheritdoc cref="File.ReadLines(string,Encoding)"/>
+        public static IEnumerable<string> ReadLines(this IFileInfo fileInfo, Encoding? encoding = null) =>
+        encoding is null ?
+                fileInfo.FileSystem.File.ReadLines(fileInfo.FullName) :
+                fileInfo.FileSystem.File.ReadLines(fileInfo.FullName, encoding);
 
         /// <summary>
         /// See <see cref="File.WriteAllBytes(string, byte[])"/> <br />
@@ -295,7 +274,7 @@ namespace kwd.CoreUtil.FileSystem
         /// <inheritdoc cref="WriteAllLines(FileInfo,string[])"/>
         public static void WriteAllLines(this IFileInfo fileInfo, IEnumerable<string> contents) =>
             fileInfo.FileSystem.File.WriteAllLines(fileInfo.FullName, contents);
-        
+
         /// <summary>
         /// See <see cref="File.WriteAllLines(string,string[], Encoding)"/> <br />
         /// Creates a new file, writes the specified string array to the file by using the specified encoding, and then closes the file.
