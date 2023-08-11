@@ -36,18 +36,22 @@ jobs:
           ${{ runner.os }}-nuget
 
     - name: ver
+      id: ver
+      shell: pwsh
       run: |
         $version = "${{github.ref_name}}".Substring(1);
-        write-host "Package Version - '$version'"
-        $env:PackageVersion = $version
-      shell: pwsh
-
+        
+        echo "PackageVersion=$version" >> $$Env:GITHUB_ENV
+      
     - name: build
-      run: >
-        dotnet build src/
-        -c Release 
-        -p:ContinuousIntegrationBuild=true 
-        -p:PackageVersion=$env:PackageVersion
+      run: |
+        $version = '${{steps.ver.outputs.PackageVersion}}'
+        write-host "Package Version - '$version'"
+        dotnet build src/ `
+        -c Release `
+        -p:ContinuousIntegrationBuild=true `
+        -p:PackageVersion=$env:PackageVersion `
+
       shell: pwsh
 
     - name: wiki artifact
