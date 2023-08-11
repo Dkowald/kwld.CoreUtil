@@ -50,7 +50,7 @@ jobs:
         dotnet build src/ `
         -c Release `
         -p:ContinuousIntegrationBuild=true `
-        -p:PackageVersion=$env:PackageVersion `
+        -p:PackageVersion=$version `
 
       shell: pwsh
 
@@ -58,6 +58,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: wiki
-        path: wiki/
+        path: wiki/_Footer.md
         if-no-files-found: error
   
