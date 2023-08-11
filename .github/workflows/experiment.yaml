@@ -47,7 +47,8 @@ jobs:
         dotnet build src/
         -c Release 
         -p:ContinuousIntegrationBuild=true 
-        -p:PackageVersion=($env:PackageVersion)
+        -p:PackageVersion=$env:PackageVersion
+      shell: pwsh
 
     - name: wiki artifact
       uses: actions/upload-artifact@v3
