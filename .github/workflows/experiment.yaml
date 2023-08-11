@@ -16,25 +16,7 @@ jobs:
     name: "Update Wiki doc"
     steps:
     - uses: actions/checkout@v3
-  
-    - name: ApplyVersion
-      shell: pwsh
-      run: |
-        
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: |
-          6.0.x
-          7.0.x
-
-    - uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget
-
+    
     - name: ver
       id: ver
       shell: pwsh
@@ -43,15 +25,11 @@ jobs:
         
         write-output "PackageVersion=$version" >> $env:GITHUB_OUTPUT
       
-    - name: build
+    - name: updatewiki
       run: |
         $version = '${{steps.ver.outputs.PackageVersion}}'
         write-host "Package Version - '$version'"
-        dotnet build src/ `
-        -c Release `
-        -p:ContinuousIntegrationBuild=true `
-        -p:PackageVersion=$version `
-
+        . update-wiki.ps1 -PackageVersion $version
       shell: pwsh
 
     - name: wiki artifact

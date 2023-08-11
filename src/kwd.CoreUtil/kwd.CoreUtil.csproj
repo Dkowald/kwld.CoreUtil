@@ -50,9 +50,5 @@
 	    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 		<PackageReference Include="System.IO.Abstractions" Version="19.2.51" />
 	</ItemGroup>
-
-  <Target Name="WikiVersionUpdate" BeforeTargets="Build" Condition="$(ContinuousIntegrationBuild) != 'true'">
-    <Exec Command='pwsh -f $(MSBuildProjectDirectory)/update-wiki.ps1 -PackageVersion $(PackageVersion)' />
-  </Target>
-
+  
 </Project>
