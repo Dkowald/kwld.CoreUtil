@@ -41,7 +41,7 @@ jobs:
       run: |
         $version = "${{github.ref_name}}".Substring(1);
         
-        echo "PackageVersion=$version" >> $$Env:GITHUB_ENV
+        echo "PackageVersion=$version" >> $env:GITHUB_ENV
       
     - name: build
       run: |
