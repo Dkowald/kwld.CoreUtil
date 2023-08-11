@@ -38,7 +38,7 @@ jobs:
     - name: ver
       run: |
         $version = "${{github.ref_name}}".Substring(1);
-        
+        write-host "Package Version - '$version'"
         $env:PackageVersion = $version
       shell: pwsh
 
@@ -47,7 +47,7 @@ jobs:
         dotnet build src/
         -c Release 
         -p:ContinuousIntegrationBuild=true 
-        -p:PackageVersion=$env:PackageVersion
+        -p:PackageVersion=($env:PackageVersion)
 
     - name: wiki artifact
       uses: actions/upload-artifact@v3
