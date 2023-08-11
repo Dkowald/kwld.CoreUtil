@@ -12,7 +12,7 @@ name: release via tag
 on:
   push:
     tags:
-      - "v*"
+    - "v*"
 env:
   PackTarget: src/kwd.CoreUtil
   PackBranches: "master,build,development"
@@ -37,7 +37,7 @@ jobs:
           
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
-              $relVersion = "${{github.ref_name}}".Substring(2);
+              $relVersion = "${{github.ref_name}}".Substring(1);
               
               $isPreview = if($relVersion.Contains("-")){'true'}else{'false'};
 

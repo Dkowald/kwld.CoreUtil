@@ -1,0 +1,58 @@
+# Experiment: check can update wiki with version.
+# [Syntax](https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions)
+# [Triggers](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#about-events-that-trigger-workflows)
+# [Variables](https://docs.github.com/en/actions/learn-github-actions/variables#default-environment-variables)
+# [Actions](https://github.com/marketplace?type=actions)
+name: experiment
+
+on:
+  push:
+    tags:
+    - "x*"
+    
+jobs:
+  prep:
+    runs-on: ubuntu-latest
+    name: "Update Wiki doc"
+    steps:
+    - uses: actions/checkout@v3
+  
+    - name: ApplyVersion
+      shell: pwsh
+      run: |
+        
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: |
+          6.0.x
+          7.0.x
+
+    - uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget
+
+    - name: ver
+      run: |
+        $version = "${{github.ref_name}}".Substring(1);
+        
+        $env:PackageVersion = $version
+      shell: pwsh
+
+    - name: build
+      run: >
+        dotnet build src/
+        -c Release 
+        -p:ContinuousIntegrationBuild=true 
+        -p:PackageVersion=$env:PackageVersion
+
+    - name: wiki artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: wiki
+        path: wiki/
+        if-no-files-found: error
+  
