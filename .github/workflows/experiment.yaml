@@ -26,11 +26,14 @@ jobs:
         write-output "PackageVersion=$version" >> $env:GITHUB_OUTPUT
       
     - name: updatewiki
+      shell: pwsh
       run: |
         $version = '${{steps.ver.outputs.PackageVersion}}'
         write-host "Package Version - '$version'"
-        . update-wiki.ps1 -PackageVersion $version
-      shell: pwsh
+        $dir = '${{github.workspace}}'
+        set-location $dir
+
+        . ./update-wiki.ps1 -PackageVersion $version
 
     - name: wiki artifact
       uses: actions/upload-artifact@v3
