@@ -88,7 +88,7 @@ jobs:
         -p:ContinuousIntegrationBuild=true 
         -p PackageVersion=${{needs.check.outputs.build_version}}
         -o packages
-    
+
     - name: "Update Wiki doc"
       shell: pwsh
       run: |
@@ -106,13 +106,6 @@ jobs:
         path: packages/
         if-no-files-found: error
         
-    - name: Push package to github
-      run: > 
-        dotnet nuget push 
-        packages/*.nupkg 
-        --source https://nuget.pkg.github.com/dkowald/index.json
-        --api-key ${{ secrets.GITHUB_TOKEN }}
-        
     - name: Nuget publish
       run: >
         dotnet nuget push
@@ -126,6 +119,7 @@ jobs:
         git config --global user.email "derek@kowald.id.au"
 
     - name: Clone wiki
+      if: needs.check.outputs.is_preview == 'false'
       uses: actions/checkout@v3
       with:
        repository: 'Dkowald/kwd.CoreUtil.wiki.git'
@@ -133,11 +127,13 @@ jobs:
        path: 'w'
 
     - name: Copy updated wiki files
+      if: needs.check.outputs.is_preview == 'false'
       run: |
        rm -r w/*
        cp -r wiki/* w/
 
     - name: Publish wiki files
+      if: needs.check.outputs.is_preview == 'false'
       run: |
        cd w
        git add -A
