@@ -17,7 +17,7 @@
         - File.OpenHandle as extension.
         - Directory.CreateTempSubdirectory
 			  - File.ReadLinesAsync
-      Added a Disposable set churrent directory (pushd)
+      Added a Disposable set current directory (pushd)
       Added a Disposable temp file / folder
 			Override extensions now called Overload extensions.
     </PackageReleaseNotes>
@@ -50,5 +50,5 @@
 	    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 		<PackageReference Include="System.IO.Abstractions" Version="19.2.51" />
 	</ItemGroup>
-
+  
 </Project>

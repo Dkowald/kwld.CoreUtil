@@ -12,7 +12,7 @@ name: release via tag
 on:
   push:
     tags:
-      - "v*"
+    - "v*"
 env:
   PackTarget: src/kwd.CoreUtil
   PackBranches: "master,build,development"
@@ -37,7 +37,7 @@ jobs:
           
           foreach($item in $allowed){
             if($tagBranches.Contains($item)){
-              $relVersion = "${{github.ref_name}}".Substring(2);
+              $relVersion = "${{github.ref_name}}".Substring(1);
               
               $isPreview = if($relVersion.Contains("-")){'true'}else{'false'};
 
@@ -72,6 +72,7 @@ jobs:
         dotnet-version: |
           6.0.x
           7.0.x
+
     - name: Restore dependencies
       run: dotnet restore --locked-mode src/
 
@@ -88,6 +89,16 @@ jobs:
         -p PackageVersion=${{needs.check.outputs.build_version}}
         -o packages
     
+    - name: "Update Wiki doc"
+      shell: pwsh
+      run: |
+        $version = "${{needs.check.outputs.build_version}}";
+        write-host "Package Version - '$version'"
+        $dir = '${{github.workspace}}'
+
+        set-location $dir
+        . ./update-wiki.ps1 -PackageVersion $version
+
     - name: Keep package artifact
       uses: actions/upload-artifact@v3
       with:
