@@ -12,7 +12,7 @@ name: release via tag
 on:
   push:
     tags:
-    - "x*"
+    - "v*"
 env:
   PackTarget: src/kwd.CoreUtil
   PackBranches: "master,build,development"
@@ -73,24 +73,23 @@ jobs:
           6.0.x
           7.0.x
 
-    # - name: Restore dependencies
-    #   run: dotnet restore --locked-mode src/
+    - name: Restore dependencies
+      run: dotnet restore --locked-mode src/
 
-    # - name: Test
-    #   run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
+    - name: Test
+      run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
     
-    # - name: Pack
-    #   run: >
-    #     dotnet pack 
-    #     -c Release 
-    #     --include-symbols
-    #     ${{env.PackTarget}}
-    #     -p:ContinuousIntegrationBuild=true 
-    #     -p PackageVersion=${{needs.check.outputs.build_version}}
-    #     -o packages
+    - name: Pack
+      run: >
+        dotnet pack 
+        -c Release 
+        --include-symbols
+        ${{env.PackTarget}}
+        -p:ContinuousIntegrationBuild=true 
+        -p PackageVersion=${{needs.check.outputs.build_version}}
+        -o packages
 
     - name: "Update Wiki doc"
-      if: needs.check.outputs.is_preview == 'false'
       shell: pwsh
       run: |
         $version = "${{needs.check.outputs.build_version}}";
@@ -100,55 +99,51 @@ jobs:
         set-location $dir
         . ./update-wiki.ps1 -PackageVersion $version
 
-    # - name: Keep package artifact
-    #   uses: actions/upload-artifact@v3
-    #   with:
-    #     name: package
-    #     path: packages/
-    #     if-no-files-found: error
+    - name: Keep package artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: packages/
+        if-no-files-found: error
         
-    # - name: Push package to github
-    #   run: > 
-    #     dotnet nuget push 
-    #     packages/*.nupkg 
-    #     --source https://nuget.pkg.github.com/dkowald/index.json
-    #     --api-key ${{ secrets.GITHUB_TOKEN }}
-        
-    # - name: Nuget publish
-    #   run: >
-    #     dotnet nuget push
-    #     "packages/*.*"
-    #     --api-key ${{secrets.NUGETPUSH}}
-    #     --source https://api.nuget.org/v3/index.json
+    - name: Nuget publish
+      run: >
+        dotnet nuget push
+        "packages/*.*"
+        --api-key ${{secrets.NUGETPUSH}}
+        --source https://api.nuget.org/v3/index.json
     
     - name: Setup git
       run: |
         git config --global user.name "dkowald"
         git config --global user.email "derek@kowald.id.au"
 
-    # - name: Clone wiki
-    #   uses: actions/checkout@v3
-    #   with:
-    #    repository: 'Dkowald/kwd.CoreUtil.wiki.git'
-    #    ref: 'master'
-    #    path: 'w'
+    - name: Clone wiki
+      if: needs.check.outputs.is_preview == 'false'
+      uses: actions/checkout@v3
+      with:
+       repository: 'Dkowald/kwd.CoreUtil.wiki.git'
+       ref: 'master'
+       path: 'w'
 
-    # - name: Copy updated wiki files
-    #   run: |
-    #    rm -r w/*
-    #    cp -r wiki/* w/
+    - name: Copy updated wiki files
+      if: needs.check.outputs.is_preview == 'false'
+      run: |
+       rm -r w/*
+       cp -r wiki/* w/
 
-    # - name: Publish wiki files
-    #   run: |
-    #    cd w
-    #    git add -A
-    #    git commit -m "release ${{needs.check.outputs.build_version}}"
-    #    git push
+    - name: Publish wiki files
+      if: needs.check.outputs.is_preview == 'false'
+      run: |
+       cd w
+       git add -A
+       git commit -m "release ${{needs.check.outputs.build_version}}"
+       git push
     
-    # - name: Create release
-    #   uses: ncipollo/release-action@v1      
-    #   with:
-    #     draft: false
-    #     prerelease: ${{needs.check.outputs.is_preview}}
-    #     artifacts: "./packages/*"
+    - name: Create release
+      uses: ncipollo/release-action@v1      
+      with:
+        draft: false
+        prerelease: ${{needs.check.outputs.is_preview}}
+        artifacts: "./packages/*"
    
