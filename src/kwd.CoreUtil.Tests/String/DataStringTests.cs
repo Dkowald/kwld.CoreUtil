@@ -16,7 +16,15 @@ public class DataStringTests
         cfg.Converters.Add(new DataStringConverterFactory());
         return cfg;
     });
-    
+
+    [TestMethod]
+    public void MultipleTryParseCandidates()
+    {
+        var target = JsonSerializer.Deserialize<HostName>("\"a.b.xyz\"", _jsonConfig.Value);
+
+        Assert.AreEqual("a.b.xyz", target, "Ok if have multiple TryParse methods");
+    }
+
     [TestMethod]
     public void RefactoringWithADataString()
     {
