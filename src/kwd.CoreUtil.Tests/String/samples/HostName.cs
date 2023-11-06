@@ -38,11 +38,20 @@ public record HostName : IDataString
         return (null, parts.OfType<UserName>().ToArray());
     }
 
-    public static HostName? TryParse(string? data)
+    public static HostName? TryParse(string? data) => TryParse(data, out _);
+    
+    public static HostName? TryParse(string? data, out string failReason)
     {
-        if (data is null) return null;
+        if (data is null)
+        {
+            failReason = "must have at-least one part";
+            return null;
+        }
 
-        var (_, parts) = TryRead(data);
+        var (error, parts) = TryRead(data);
+        
+        failReason = error ?? "";
+
         return parts is null ? null : new(parts);
     }
 

@@ -4,33 +4,33 @@
     "net6.0": {
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
-        "requested": "[17.6.2, )",
-        "resolved": "17.6.2",
-        "contentHash": "+WFxuoFVBG0aewD9Psw+1I90kaRToQgMIzK20xNVRO4QRWR9Bou3qGefrZvMZ/xTC+6bAmZppFbpPbiHDzrPyg==",
+        "requested": "[17.7.2, )",
+        "resolved": "17.7.2",
+        "contentHash": "WOSF/GUYcnrLGkdvCbXDRig2rShtBwfQc5l7IxQE6PZI3CeXAqF1SpyzwlGA5vw+MdEAXs3niy+ZkGBBWna6tw==",
         "dependencies": {
-          "Microsoft.CodeCoverage": "17.6.2",
-          "Microsoft.TestPlatform.TestHost": "17.6.2"
+          "Microsoft.CodeCoverage": "17.7.2",
+          "Microsoft.TestPlatform.TestHost": "17.7.2"
         }
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
-        "requested": "[3.0.4, )",
-        "resolved": "3.0.4",
-        "contentHash": "18THEGVcU4fbAOZWvRtEyvQCnZ/o+3LFAiFbAkWYh63GC5TmHoJ10IUiF9L02SMmbLbWpH1/PxvO7mcInIY4/Q=="
+        "requested": "[3.1.1, )",
+        "resolved": "3.1.1",
+        "contentHash": "kMvdO5dhrUR3o1qk0fzS0St0prlKyMQAfz1ChVAUdGGobTU5ehR60szOFto0+Q7rFG5iXMvTlVIthXM9EcNYnw=="
       },
       "MSTest.TestFramework": {
         "type": "Direct",
-        "requested": "[3.0.4, )",
-        "resolved": "3.0.4",
-        "contentHash": "hYq5xOOr2k09rtXpmcHkJ4Tdt/yS4cy8jiFPNMdDJP+lB6OY8yekOmQC4Fsvug4rhLpXGDd6zbPWYeoewqfePA=="
+        "requested": "[3.1.1, )",
+        "resolved": "3.1.1",
+        "contentHash": "3rjkGxciNHHmPW8cl1/QVIYjOpfptjmAH5JrLBw+dnMTYDoweg3I579N7OIbar3Zd3q9dfWFrCy2LEV/AmPn3A=="
       },
       "System.IO.Abstractions.TestingHelpers": {
         "type": "Direct",
-        "requested": "[19.2.29, )",
-        "resolved": "19.2.29",
-        "contentHash": "qKYgCy6YggzHcCwV/AFTDoRhFFL/QMNT33hC4a4sdy2g4hUsX1HCMZrR5j5Mk5JIN7HeVdK2FvIEt91gWEqW1w==",
+        "requested": "[19.2.51, )",
+        "resolved": "19.2.51",
+        "contentHash": "Jvnh3bZJXZSphy5+C5x7XZtmAqOiuuqWym5fuax32IqL+y52GWRCfI6aLuy7V76us3UwFkGXwWRfzJnvB3z1mQ==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions.TestingHelpers": "19.2.29"
+          "TestableIO.System.IO.Abstractions.TestingHelpers": "19.2.51"
         }
       },
       "System.Linq.Async": {
@@ -49,13 +49,13 @@
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
-        "resolved": "17.6.2",
-        "contentHash": "t+DjPlq7GIxIkOK/jiTmNeiEMVkfVCynBEZyV+IMg2ro43NugKExng+7a04R1fBLi+d6voxjeDxL2ozdl+XyVg=="
+        "resolved": "17.7.2",
+        "contentHash": "ntbkwIqwszkfCRjxVZOyEQiHauiYsY9NtYjw9ASsoxDSiG8YtV6AGcOAwrAk3TZv2UOq4MrpX+3MYEeMHSb03w=="
       },
       "Microsoft.TestPlatform.ObjectModel": {
         "type": "Transitive",
-        "resolved": "17.6.2",
-        "contentHash": "I3S/oELDAe/ckFltBnPb0PV+gADbpc8n0yGTtYfTd7q1hd0cAZKn/FrYoegA/rGws8fEFyJD/2PB6uq+nIjWsg==",
+        "resolved": "17.7.2",
+        "contentHash": "aHzQWgDMVBnk39HhQVmn06w+YxzF1h2V5/M4WgrNQAn7q97GR4Si3vLRTDlmJo9nK/Nknce+H4tXx4gqOKyLeg==",
         "dependencies": {
           "NuGet.Frameworks": "6.5.0",
           "System.Reflection.Metadata": "1.6.0"
@@ -63,10 +63,10 @@
       },
       "Microsoft.TestPlatform.TestHost": {
         "type": "Transitive",
-        "resolved": "17.6.2",
-        "contentHash": "WszrF1CoG+Y2bA4WJFxlaPADQCWUuNP6TCxVRuScmP6DQsNvDDuOO9XiUxCA+wPmNOSyWVh9EGrPu7JoUpf2gA==",
+        "resolved": "17.7.2",
+        "contentHash": "pv9yVD7IKPLJV28zYjLsWFiM3j506I2ye+6NquG8vsbm/gR7lgyig8IgY6Vo57VMvGaAKwtUECzcj+C5tH271Q==",
         "dependencies": {
-          "Microsoft.TestPlatform.ObjectModel": "17.6.2",
+          "Microsoft.TestPlatform.ObjectModel": "17.7.2",
           "Newtonsoft.Json": "13.0.1"
         }
       },
@@ -82,11 +82,11 @@
       },
       "System.IO.Abstractions": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "G6Cv4Uf3aAE5Idcec1GUHMhqaKmzdrYfAZsxnRE+aW8yIrDs/qTC7yxG2FUDxuIMOYOuhaWJWaUfxpTjCenWZA==",
+        "resolved": "19.2.69",
+        "contentHash": "VNc0GMVJ7df9IOupFyUrsLVwOvnba6W+lKJPeR/sDx+agPkd6LmdZkXbcURWNN1ue//uLTwP6145agO61c9gNg==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29",
-          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.2.69",
+          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.69"
         }
       },
       "System.Reflection.Metadata": {
@@ -96,63 +96,63 @@
       },
       "TestableIO.System.IO.Abstractions": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "sqZAF3+li6MCKr1jWEonv6wVvhZfVGgwWWsKx8dfxlARWQNw543ZJDlU0Yn7ce8UBeOOzWLwBNl2TAPPuQqAqQ=="
+        "resolved": "19.2.69",
+        "contentHash": "BHZ9uqMAPG7TId4dwJPEuofR6NjIu8AycwH8qSWTSLYUKpQzJKFMIgo7Igp37BW3oURRdIs5Dx4+W86BqvEXrg=="
       },
       "TestableIO.System.IO.Abstractions.TestingHelpers": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "RwBZee4i2JW39B3zVYGWHTFkRVtPqn+e5cw+KWaalh10w62hNoeT6h1j5otHMpzSpdzS/TDvkbHMuek17UEuTw==",
+        "resolved": "19.2.51",
+        "contentHash": "qCNPD0CIofxYj7ATyesPTybSbOVlVjtl79EgomvkATD0rluINpOld6rOdd0ZEbyagMNxYfFaiIkFKPA5WyzzCg==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29",
-          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.2.51",
+          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.51"
         }
       },
       "TestableIO.System.IO.Abstractions.Wrappers": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "oO00myIO1cjVYgDj46AXY2Oeba3pz89HhsQ1uuFRSP9bwn2cUB1Y93EsGL4nSPMms2Wgikv8i58AVwQLGDEU7w==",
+        "resolved": "19.2.69",
+        "contentHash": "yHPZKCrsaVoA/LuZRqarYhecFJ+hUnQFXXfTvFfFaGdfKhCUYN7oo1CPgtMcr2TqLA2usGpSPZ2R7ybDWotY/g==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.2.69"
         }
       },
       "kwd.coreutil": {
         "type": "Project",
         "dependencies": {
-          "System.IO.Abstractions": "[19.2.29, )"
+          "System.IO.Abstractions": "[19.2.69, )"
         }
       }
     },
     "net7.0": {
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
-        "requested": "[17.6.2, )",
-        "resolved": "17.6.2",
-        "contentHash": "+WFxuoFVBG0aewD9Psw+1I90kaRToQgMIzK20xNVRO4QRWR9Bou3qGefrZvMZ/xTC+6bAmZppFbpPbiHDzrPyg==",
+        "requested": "[17.7.2, )",
+        "resolved": "17.7.2",
+        "contentHash": "WOSF/GUYcnrLGkdvCbXDRig2rShtBwfQc5l7IxQE6PZI3CeXAqF1SpyzwlGA5vw+MdEAXs3niy+ZkGBBWna6tw==",
         "dependencies": {
-          "Microsoft.CodeCoverage": "17.6.2",
-          "Microsoft.TestPlatform.TestHost": "17.6.2"
+          "Microsoft.CodeCoverage": "17.7.2",
+          "Microsoft.TestPlatform.TestHost": "17.7.2"
         }
       },
       "MSTest.TestAdapter": {
         "type": "Direct",
-        "requested": "[3.0.4, )",
-        "resolved": "3.0.4",
-        "contentHash": "18THEGVcU4fbAOZWvRtEyvQCnZ/o+3LFAiFbAkWYh63GC5TmHoJ10IUiF9L02SMmbLbWpH1/PxvO7mcInIY4/Q=="
+        "requested": "[3.1.1, )",
+        "resolved": "3.1.1",
+        "contentHash": "kMvdO5dhrUR3o1qk0fzS0St0prlKyMQAfz1ChVAUdGGobTU5ehR60szOFto0+Q7rFG5iXMvTlVIthXM9EcNYnw=="
       },
       "MSTest.TestFramework": {
         "type": "Direct",
-        "requested": "[3.0.4, )",
-        "resolved": "3.0.4",
-        "contentHash": "hYq5xOOr2k09rtXpmcHkJ4Tdt/yS4cy8jiFPNMdDJP+lB6OY8yekOmQC4Fsvug4rhLpXGDd6zbPWYeoewqfePA=="
+        "requested": "[3.1.1, )",
+        "resolved": "3.1.1",
+        "contentHash": "3rjkGxciNHHmPW8cl1/QVIYjOpfptjmAH5JrLBw+dnMTYDoweg3I579N7OIbar3Zd3q9dfWFrCy2LEV/AmPn3A=="
       },
       "System.IO.Abstractions.TestingHelpers": {
         "type": "Direct",
-        "requested": "[19.2.29, )",
-        "resolved": "19.2.29",
-        "contentHash": "qKYgCy6YggzHcCwV/AFTDoRhFFL/QMNT33hC4a4sdy2g4hUsX1HCMZrR5j5Mk5JIN7HeVdK2FvIEt91gWEqW1w==",
+        "requested": "[19.2.51, )",
+        "resolved": "19.2.51",
+        "contentHash": "Jvnh3bZJXZSphy5+C5x7XZtmAqOiuuqWym5fuax32IqL+y52GWRCfI6aLuy7V76us3UwFkGXwWRfzJnvB3z1mQ==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions.TestingHelpers": "19.2.29"
+          "TestableIO.System.IO.Abstractions.TestingHelpers": "19.2.51"
         }
       },
       "System.Linq.Async": {
@@ -171,13 +171,13 @@
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
-        "resolved": "17.6.2",
-        "contentHash": "t+DjPlq7GIxIkOK/jiTmNeiEMVkfVCynBEZyV+IMg2ro43NugKExng+7a04R1fBLi+d6voxjeDxL2ozdl+XyVg=="
+        "resolved": "17.7.2",
+        "contentHash": "ntbkwIqwszkfCRjxVZOyEQiHauiYsY9NtYjw9ASsoxDSiG8YtV6AGcOAwrAk3TZv2UOq4MrpX+3MYEeMHSb03w=="
       },
       "Microsoft.TestPlatform.ObjectModel": {
         "type": "Transitive",
-        "resolved": "17.6.2",
-        "contentHash": "I3S/oELDAe/ckFltBnPb0PV+gADbpc8n0yGTtYfTd7q1hd0cAZKn/FrYoegA/rGws8fEFyJD/2PB6uq+nIjWsg==",
+        "resolved": "17.7.2",
+        "contentHash": "aHzQWgDMVBnk39HhQVmn06w+YxzF1h2V5/M4WgrNQAn7q97GR4Si3vLRTDlmJo9nK/Nknce+H4tXx4gqOKyLeg==",
         "dependencies": {
           "NuGet.Frameworks": "6.5.0",
           "System.Reflection.Metadata": "1.6.0"
@@ -185,10 +185,10 @@
       },
       "Microsoft.TestPlatform.TestHost": {
         "type": "Transitive",
-        "resolved": "17.6.2",
-        "contentHash": "WszrF1CoG+Y2bA4WJFxlaPADQCWUuNP6TCxVRuScmP6DQsNvDDuOO9XiUxCA+wPmNOSyWVh9EGrPu7JoUpf2gA==",
+        "resolved": "17.7.2",
+        "contentHash": "pv9yVD7IKPLJV28zYjLsWFiM3j506I2ye+6NquG8vsbm/gR7lgyig8IgY6Vo57VMvGaAKwtUECzcj+C5tH271Q==",
         "dependencies": {
-          "Microsoft.TestPlatform.ObjectModel": "17.6.2",
+          "Microsoft.TestPlatform.ObjectModel": "17.7.2",
           "Newtonsoft.Json": "13.0.1"
         }
       },
@@ -204,11 +204,11 @@
       },
       "System.IO.Abstractions": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "G6Cv4Uf3aAE5Idcec1GUHMhqaKmzdrYfAZsxnRE+aW8yIrDs/qTC7yxG2FUDxuIMOYOuhaWJWaUfxpTjCenWZA==",
+        "resolved": "19.2.69",
+        "contentHash": "VNc0GMVJ7df9IOupFyUrsLVwOvnba6W+lKJPeR/sDx+agPkd6LmdZkXbcURWNN1ue//uLTwP6145agO61c9gNg==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29",
-          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.2.69",
+          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.69"
         }
       },
       "System.Reflection.Metadata": {
@@ -218,30 +218,30 @@
       },
       "TestableIO.System.IO.Abstractions": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "sqZAF3+li6MCKr1jWEonv6wVvhZfVGgwWWsKx8dfxlARWQNw543ZJDlU0Yn7ce8UBeOOzWLwBNl2TAPPuQqAqQ=="
+        "resolved": "19.2.69",
+        "contentHash": "BHZ9uqMAPG7TId4dwJPEuofR6NjIu8AycwH8qSWTSLYUKpQzJKFMIgo7Igp37BW3oURRdIs5Dx4+W86BqvEXrg=="
       },
       "TestableIO.System.IO.Abstractions.TestingHelpers": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "RwBZee4i2JW39B3zVYGWHTFkRVtPqn+e5cw+KWaalh10w62hNoeT6h1j5otHMpzSpdzS/TDvkbHMuek17UEuTw==",
+        "resolved": "19.2.51",
+        "contentHash": "qCNPD0CIofxYj7ATyesPTybSbOVlVjtl79EgomvkATD0rluINpOld6rOdd0ZEbyagMNxYfFaiIkFKPA5WyzzCg==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29",
-          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.2.51",
+          "TestableIO.System.IO.Abstractions.Wrappers": "19.2.51"
         }
       },
       "TestableIO.System.IO.Abstractions.Wrappers": {
         "type": "Transitive",
-        "resolved": "19.2.29",
-        "contentHash": "oO00myIO1cjVYgDj46AXY2Oeba3pz89HhsQ1uuFRSP9bwn2cUB1Y93EsGL4nSPMms2Wgikv8i58AVwQLGDEU7w==",
+        "resolved": "19.2.69",
+        "contentHash": "yHPZKCrsaVoA/LuZRqarYhecFJ+hUnQFXXfTvFfFaGdfKhCUYN7oo1CPgtMcr2TqLA2usGpSPZ2R7ybDWotY/g==",
         "dependencies": {
-          "TestableIO.System.IO.Abstractions": "19.2.29"
+          "TestableIO.System.IO.Abstractions": "19.2.69"
         }
       },
       "kwd.coreutil": {
         "type": "Project",
         "dependencies": {
-          "System.IO.Abstractions": "[19.2.29, )"
+          "System.IO.Abstractions": "[19.2.69, )"
         }
       }
     }

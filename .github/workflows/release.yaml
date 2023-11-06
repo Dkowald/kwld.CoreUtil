@@ -1,0 +1,149 @@
+﻿# Tag based release.
+# Build and publish to github.
+# Publish to nuget
+# Uses the provided tag as the version.
+#
+# Tag must start with v
+# Only works on selected branches
+#
+
+name: release via tag
+
+on:
+  push:
+    tags:
+    - "v*"
+env:
+  PackTarget: src/kwd.CoreUtil
+  PackBranches: "master,build,development"
+
+jobs:
+  check:
+    name: 'check is valid branch'
+    runs-on: ubuntu-latest
+    outputs:
+      build_version: ${{steps.check_branch.outputs.build_version}}
+      is_preview: ${{steps.check_branch.outputs.is_preview}}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: check_branch
+        id: check_branch
+        shell: pwsh
+        run: |
+          $tagBranches = "$(git branch -r --contains ${{github.ref}})"
+          $allowed = "${{env.PackBranches}}" -split ','
+          
+          foreach($item in $allowed){
+            if($tagBranches.Contains($item)){
+              $relVersion = "${{github.ref_name}}".Substring(1);
+              
+              $isPreview = if($relVersion.Contains("-")){'true'}else{'false'};
+
+              echo build_version=$relVersion >> $env:GITHUB_OUTPUT
+              echo is_preview=$isPreview >> $env:GITHUB_OUTPUT
+              
+              echo "Allow building release - $relVersion"
+              echo "Is Preview $isPreview"
+              return;
+            }
+          }
+          echo build_version="" >> $env:GITHUB_OUTPUT
+          echo Deny
+      
+      - name: results
+        run: |
+          echo BuildVersion - ${{steps.check_branch.outputs.build_version}}
+          echo IsPreview - ${{steps.check_branch.outputs.is_preview}}
+  
+  build:
+    runs-on: ubuntu-latest
+    name: "Build release package"
+    needs: "check"
+    if: needs.check.outputs.build_version != ''
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: |
+          6.0.x
+          7.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore --locked-mode src/
+
+    - name: Test
+      run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
+    
+    - name: Pack
+      run: >
+        dotnet pack 
+        -c Release 
+        --include-symbols
+        ${{env.PackTarget}}
+        -p:ContinuousIntegrationBuild=true 
+        -p PackageVersion=${{needs.check.outputs.build_version}}
+        -o packages
+
+    - name: "Update Wiki doc"
+      shell: pwsh
+      run: |
+        $version = "${{needs.check.outputs.build_version}}";
+        write-host "Package Version - '$version'"
+        $dir = '${{github.workspace}}'
+
+        set-location $dir
+        . ./update-wiki.ps1 -PackageVersion $version
+
+    - name: Keep package artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: packages/
+        if-no-files-found: error
+        
+    - name: Nuget publish
+      run: >
+        dotnet nuget push
+        "packages/*.*"
+        --api-key ${{secrets.NUGETPUSH}}
+        --source https://api.nuget.org/v3/index.json
+    
+    - name: Setup git
+      run: |
+        git config --global user.name "dkowald"
+        git config --global user.email "derek@kowald.id.au"
+
+    - name: Clone wiki
+      if: needs.check.outputs.is_preview == 'false'
+      uses: actions/checkout@v3
+      with:
+       repository: 'Dkowald/kwd.CoreUtil.wiki.git'
+       ref: 'master'
+       path: 'w'
+
+    - name: Copy updated wiki files
+      if: needs.check.outputs.is_preview == 'false'
+      run: |
+       rm -r w/*
+       cp -r wiki/* w/
+
+    - name: Publish wiki files
+      if: needs.check.outputs.is_preview == 'false'
+      run: |
+       cd w
+       git add -A
+       git commit -m "release ${{needs.check.outputs.build_version}}"
+       git push
+    
+    - name: Create release
+      uses: ncipollo/release-action@v1      
+      with:
+        draft: false
+        prerelease: ${{needs.check.outputs.is_preview}}
+        artifacts: "./packages/*"
+   

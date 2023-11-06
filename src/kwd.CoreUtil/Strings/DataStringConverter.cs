@@ -1,5 +1,6 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -19,9 +20,16 @@ internal class DataStringConverter<T> : JsonConverter<T> where T : IDataString
         var data = reader.GetString();
 
         if (data is null) return default;
-        
-        var parseMethod = typeToConvert.GetMethod("TryParse",
-            BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+        var parseMethod = typeToConvert.GetMethods(
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public)
+            .Where(m => m.Name == "TryParse")
+            .First(m =>
+            {
+                var args = m.GetParameters();
+                return args.Length == 1 &&
+                       args[0].ParameterType == typeof(string);
+            });
 
         if (parseMethod is null)
             throw new Exception($"The '{nameof(IDataString)}' type '{typeToConvert.Name}' MUST implement TryParse");

@@ -30,10 +30,14 @@ Split on whitespace (find words)
 
 Compare case-ignorant, and white-space ignorant (Same).
 
-### Dictionary helpers.
-Add or merge 2 dictonaries.
+### Collections.
 
-Ensure an item exists (DefaultTo)
+Dictionary extensions to:
+1.  Add a range, or merge.
+2.  Ensure an item exists (DefaultTo)
+
+A RecordArray for value-equality of a set of records.
+(with array-like serialization)
 
 ### Build tooling.
 
@@ -45,4 +49,4 @@ Download file as part of the build.
 See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details
 
 ---
-^ v1.3 [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)
+^ [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)

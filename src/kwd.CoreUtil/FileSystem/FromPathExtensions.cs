@@ -115,5 +115,5 @@ namespace kwd.CoreUtil.FileSystem
         /// </remarks>
         public static FileInfo GetFullPath(this FileInfo file, DirectoryInfo root) =>
             new FileInfo(Path.GetFullPath(file.ToString(), root.ToString()));
-    }
+  }
 }
