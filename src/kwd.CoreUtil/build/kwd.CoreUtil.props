@@ -6,4 +6,12 @@
 		<!--see https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md-->
 		<TriggerDownloadFileTarget>CollectPackageDownloads</TriggerDownloadFileTarget>
 	</PropertyGroup>
+
+  <ItemGroup Condition=" $(ImplicitUsings_CorUtil) == 'enable' Or ($(ImplicitUsings_CorUtil) == '' And $(ImplicitUsings) == 'enable' )">
+    <Using Include="kwd.CoreUtil.Collections" />
+    <Using Include="System.IO.Abstractions" />
+    <Using Include="kwd.CoreUtil.FileSystem" />
+    <Using Include="kwd.CoreUtil.Streams" />
+    <Using Include="kwd.CoreUtil.Strings" />
+  </ItemGroup>
 </Project>

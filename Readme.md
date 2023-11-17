@@ -1,6 +1,13 @@
 ## Overview
 Core library holding various extensions to improve code development and readability.
 
+For easy use; extensions are included as global usings (.net 6 +)
+These can be explicitly configured using 
+__ImplicitUsings_CorUtil__ build property.
+
+If __ImplicitUsings_CorUtil__ is not set, then 
+the standard __ImplicitUsings__ property determines if they are used or not.
+
 ### Framework support 
 To leverage new language features, this now targets multiple frameworks.
 

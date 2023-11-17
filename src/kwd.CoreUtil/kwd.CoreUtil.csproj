@@ -9,7 +9,7 @@
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageOutputPath>../../sample/packages</PackageOutputPath>
+    <PackageOutputPath>../../samples/packages</PackageOutputPath>
     <EmbedUntrackedSources>True</EmbedUntrackedSources>
 	</PropertyGroup>
 
@@ -18,6 +18,7 @@
 		<PackageReleaseNotes>
 			Add .net8.0 target
 			Add samples; using approach for local nuget package usage
+			Add extensions as implicit global usings.
     </PackageReleaseNotes>
 	</PropertyGroup>
 
@@ -43,7 +44,7 @@
 		<None Include="../../Readme.md" Pack="true" PackagePath="" />
 		<Content Include="build\**" target="build" Pack="true" PackagePath="%(Identity)" />
 	</ItemGroup>
-
+	
 	<ItemGroup>
 	    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 		<PackageReference Include="System.IO.Abstractions" Version="19.2.69" />
