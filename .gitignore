@@ -8,5 +8,5 @@ bin/
 
 /src/**/App_Data/
 
-/sample/packages/
-/sample/Sample/App_Data/
+/samples/packages/
+/samples/Sample/App_Data/

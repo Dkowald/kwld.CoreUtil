@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0;net6.0;netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>net8.0;net7.0;net6.0;netstandard2.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
@@ -10,18 +10,14 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageOutputPath>../../sample/packages</PackageOutputPath>
+    <EmbedUntrackedSources>True</EmbedUntrackedSources>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<VersionPrefix>99.0.0</VersionPrefix>
 		<PackageReleaseNotes>
-      Refresh with .net6 and .net7 additions
-        - File.OpenHandle as extension.
-        - Directory.CreateTempSubdirectory
-			  - File.ReadLinesAsync
-      Added a Disposable set current directory (pushd)
-      Added a Disposable temp file / folder
-			Override extensions now called Overload extensions.
+			Add .net8.0 target
+			Add samples; using approach for local nuget package usage
     </PackageReleaseNotes>
 	</PropertyGroup>
 
