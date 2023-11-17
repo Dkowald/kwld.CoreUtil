@@ -8,10 +8,12 @@
 		<AnalysisLevel>latest</AnalysisLevel>
 		<IncludeSymbols>true</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath>../../sample/packages</PackageOutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<VersionPrefix>1.3.2</VersionPrefix>
+		<VersionPrefix>99.0.0</VersionPrefix>
 		<PackageReleaseNotes>
       Refresh with .net6 and .net7 additions
         - File.OpenHandle as extension.
@@ -50,5 +52,10 @@
 	    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 		<PackageReference Include="System.IO.Abstractions" Version="19.2.69" />
 	</ItemGroup>
-  
+
+  <Target Name="AfterPack" AfterTargets="Pack">
+    <!--reset local falback cache (if any)-->
+    <RemoveDir Directories="$(PackageOutputPath)/$(PackageId)/" />
+  </Target>
+
 </Project>
