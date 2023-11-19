@@ -1,6 +1,8 @@
 ## Overview
 Core library holding various extensions to improve code development and readability.
 
+See [Docs](docs/Home.md) for details
+
 For easy use; extensions are included as global usings (.net 6 +)
 These can be explicitly configured using 
 __ImplicitUsings_CorUtil__ build property.
@@ -51,9 +53,6 @@ A RecordArray for value-equality of a set of records.
 A number of msbuild helpers, including:
 
 Download file as part of the build.
-
-
-See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details
 
 ---
 ^ [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)

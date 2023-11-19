@@ -13,6 +13,8 @@ Dummy project to include additional repository files
 
 	<ItemGroup>
 		<None Include=".github/**" />
+		<None Include="docs/**/*" />
+    <None Include="build/**/*" />
 	</ItemGroup>
   
   <ItemGroup>

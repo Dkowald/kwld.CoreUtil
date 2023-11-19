@@ -15,53 +15,52 @@ on:
     - "v*"
 env:
   PackTarget: src/kwd.CoreUtil
-  PackBranches: "master,build,development"
-
+defaults:
+  run: 
+    shell: pwsh
 jobs:
-  check:
-    name: 'check is valid branch'
+  version_info:
+    name: 'read version info from tag'
     runs-on: ubuntu-latest
     outputs:
-      build_version: ${{steps.check_branch.outputs.build_version}}
-      is_preview: ${{steps.check_branch.outputs.is_preview}}
+      is_preview: '${{steps.version_from_tag.outputs.is_preview}}'
+      version_prefix: '${{steps.version_from_tag.outputs.version_prefix}}'
+      version_suffix: '${{steps.version_from_tag.outputs.version_suffix}}'
+      package_version: '${{steps.version_from_tag.outputs.package_version}}'      
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: check_branch
-        id: check_branch
+      - name: version_from_tag
+        id: version_from_tag
         shell: pwsh
         run: |
-          $tagBranches = "$(git branch -r --contains ${{github.ref}})"
-          $allowed = "${{env.PackBranches}}" -split ','
-          
-          foreach($item in $allowed){
-            if($tagBranches.Contains($item)){
-              $relVersion = "${{github.ref_name}}".Substring(1);
-              
-              $isPreview = if($relVersion.Contains("-")){'true'}else{'false'};
+          $tagVersion = "${{github.ref_name}}".Substring(1);
 
-              echo build_version=$relVersion >> $env:GITHUB_OUTPUT
-              echo is_preview=$isPreview >> $env:GITHUB_OUTPUT
-              
-              echo "Allow building release - $relVersion"
-              echo "Is Preview $isPreview"
-              return;
-            }
-          }
-          echo build_version="" >> $env:GITHUB_OUTPUT
-          echo Deny
-      
+          $parts = $tagVersion.Split('-');
+
+          $VersionPrefix = $parts[0];
+          echo version_prefix="$VersionPrefix" >> $env:GITHUB_OUTPUT
+
+          $VersionSuffix =  if($parts.Length -gt 1){$parts[1]}else{""}
+          echo version_suffix="$VersionSuffix" >> $env:GITHUB_OUTPUT
+
+          $isPreview = if($VersionSuffix -eq ""){"false"}else{"true"}
+          echo is_preview="$isPreview" >> $env:GITHUB_OUTPUT
+
+          $PackageSuffix = if($VersionSuffix -eq ""){""}else{"-$($VersionSuffix)"}
+          $PackageVersion = "$($VersionPrefix)$($PackageSuffix)"
+          echo package_version="$PackageVersion" >> $env:GITHUB_OUTPUT
+    
       - name: results
         run: |
-          echo BuildVersion - ${{steps.check_branch.outputs.build_version}}
-          echo IsPreview - ${{steps.check_branch.outputs.is_preview}}
-  
+         echo IsPreview - ${{steps.version_from_tag.outputs.is_preview}}
+         echo VersionPrefix - ${{steps.version_from_tag.outputs.version_prefix}}
+         echo VersionSuffix - ${{steps.version_from_tag.outputs.version_suffix}}
+         echo PackageVersion - ${{steps.version_from_tag.outputs.package_version}}
+
   build:
     runs-on: ubuntu-latest
     name: "Build release package"
-    needs: "check"
-    if: needs.check.outputs.build_version != ''
+    needs: "version_info"
+    if: needs.version_info.outputs.package_version != ''
     permissions:
       contents: write
     steps:
@@ -72,33 +71,56 @@ jobs:
         dotnet-version: |
           6.0.x
           7.0.x
+          8.0.x
 
     - name: Restore dependencies
       run: dotnet restore --locked-mode src/
 
+    - name: "Update Files"
+      shell: pwsh
+      run: |
+        $version = "${{needs.version_info.outputs.package_version}}";
+        write-host "Package Version - '$version'"
+        
+        ./build/update-files.ps1 -PackageVersion $version
+
+    - name: Build
+      run: > 
+        dotnet build
+        -c Release
+        --no-restore
+        -p:GeneratePackageOnBuild=false
+        -p:ContinuousIntegrationBuild=true
+        -p:VersionPrefix=${{needs.version_info.outputs.version_prefix}}
+        -p:VersionSuffix=${{needs.version_info.outputs.version_suffix}}
+        src/
+
     - name: Test
-      run: dotnet test -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
+      run: >
+        dotnet test 
+        -c Release 
+        --no-build 
+        --verbosity normal 
+        --logger trx 
+        --results-directory "TestResults" 
+        src/
     
+    - name: create packages folder
+      run: |
+        if(!(Test-path -Path packages)) {
+          New-Item packages -ItemType Directory
+        }
     - name: Pack
       run: >
         dotnet pack 
         -c Release 
+        --no-build
         --include-symbols
-        ${{env.PackTarget}}
         -p:ContinuousIntegrationBuild=true 
-        -p PackageVersion=${{needs.check.outputs.build_version}}
+        -p:PackageVersion=${{needs.version_info.outputs.package_version}}
         -o packages
-
-    - name: "Update Wiki doc"
-      shell: pwsh
-      run: |
-        $version = "${{needs.check.outputs.build_version}}";
-        write-host "Package Version - '$version'"
-        $dir = '${{github.workspace}}'
-
-        set-location $dir
-        . ./update-wiki.ps1 -PackageVersion $version
-
+        ${{env.PackTarget}}
+        
     - name: Keep package artifact
       uses: actions/upload-artifact@v3
       with:
@@ -112,38 +134,11 @@ jobs:
         "packages/*.*"
         --api-key ${{secrets.NUGETPUSH}}
         --source https://api.nuget.org/v3/index.json
-    
-    - name: Setup git
-      run: |
-        git config --global user.name "dkowald"
-        git config --global user.email "derek@kowald.id.au"
 
-    - name: Clone wiki
-      if: needs.check.outputs.is_preview == 'false'
-      uses: actions/checkout@v3
-      with:
-       repository: 'Dkowald/kwd.CoreUtil.wiki.git'
-       ref: 'master'
-       path: 'w'
-
-    - name: Copy updated wiki files
-      if: needs.check.outputs.is_preview == 'false'
-      run: |
-       rm -r w/*
-       cp -r wiki/* w/
-
-    - name: Publish wiki files
-      if: needs.check.outputs.is_preview == 'false'
-      run: |
-       cd w
-       git add -A
-       git commit -m "release ${{needs.check.outputs.build_version}}"
-       git push
-    
     - name: Create release
       uses: ncipollo/release-action@v1      
       with:
         draft: false
-        prerelease: ${{needs.check.outputs.is_preview}}
+        prerelease: ${{needs.version_info.outputs.is_preview}}
         artifacts: "./packages/*"
    
