@@ -9,7 +9,7 @@ Using this you can download a file as part of the build.
 
 ```xml
 <ItemGroup>
-  <DownloadFile OutFolder="App_Data" Include="https://raw.githubusercontent.com/Dkowald/kwd.CoreUtil/master/Readme.md"/>
+  <DownloadFile OutFolder="App_Data" Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md"/>
 </ItemGroup>
 ```
 
@@ -27,7 +27,7 @@ The following Metadata is used:
 
 For finer control, you can explicity set the metadata as desired:
 ```xml
-<DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwd.CoreUtil/master/Readme.md">
+<DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md">
   <OutFolder>App_Data/Other</OutFolder>
   <OutFileName>%(Filename).download.%(Extension)</OutFileName>
 </DownloadFile>

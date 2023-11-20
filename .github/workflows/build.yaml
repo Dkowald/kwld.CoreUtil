@@ -43,7 +43,7 @@ jobs:
       run: dotnet test --no-build -c Release --verbosity normal --logger trx --results-directory "TestResults" src/
 
     - name: Pack 
-      run: dotnet pack --no-build -c Release -o ./packages src/kwd.CoreUtil
+      run: dotnet pack --no-build -c Release -o ./packages src/kwld.CoreUtil
 
     - name: Keep package artifact
       uses: actions/upload-artifact@v3

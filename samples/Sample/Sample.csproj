@@ -8,13 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="kwd.CoreUtil" Version="99.0.0" />
+    <PackageReference Include="kwld.CoreUtil" Version="99.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwd.CoreUtil/master/Readme.md" OutFolder="App_Data" />
+    <DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md" OutFolder="App_Data" />
 
-    <DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwd.CoreUtil/master/Readme.md">
+    <DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md">
       <OutFolder>App_Data/Alt</OutFolder>
      <OutFileName>AltName.md</OutFileName>
     </DownloadFile>

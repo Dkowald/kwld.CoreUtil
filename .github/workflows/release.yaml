@@ -14,7 +14,7 @@ on:
     tags:
     - "v*"
 env:
-  PackTarget: src/kwd.CoreUtil
+  PackTarget: src/kwld.CoreUtil
 defaults:
   run: 
     shell: pwsh

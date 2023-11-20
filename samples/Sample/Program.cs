@@ -1,7 +1,6 @@
 ﻿using System.IO.Abstractions;
-using kwd.CoreUtil.FileSystem;
+using kwld.CoreUtil.FileSystem;
 using static System.Console;
-
 
 WriteLine("Sample app using core utils");
 WriteLine("-----------");

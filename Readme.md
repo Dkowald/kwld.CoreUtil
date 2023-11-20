@@ -55,4 +55,4 @@ A number of msbuild helpers, including:
 Download file as part of the build.
 
 ---
-^ [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)
+^ [source](https://github.com/Dkowald/kwld.CoreUtil) | [nuget](https://www.nuget.org/packages/kwld.CoreUtil/)

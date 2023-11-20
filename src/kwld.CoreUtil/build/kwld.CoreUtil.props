@@ -1,0 +1,17 @@
+﻿<Project>
+	<PropertyGroup>
+		<kwld-CoreUtil>true</kwld-CoreUtil>
+
+		<!--Default run target in design-time build-->
+		<!--see https://github.com/dotnet/project-system/blob/main/docs/design-time-builds.md-->
+		<TriggerDownloadFileTarget>CollectPackageDownloads</TriggerDownloadFileTarget>
+	</PropertyGroup>
+
+  <ItemGroup Condition=" $(ImplicitUsings_CorUtil) == 'enable' Or ($(ImplicitUsings_CorUtil) == '' And $(ImplicitUsings) == 'enable' )">
+    <Using Include="kwld.CoreUtil.Collections" />
+    <Using Include="System.IO.Abstractions" />
+    <Using Include="kwld.CoreUtil.FileSystem" />
+    <Using Include="kwld.CoreUtil.Streams" />
+    <Using Include="kwld.CoreUtil.Strings" />
+  </ItemGroup>
+</Project>
