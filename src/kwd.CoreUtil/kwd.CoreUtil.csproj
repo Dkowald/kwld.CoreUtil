@@ -46,10 +46,12 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-		<PackageReference Include="System.IO.Abstractions" Version="19.2.69" />
+    <PackageReference Include="System.IO.Abstractions" Version="19.2.87" />
 	</ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+  
   <Target Name="AfterPack" AfterTargets="Pack">
     <!--reset local falback cache (if any)-->
     <RemoveDir Directories="$(PackageOutputPath)/$(PackageId)/" />
