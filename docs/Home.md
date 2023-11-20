@@ -39,6 +39,6 @@ See [Features/Collections](Features/Collections.md)
 ## Build
 Helpers for msbuild.
 
-__DownloadFile__ : easy support for downloadign a file from a url
+__DownloadFile__ : easy support for downloading a file from a url
 
-See (Features/Buld)(Features/Build.md) for details.
+See [Features/Build](Features/Build.md) for details.
