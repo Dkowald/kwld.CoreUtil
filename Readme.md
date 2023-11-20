@@ -1,6 +1,15 @@
 ## Overview
 Core library holding various extensions to improve code development and readability.
 
+See [Docs](docs/Home.md) for details
+
+For easy use; extensions are included as global usings (.net 6 +)
+These can be explicitly configured using 
+__ImplicitUsings_CorUtil__ build property.
+
+If __ImplicitUsings_CorUtil__ is not set, then 
+the standard __ImplicitUsings__ property determines if they are used or not.
+
 ### Framework support 
 To leverage new language features, this now targets multiple frameworks.
 
@@ -45,8 +54,5 @@ A number of msbuild helpers, including:
 
 Download file as part of the build.
 
-
-See [wiki](https://github.com/Dkowald/kwd.CoreUtil/wiki/) for details
-
 ---
-^ [source](https://github.com/Dkowald/kwd.CoreUtil) | [nuget](https://www.nuget.org/packages/kwd.CoreUtil/)
+^ [source](https://github.com/Dkowald/kwld.CoreUtil) | [nuget](https://www.nuget.org/packages/kwld.CoreUtil/)

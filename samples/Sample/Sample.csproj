@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>disabled</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="kwld.CoreUtil" Version="99.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md" OutFolder="App_Data" />
+
+    <DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md">
+      <OutFolder>App_Data/Alt</OutFolder>
+     <OutFileName>AltName.md</OutFileName>
+    </DownloadFile>
+  </ItemGroup>
+
+</Project>

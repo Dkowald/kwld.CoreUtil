@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="19.2.87" />
+		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\kwld.CoreUtil\kwld.CoreUtil.csproj" />
+	</ItemGroup>
+	<Import Project="..\kwld.CoreUtil\build\kwld.CoreUtil.props" />
+	<Import Project="..\kwld.CoreUtil\build\kwld.CoreUtil.targets" />
+
+	<ItemGroup>
+		<DownloadFile Include="https://raw.githubusercontent.com/Dkowald/kwld.CoreUtil/master/Readme.md" OutFolder="App_Data" />
+	</ItemGroup>
+
+</Project>

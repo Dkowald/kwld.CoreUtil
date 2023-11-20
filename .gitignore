@@ -7,3 +7,6 @@ bin/
 *.user
 
 /src/**/App_Data/
+
+/samples/packages/
+/samples/Sample/App_Data/

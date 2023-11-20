@@ -1,22 +1,23 @@
 ﻿<!--
 Dummy project to include additional repository files
 -->
-<Project Sdk="Microsoft.Build.NoTargets/3.7.0">
+<Project Sdk="Microsoft.Build.Traversal/4.1.0">
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="src\**" />
-		<EmbeddedResource Remove="src\**" />
-		<None Remove="src\**" />
+    <None Include="*.*" Exclude="$(MSBuildProjectFile)" />
+    <None Include="src/.*" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include=".github/**" />
+		<None Include="docs/**/*" />
+    <None Include="build/**/*" />
 	</ItemGroup>
-
+  
   <ItemGroup>
-    <None Include="src/.*" />
+		<None Include="samples/**/*" Exclude="samples/Sample/obj/**/*;samples/Sample/bin/**/*"/>
   </ItemGroup>
 </Project>
