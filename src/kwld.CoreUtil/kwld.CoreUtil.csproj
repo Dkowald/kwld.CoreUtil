@@ -43,8 +43,10 @@
 		<None Include="icon.png" Pack="true" PackagePath="\" />
 		<None Include="icon.svg" Pack="false" />
 		<None Include="../../Readme.md" Pack="true" PackagePath="" />
-		<Content Include="build\**" target="build" Pack="true" PackagePath="%(Identity)" />
-	</ItemGroup>
+		<Content Include="build/**" target="build" Pack="true" PackagePath="%(Identity)" />
+    <UpToDateCheckInput Include="build/**" />
+    <UpToDateCheckOutput Include="$(PackageOutputPath)/$(PackageId).nupkg"/>
+  </ItemGroup>
 	
 	<ItemGroup>
     <PackageReference Include="System.IO.Abstractions" Version="19.2.87" />
