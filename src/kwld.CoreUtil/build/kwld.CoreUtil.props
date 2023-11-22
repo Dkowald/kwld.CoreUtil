@@ -7,7 +7,7 @@
 		<TriggerDownloadFileTarget>CollectPackageDownloads</TriggerDownloadFileTarget>
 	</PropertyGroup>
 
-  <ItemGroup Condition=" $(ImplicitUsings_CorUtil) == 'enable' Or ($(ImplicitUsings_CorUtil) == '' And $(ImplicitUsings) == 'enable' )">
+  <ItemGroup Condition=" $(ImplicitUsings_CoreUtil) == 'enable' Or ($(ImplicitUsings_CoreUtil) == '' And $(ImplicitUsings) == 'enable' )">
     <Using Include="kwld.CoreUtil.Collections" />
     <Using Include="System.IO.Abstractions" />
     <Using Include="kwld.CoreUtil.FileSystem" />

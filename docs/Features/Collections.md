@@ -25,6 +25,8 @@ copy constructor in the owning record type.
 
 Simple example:
 ``` cs
+using kwld.CoreUtil.Collections;
+
 public record AThing(string Name);
 
 public record SomeThings(RecordArray<AThing> Items)

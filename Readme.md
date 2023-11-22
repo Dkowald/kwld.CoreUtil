@@ -3,16 +3,22 @@ Core library holding various extensions to improve code development and readabil
 
 See [Docs](docs/Home.md) for details
 
-For easy use; extensions are included as global usings (.net 6 +)
-These can be explicitly configured using 
-__ImplicitUsings_CorUtil__ build property.
+## Whats New
+- Add .net8.0 target
+- Add samples; using approach for local nuget package usage
+- Add extensions as implicit global usings.
+- Project moved to new name: **kwld.CoreUtil**
 
-If __ImplicitUsings_CorUtil__ is not set, then 
-the standard __ImplicitUsings__ property determines if they are used or not.
+## Features
+
+### Global Usings
+For easy use; all extensions are included as global usings (.net 6 +)  
+By default the standard __ImplicitUsings__ property determines if they are 
+  included or not.  
+The can also be manually controlled via the __ImplicitUsings_CoreUtil__ build property.
 
 ### Framework support 
-To leverage new language features, this now targets multiple frameworks.
-
+To leverage new language features, this now targets multiple frameworks.  
 Some features are only available for newer frameworks.
 
 ### Helpers for file system.

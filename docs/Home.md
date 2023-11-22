@@ -39,6 +39,28 @@ See [Features/Collections](Features/Collections.md)
 ## Build
 Helpers for msbuild.
 
+__Global Usings__  
+CoreUtl extensions included as global usings if 
+the standard __ImplicitUsings__ property is set to 'enable'.
+Optionally they can be explicity controlled via the __ImplicitUsings_CoreUtil__ property;
+```xml
+<PropertyGroup>
+ <!--By default; also enabled use of CoreUtl global usings-->
+ <ImplicitUsings>enable</ImplicitUsings>
+</PropertyGroup>
+
+<PropertyGroup>
+ <!--using off; no CoreUtil global usings-->
+ <ImplicitUsings>disable</ImplicitUsings>
+</PropertyGroup>
+
+<PropertyGroup>
+ <!--usings off, but override to include CoreUtl-->
+ <ImplicitUsings>disable</ImplicitUsings>
+ <ImplicitUsings_CoreUtil>enable</ImplicitUsings_CoreUtil>
+</PropertyGroup>
+```
+
 __DownloadFile__ : easy support for downloading a file from a url
 
 See [Features/Build](Features/Build.md) for details.
