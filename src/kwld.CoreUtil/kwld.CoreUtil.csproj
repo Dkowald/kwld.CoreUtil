@@ -16,10 +16,7 @@
 	<PropertyGroup>
 		<VersionPrefix>99.0.0</VersionPrefix>
 		<PackageReleaseNotes>
-			Add .net8.0 target
-			Add samples; using approach for local nuget package usage
-			Add extensions as implicit global usings.
-			Project moved to new name: kwld.CoreUtil
+			Tree Extensions rename TreeCUD to TreeDiff.
     </PackageReleaseNotes>
 	</PropertyGroup>
 

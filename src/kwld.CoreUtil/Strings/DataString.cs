@@ -9,7 +9,8 @@ namespace kwld.CoreUtil.Strings;
 /// <item>MUST overload ToString() to return a value that could be used by TryParse</item>
 /// <item>MUST provide a T? TryParse(string? data) static member</item>
 /// <item>Should provide a constructor that takes ony a string: T(string data).</item>
-/// <item>Should provide an implicit cast to string.</item>
+/// <item>Should provide an implicit cast to string: 
+///     [return: NotNullIfNotNull(nameof(item))] implicit operator string? (T? item)</item>
 /// </list>
 /// </summary>
 /// <remarks>

@@ -32,12 +32,15 @@ namespace kwld.CoreUtil.FileSystem
         }
 
         /// <summary>
-        /// Retrieve list of files from <paramref name="targetDir"/>
-        /// compared to files (relative path) in <paramref name="srcDir"/>.
+        /// Retrieve list of differences between <paramref name="targetDir"/>
+        /// and <see cref="srcDir"/>.
+        /// The file's <see cref="IFileSystemInfo.LastWriteTimeUtc"/> is used to determine if updated.
         /// </summary>
+        /// <param name="srcDir">The source directory</param>
+        /// <param name="targetDir">The target directory to compare with</param>
         public static (IReadOnlyCollection<FileInfo> Created,
             IReadOnlyCollection<FileInfo> Updated,
-            IReadOnlyCollection<FileInfo> Deleted ) TreeCUD(this DirectoryInfo srcDir, DirectoryInfo targetDir)
+            IReadOnlyCollection<FileInfo> Deleted ) TreeDiff(this DirectoryInfo srcDir, DirectoryInfo targetDir)
         {
             var mapped = srcDir.EnumerateFiles("*", SearchOption.AllDirectories)
                 .Select(x => new {
@@ -45,27 +48,27 @@ namespace kwld.CoreUtil.FileSystem
                     dest = targetDir.GetFile(x.GetRelativePath(srcDir))
                 }).ToArray();
 
-            var other = targetDir.EnumerateFiles("*", SearchOption.AllDirectories);
+            var targetFiles = targetDir.EnumerateFiles("*", SearchOption.AllDirectories);
 
-            var created = other
-                .Where(o => !mapped.Any(s => s.dest.FullName == o.FullName))
+            var created = targetFiles
+                .Where(o => mapped.All(s => s.dest.FullName != o.FullName))
                 .ToArray();
 
             var updated = mapped.Where(x =>
                     x.src.Exists && x.dest.Exists &&
                     x.src.LastWriteTimeUtc != x.dest.LastWriteTimeUtc)
                 .Select(x => x.dest).ToArray();
-
+            
             var deleted = mapped.Where(x => x.src.Exists && !x.dest.Exists)
-                .Select(x => x.dest).ToArray();
+                  .Select(x => x.dest).ToArray();
 
             return (created, updated, deleted);
         }
 
-        /// <inheritdoc cref="TreeCUD(DirectoryInfo,DirectoryInfo)"/>
+        /// <inheritdoc cref="TreeDiff(DirectoryInfo,DirectoryInfo)"/>
         public static (IReadOnlyCollection<IFileInfo> Created,
             IReadOnlyCollection<IFileInfo> Updated,
-            IReadOnlyCollection<IFileInfo> Deleted) TreeCUD(this IDirectoryInfo srcDir, IDirectoryInfo targetDir)
+            IReadOnlyCollection<IFileInfo> Deleted) TreeDiff(this IDirectoryInfo srcDir, IDirectoryInfo targetDir)
         {
             var mapped = srcDir.EnumerateFiles("*", SearchOption.AllDirectories)
                 .Select(x => new {

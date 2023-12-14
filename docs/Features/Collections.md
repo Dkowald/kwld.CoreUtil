@@ -4,8 +4,9 @@ A set of classes to simplify working with collections.
 [<-Home](../Home.md)  
 
 ## Dictionary
-Helpers to provide some extra capabilities when using 
-a Dictionary
+Extensions to provide some extra capabilities when using a  
+
+IDictionary&lt;TKey, TItem&gt;
 
 |Extension|Description|
 |    ---  |   :---:   |

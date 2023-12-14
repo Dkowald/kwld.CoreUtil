@@ -39,10 +39,10 @@ See [Features/Collections](Features/Collections.md)
 ## Build
 Helpers for msbuild.
 
-__Global Usings__  
-CoreUtl extensions included as global usings if 
+__Global Using's__  
+CoreUtll extensions included as global using's if 
 the standard __ImplicitUsings__ property is set to 'enable'.
-Optionally they can be explicity controlled via the __ImplicitUsings_CoreUtil__ property;
+Optionally they can be explicitly controlled via the __ImplicitUsings_CoreUtil__ property;
 ```xml
 <PropertyGroup>
  <!--By default; also enabled use of CoreUtl global usings-->
@@ -60,6 +60,7 @@ Optionally they can be explicity controlled via the __ImplicitUsings_CoreUtil__ 
  <ImplicitUsings_CoreUtil>enable</ImplicitUsings_CoreUtil>
 </PropertyGroup>
 ```
+**NOTE:** this ONLY works where the project directly includes this package.
 
 __DownloadFile__ : easy support for downloading a file from a url
 

@@ -62,9 +62,9 @@ namespace kwld.CoreUtil.Tests.FileSystem
         }
 
         [TestMethod]
-        public void TreeCUD_Success()
+        public void TreeDiff_Success()
         {
-            var root = Files.AppData.GetFolder(nameof(TreeCUD_Success)).EnsureDelete();
+            var root = Files.AppData.GetFolder(nameof(TreeDiff_Success)).EnsureDelete();
 
             var src = root.GetFolder("src");
             var other = root.GetFolder("other");

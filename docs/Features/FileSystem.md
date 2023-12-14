@@ -52,9 +52,9 @@ A mixed bag of simple helpers.
 |GetFile  | Get a file using a series of sub-path strings   |
 |GetFolder| Get a folder using a series of sub path strings |
 |MoveTo   | Overloads for MoveTo                            |
-| **FileInfo**|
+| For **FileInfo**|
 |Touch | Update the LastWriteTime of a file |
-| **FileSystemInfo**|
+| For **FileSystemInfo**|
 |Exists() | Calls refresh, then returns result from Exist |
 |AsUri    | Converts item to Uri. Directories have a trailing '/'  |
 
@@ -69,11 +69,11 @@ If needed, destination directory is created.
 
 | Extension | Description |
 | --------- | ----------- |
-| **FileInfo** |
+| For **FileInfo** |
 | CopyTo | Copy file over another, or into a directory (creates parent directories as needed) |
 | MoveTo | Move source file to target file or target directory  (optional overwrite) |
 | Replace | Replace destination with source file, optional backup destination and ignoreErrors|
-| **DirectoryInfo**|
+| For **DirectoryInfo**|
 | MoveTo | Move source directory to target directory |
 
 ## Chain Extensions
@@ -90,10 +90,10 @@ Assert.IsTrue(f.Exists);
 
 | Extension | Description |
 | --------- | ----------- |
-|EnsureDelete| Delete file / directory; return refreshed object       |
-|EnsureExists| Create file / directory; return refreshed object       |
-|EnsureEmpty | Ensures file or directory exists as is currently empty |
-|EnsureDirectory| Ensures the directory for a file exists |
+|EnsureDelete| Delete _file_ or _directory_; return refreshed object       |
+|EnsureExists| Create _file_ or _directory_; return refreshed object       |
+|EnsureEmpty | Ensures _file_ or _directory_ exists as is currently empty |
+|EnsureDirectory| Ensures the _directory_ for a file exists |
 
 ## TreeExtensions
 Some extensions that operate on items in a Directory
@@ -101,8 +101,8 @@ Some extensions that operate on items in a Directory
 | Extension | Description |
 | --- | --- |
 |Prune| Recursive remove empty directories |
-| TreeCUD | Compare two directories returning the **C**reated **U**pdated and **D**eleted matching relative paths.|
-| TreeSameFiles | Find files in other directory that have same relative path|
+| TreeDiff | Compare two directories returning the **C**reated **U**pdated and **D**eleted matching relative paths.|
+| TreeSameFiles | Find files in other directory that have same relative path |
 | Merge| Copy new (and optional updated) files from source to current directory. |
 | MergeForce | Merge that copies all files from source to target directory. |
 
