@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "Sample\Sample.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImplicitUsings", "ImplicitUsings\ImplicitUsings.csproj", "{B282B938-A51D-4723-A346-6082355B1B02}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleLib", "SampleLib\SampleLib.csproj", "{4A91A29D-9BA8-456A-8868-B91CB84D9A79}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B282B938-A51D-4723-A346-6082355B1B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B282B938-A51D-4723-A346-6082355B1B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B282B938-A51D-4723-A346-6082355B1B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A91A29D-9BA8-456A-8868-B91CB84D9A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A91A29D-9BA8-456A-8868-B91CB84D9A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A91A29D-9BA8-456A-8868-B91CB84D9A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A91A29D-9BA8-456A-8868-B91CB84D9A79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

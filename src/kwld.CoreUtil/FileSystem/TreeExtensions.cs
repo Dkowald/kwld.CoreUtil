@@ -33,7 +33,7 @@ namespace kwld.CoreUtil.FileSystem
 
         /// <summary>
         /// Retrieve list of differences between <paramref name="targetDir"/>
-        /// and <see cref="srcDir"/>.
+        /// and <paramref name="srcDir"/>.
         /// The file's <see cref="IFileSystemInfo.LastWriteTimeUtc"/> is used to determine if updated.
         /// </summary>
         /// <param name="srcDir">The source directory</param>
