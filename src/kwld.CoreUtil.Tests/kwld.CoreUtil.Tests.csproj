@@ -8,7 +8,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="NSubstitute" Version="5.1.0" />
-		<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="19.2.87" />
 		<PackageReference Include="System.Linq.Async" Version="6.0.1" />
 	</ItemGroup>
 
@@ -16,6 +15,7 @@
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
 		<PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
 		<PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+		<PackageReference Include="Testably.Abstractions.Testing" Version="3.2.3" />
 	</ItemGroup>
 
 	<ItemGroup>

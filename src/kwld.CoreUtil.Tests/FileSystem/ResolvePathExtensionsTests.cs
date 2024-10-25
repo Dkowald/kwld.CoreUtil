@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using System.IO.Abstractions;
-using System.IO.Abstractions.TestingHelpers;
 using kwld.CoreUtil.FileSystem;
 using kwld.CoreUtil.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NSubstitute;
+using Testably.Abstractions.Testing;
 
 namespace kwld.CoreUtil.Tests.FileSystem
 {
@@ -15,72 +13,64 @@ namespace kwld.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void Expand_()
         {
-            var files = new MockFileSystem();
-
-            //Volume name on windows, '/' on linux.
-            var sysRoot = files.Current().Root.FullName;
-
-            Environment.SetEnvironmentVariable("TEST", "MyPlace");
-            var target = files.FileInfo.New("./%TEST%/config.data");
+            var files = new MockFileSystem(o => o.SimulatingOperatingSystem(SimulationMode.Windows));
             
-            files.DirectoryInfo.New(sysRoot +"etc").SetCurrentDirectory();
+            Environment.SetEnvironmentVariable("TEST", "MyPlace");
+            
+            files.Directory.CreateDirectory("c:/etc/");
+            files.Directory.SetCurrentDirectory("c:/etc");
+
+            var target = files.FileInfo.New("./%TEST%/config.data");
 
             var rootWithCurrent = target.Expand();
 
-            var expected = sysRoot + "etc/MyPlace/config.data".Replace('/', Path.DirectorySeparatorChar);
+            var expected = @"c:\etc\MyPlace\config.data";
             Assert.AreEqual(expected, rootWithCurrent.FullName, "Expand and use current dir");
 
-            var otherRoot = files.DirectoryInfo.New(sysRoot + "myapp/user-data/");
+            var otherRoot = files.DirectoryInfo.New(@"c:\myapp\user-data\");
 
-            expected = sysRoot + "myapp/user-data/MyPlace/config.data".Replace('/', Path.DirectorySeparatorChar);
-            Assert.AreEqual(expected, target.Expand(otherRoot).ToString(), "Expand with custom root");
+            expected = @"c:\myapp\user-data\MyPlace\config.data";
+            var result = target.Expand(otherRoot);
+            Assert.AreEqual(expected, result.FullName, "Expand with custom root");
 
             var dirTarget = files.DirectoryInfo.New("../settings/general/");
 
-            expected = sysRoot + "myapp/settings/general/".Replace('/', Path.DirectorySeparatorChar);
-            Assert.AreEqual(expected, dirTarget.Expand(otherRoot).ToString());
+            expected = @"c:\myapp\settings\general\";
+            var expandedDir = dirTarget.Expand(otherRoot);
+            Assert.AreEqual(expected, expandedDir.FullName);
         }
 
         [TestMethod]
         public void IsCaseSensitive_True()
         {
-            var mockDirInfo = Substitute.For<IDirectoryInfo>();
+            var files = new MockFileSystem(o => o.SimulatingOperatingSystem(SimulationMode.Linux));
+            var dir = files.DirectoryInfo.New("/user/me/Profile");
+            files.Directory.CreateDirectory(dir.FullName);
 
-            mockDirInfo.Exists.Returns(true);
-            mockDirInfo.FullName.Returns("Fullname");
-
-            var files = Substitute.For<IFileSystem>();
-            mockDirInfo.FileSystem.Returns(files);
-
-            var mockDirectory = Substitute.For<IDirectory>();
-            files.Directory.Returns(mockDirectory);
-
-            mockDirectory.Exists(default)
-                .ReturnsForAnyArgs(x => x.Arg<string>() == "Fullname");
-
-            var result = mockDirInfo.IsCaseSensitive();
+            var result = dir.IsCaseSensitive();
             Assert.IsTrue(result);
         }
 
         [TestMethod]
         public void IsCaseSensitive_False()
         {
-            var mockDirInfo = Substitute.For<IDirectoryInfo>();
+            var files = new MockFileSystem(o => o.SimulatingOperatingSystem(SimulationMode.MacOS));
+            var file = files.FileInfo.New("c:/temp/user/Data/Profile.txt");
+            files.Directory.CreateDirectory(file.DirectoryName!);
+            files.File.WriteAllText(file.FullName, "data");
 
-            mockDirInfo.Exists.Returns(true);
-            mockDirInfo.FullName.Returns("Fullname");
-
-            var files = Substitute.For<IFileSystem>();
-            mockDirInfo.FileSystem.Returns(files);
-
-            var mockDirectory = Substitute.For<IDirectory>();
-            files.Directory.Returns(mockDirectory);
-
-            mockDirectory.Exists(default)
-                .ReturnsForAnyArgs(x => string.Equals(x.Arg<string>(), "Fullname", StringComparison.OrdinalIgnoreCase));
-
-            var result = mockDirInfo.IsCaseSensitive();
+            var result = file.IsCaseSensitive();
             Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void IsCaseSensitive_FileSystem()
+        {
+            var files = new MockFileSystem(o => o.SimulatingOperatingSystem(SimulationMode.Linux));
+            var dir = files.Directory.CreateDirectory("/user/me/Profile");
+            files.Directory.SetCurrentDirectory(dir.FullName);
+            
+            Assert.IsTrue(files.IsCaseSensitive());
         }
 
         [TestMethod]

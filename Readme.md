@@ -7,6 +7,7 @@ See [Docs](docs/Home.md) for details
 - Removing .net7.0 target (only maintaining supported versions)
 - Better implementation for IDirectoryInfo.IsCaseSensitive()
 - Renamed TreeCUD to TreeDiff
+- IsCaseSensitive now available on Directory; Files and IFileSystem
 ## Features
 
 ### Global Usings

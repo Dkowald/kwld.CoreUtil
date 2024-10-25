@@ -117,22 +117,28 @@ Includes an approach to determine if the file system is cases sensitive
 
 | Extension      | Description |
 | -------------- | ----------- |
-| IsCaseSensitive| Test for case-sensitivity for the given test folder.|
-| PathSplit      | Split a file system path string into its segments |
+| PathSplit(string) | Split a file system path string into its segments |
+| **DirectoryInfo**|
 | FindFolder     | Navigate a sub path; replacing each path segment with same-case as found on file system (if found). |
 | FindFile       | FindFolder, and include last item as a file name |
+| **FileInfo** / **DirectoryInfo** |
 | Expand         | Expand the path, resolving relative path segments, and replacing environment variables. |
+| IsCaseSensitive| Simple test for case-sensitive; also usable with **IFileSystem**|
 
 ### case sensitive checking
-The case sensitive check is not fancy. 
-You provide a directory path that exists and has a letter in it.
-It then creates either an all upper case or all lower case path based on 
-if the test path has an upper case character.
-If that path exists.. then its (like 99%) a case-ignorant file system.
+Outline of simple case-sensitive test.
+1. Provide a filesystem item that exists.
+2. If item has upper-case character; create alt-path all lower case.
+3. else create alt-path all upper case.
+4. if alt-path exist; is Not case-sensitive system.
+
+This approach is fast, and should be sufficient for most real-world cases.
+
+Testing with **IFileSystem** test using the current directory.
 
 ## Directories
-Helpers for commonly used paths.
-
+Utility class for commonly used paths.
+Operations also available as extension on **IFileSystem**
 | Extension | Description |
 | --------- | ----------- |
 | Current       | Exceuting Process' Current directory |

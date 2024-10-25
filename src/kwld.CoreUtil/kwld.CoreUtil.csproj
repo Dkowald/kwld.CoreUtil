@@ -39,7 +39,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests"/>
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests" />
     <None Include="icon.png" Pack="true" PackagePath="\" />
 		<None Include="icon.svg" Pack="false" />
 		<None Include="../../Readme.md" Pack="true" PackagePath="" />
@@ -47,11 +47,11 @@
 		<Content Include="build/**" Pack="true" PackagePath="buildTransitive/%(RecursiveDir)%(FileName)%(Extension)" />
 
     <UpToDateCheckInput Include="build/**" />
-    <UpToDateCheckOutput Include="$(PackageOutputPath)/$(PackageId).nupkg"/>
+    <UpToDateCheckOutput Include="$(PackageOutputPath)/$(PackageId).nupkg" />
   </ItemGroup>
 	
 	<ItemGroup>
-    <PackageReference Include="System.IO.Abstractions" Version="19.2.87" />
+    <PackageReference Include="TestableIO.System.IO.Abstractions" Version="19.2.87" />
 	</ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />

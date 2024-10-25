@@ -21,40 +21,63 @@ namespace kwld.CoreUtil.FileSystem
         /// returns true if not found.
         /// </remarks>
         /// <exception cref="ArgumentException">
-        /// Raised if provided <paramref name="dir"/> doesn't exist,
+        /// Raised if provided <paramref name="fileSystemItem"/> doesn't exist,
         /// or doesn't contain a letter.
         /// </exception>
-        public static bool IsCaseSensitive(this DirectoryInfo dir)
+        public static bool IsCaseSensitive(this FileSystemInfo fileSystemItem)
         {
-            var fullPath = dir.FullName;
+            var fullPath = fileSystemItem.FullName;
 
-            dir.Refresh();
-            if (!dir.Exists || !fullPath.Any(char.IsLetter))
+            fileSystemItem.Refresh();
+            if (!fileSystemItem.Exists || !fullPath.Any(char.IsLetter))
             {
-                throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
+                throw new ArgumentException(
+                    "Test item must exist, and have a letter in the name", 
+                    nameof(fileSystemItem));
             }
 
             var altPath = CaseDifferingPath(fullPath);
 
-            return !Directory.Exists(altPath);
+            if(fileSystemItem is FileInfo)
+                return !File.Exists(altPath);
+            if(fileSystemItem is DirectoryInfo)
+                return !Directory.Exists(altPath);
+
+            throw new ArgumentException(
+                $"File System item must be either {nameof(FileInfo)} or {nameof(DirectoryInfo)}",
+                nameof(fileSystemItem));
         }
 
-        /// <inheritdoc cref="IsCaseSensitive(DirectoryInfo)"/>
-        public static bool IsCaseSensitive(this IDirectoryInfo dir)
+        /// <inheritdoc cref="IsCaseSensitive(FileSystemInfo)"/>
+        public static bool IsCaseSensitive(this IFileSystemInfo fileSystemItem)
         {
-            var fullPath = dir.FullName;
+            var fullPath = fileSystemItem.FullName;
 
-            dir.Refresh();
-            if (!dir.Exists || !fullPath.Any(char.IsLetter))
+            fileSystemItem.Refresh();
+            if (!fileSystemItem.Exists || !fullPath.Any(char.IsLetter))
             {
-                throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
+                throw new ArgumentException(
+                    "Test item must exist, and have a letter in the name", 
+                    nameof(fileSystemItem));
             }
 
             var altPath = CaseDifferingPath(fullPath);
 
-            var x = dir.FileSystem.Directory.Exists(altPath);
-            return !dir.FileSystem.Directory.Exists(altPath);
+            var fileSystem = fileSystemItem.FileSystem;
+            if (fileSystemItem is IFileInfo)
+                return !fileSystem.File.Exists(altPath);
+
+            if(fileSystemItem is IDirectoryInfo)
+                return !fileSystem.Directory.Exists(altPath);
+
+            throw new ArgumentException(
+                $"File System item must be either {nameof(IFileInfo)} or {nameof(IDirectoryInfo)}",
+                nameof(fileSystemItem));
         }
+
+        /// <inheritdoc cref="IsCaseSensitive(FileSystemInfo)"/>
+        public static bool IsCaseSensitive(this IFileSystem files) =>
+            IsCaseSensitive(files.Current());
 
         /// <summary>
         /// Splits the given string into a set of path segments.
