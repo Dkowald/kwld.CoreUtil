@@ -22,6 +22,7 @@ namespace kwld.CoreUtil.FileSystem
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             _previous.SetCurrentDirectory();
         }
     }

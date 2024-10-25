@@ -139,14 +139,18 @@ Testing with **IFileSystem** test using the current directory.
 ## Directories
 Utility class for commonly used paths.
 Operations also available as extension on **IFileSystem**
+
 | Extension | Description |
 | --------- | ----------- |
 | Current       | Exceuting Process' Current directory |
-| Home          | Current user home path (windows or linux)  |
+| Home?          | Current user home path (windows or linux) |
 | Temp          | Users temporary folder.|
 | TempFile      | Create a temporary File  |
 | AssemblyFolder| Folder containing assembly for a type |
 | Project       | Codes standard source project folder |
+
+Home directory provided by environment variable %HOME%, or failing that %USERPROFILE%.
+If neither environment variable found, returns null.
 
 ## Disposable
 Small disposable wrappers.

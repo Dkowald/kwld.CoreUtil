@@ -27,6 +27,7 @@ namespace kwld.CoreUtil.Tests.FileSystem
             Environment.SetEnvironmentVariable("HOME", tmp.FullName);
             
             var home = Directories.Home();
+            Assert.IsNotNull(home);
             Assert.AreEqual(tmp.FullName, home.FullName, "Use $HOME");
         }
     }

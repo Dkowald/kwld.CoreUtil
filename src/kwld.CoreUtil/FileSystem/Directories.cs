@@ -27,21 +27,24 @@ namespace kwld.CoreUtil.FileSystem
         /// <remarks>
         /// Uses $HOME where possible; else $USERPROFILE.
         /// </remarks>
-        public static DirectoryInfo Home()
+        public static DirectoryInfo? Home()
         {
             var home = Environment.GetEnvironmentVariable("HOME") ??
-                Environment.GetEnvironmentVariable("USERPROFILE") ??
-                throw new Exception("Cannot determine user home folder");
+                       Environment.GetEnvironmentVariable("USERPROFILE");
+
+            if (home is null) return null;
             
             return new DirectoryInfo(home);
         }
 
         /// <inheritdoc cref="Home()"/>
-        public static IDirectoryInfo Home(this IFileSystem files)
+        public static IDirectoryInfo? Home(this IFileSystem files)
         {
             var home = Environment.GetEnvironmentVariable("HOME") ??
-                       Environment.GetEnvironmentVariable("USERPROFILE") ??
-                       throw new Exception("Cannot determine user home folder");
+                       Environment.GetEnvironmentVariable("USERPROFILE");
+
+            if (home is null) return null;
+
             return files.DirectoryInfo.New(home);
         }
 

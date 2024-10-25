@@ -147,14 +147,14 @@ namespace kwld.CoreUtil.FileSystem
         public static Uri AsUri(this FileSystemInfo item) => 
             item is DirectoryInfo dir ? new Uri(
                     dir.FullName + 
-                    (dir.FullName.EndsWith("/")? string.Empty :"/")) : 
+                    (dir.FullName.EndsWith('/')? string.Empty :"/")) : 
                 new Uri(item.FullName);
 
         /// <inheritdoc cref="AsUri(FileSystemInfo)"/>
         public static Uri AsUri(this IFileSystemInfo item) =>
             item is IDirectoryInfo dir ? new Uri(
                     dir.FullName +
-                    (dir.FullName.EndsWith("/") ? string.Empty : "/")) :
+                    (dir.FullName.EndsWith('/') ? string.Empty : "/")) :
                 new Uri(item.FullName);
     }
 }
