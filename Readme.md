@@ -4,11 +4,9 @@ Core library holding various extensions to improve code development and readabil
 See [Docs](docs/Home.md) for details
 
 ## Whats New
-- Add .net8.0 target
-- Add samples; using approach for local nuget package usage
-- Add extensions as implicit global usings.
-- Project moved to new name: **kwld.CoreUtil**
-
+- Removing .net7.0 target (only maintaining supported versions)
+- Better implementation for IDirectoryInfo.IsCaseSensitive()
+- Renamed TreeCUD to TreeDiff
 ## Features
 
 ### Global Usings

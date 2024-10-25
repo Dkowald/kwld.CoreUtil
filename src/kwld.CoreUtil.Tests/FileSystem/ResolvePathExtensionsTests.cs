@@ -1,9 +1,11 @@
 using System;
 using System.IO;
+using System.IO.Abstractions;
 using System.IO.Abstractions.TestingHelpers;
 using kwld.CoreUtil.FileSystem;
 using kwld.CoreUtil.Tests.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 
 namespace kwld.CoreUtil.Tests.FileSystem
 {
@@ -40,14 +42,47 @@ namespace kwld.CoreUtil.Tests.FileSystem
         }
 
         [TestMethod]
-        public void IsCaseSensitive_()
+        public void IsCaseSensitive_True()
         {
-            var dir = Files.Project;
+            var mockDirInfo = Substitute.For<IDirectoryInfo>();
 
-            dir.IsCaseSensitive();
-            Assert.IsTrue(true, "Can call");
+            mockDirInfo.Exists.Returns(true);
+            mockDirInfo.FullName.Returns("Fullname");
+
+            var files = Substitute.For<IFileSystem>();
+            mockDirInfo.FileSystem.Returns(files);
+
+            var mockDirectory = Substitute.For<IDirectory>();
+            files.Directory.Returns(mockDirectory);
+
+            mockDirectory.Exists(default)
+                .ReturnsForAnyArgs(x => x.Arg<string>() == "Fullname");
+
+            var result = mockDirInfo.IsCaseSensitive();
+            Assert.IsTrue(result);
         }
-        
+
+        [TestMethod]
+        public void IsCaseSensitive_False()
+        {
+            var mockDirInfo = Substitute.For<IDirectoryInfo>();
+
+            mockDirInfo.Exists.Returns(true);
+            mockDirInfo.FullName.Returns("Fullname");
+
+            var files = Substitute.For<IFileSystem>();
+            mockDirInfo.FileSystem.Returns(files);
+
+            var mockDirectory = Substitute.For<IDirectory>();
+            files.Directory.Returns(mockDirectory);
+
+            mockDirectory.Exists(default)
+                .ReturnsForAnyArgs(x => string.Equals(x.Arg<string>(), "Fullname", StringComparison.OrdinalIgnoreCase));
+
+            var result = mockDirInfo.IsCaseSensitive();
+            Assert.IsFalse(result);
+        }
+
         [TestMethod]
         public void FindFolder_()
         {
@@ -76,6 +111,22 @@ namespace kwld.CoreUtil.Tests.FileSystem
             var expected = Path.Combine(nameof(ResolvePathExtensionsTests), "Test.txt");
 
             Assert.IsTrue(result.FullName.EndsWith(expected));
+        }
+
+        [TestMethod]
+        public void CaseDifferingPath_()
+        {
+            var src = "/SomeWhere/myFile";
+            var result = ResolvePathExtensions.CaseDifferingPath(src);
+            Assert.AreNotEqual(src, result);
+
+            src = "/somewhere/myfile";
+            result = ResolvePathExtensions.CaseDifferingPath(src);
+            Assert.AreNotEqual(src, result);
+
+            src = "/SOMEWHERE/MYFILE";
+            result = ResolvePathExtensions.CaseDifferingPath(src);
+            Assert.AreNotEqual(src, result);
         }
     }
 }

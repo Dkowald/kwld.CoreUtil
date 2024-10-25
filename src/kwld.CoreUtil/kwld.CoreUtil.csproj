@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net7.0;net6.0;netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>net8.0;net6.0;netstandard2.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<EnableNETAnalyzers>True</EnableNETAnalyzers>
@@ -16,8 +16,9 @@
 	<PropertyGroup>
 		<VersionPrefix>99.0.0</VersionPrefix>
 		<PackageReleaseNotes>
-			Tree Extensions rename TreeCUD to TreeDiff.
-			Use transitive build assets
+      Tree Extensions rename TreeCUD to TreeDiff.
+      Use transitive build assets
+      .NET 7 removed.
     </PackageReleaseNotes>
 	</PropertyGroup>
 
@@ -34,11 +35,12 @@
 		<PackageIcon>icon.png</PackageIcon>
 		<PackageReadmeFile>Readme.md</PackageReadmeFile>
 		<PackageTags>csharp, utility</PackageTags>
-		<Copyright>Copyright (c) Derek Kowald 2023.</Copyright>
+		<Copyright>Copyright (c) Derek Kowald 2024.</Copyright>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="icon.png" Pack="true" PackagePath="\" />
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Tests"/>
+    <None Include="icon.png" Pack="true" PackagePath="\" />
 		<None Include="icon.svg" Pack="false" />
 		<None Include="../../Readme.md" Pack="true" PackagePath="" />
 		<Content Include="build/**" target="build" Pack="true" PackagePath="%(Identity)" />

@@ -7,38 +7,40 @@ These work with both System.IO types and
 [<-Home](../Home.md)
 
 ## Bread and butter
-While using FileInfo and DirectoryInfo, I continually found myself 
-reverting back to using strings for full paths etc.
+While using FileInfo and DirectoryInfo; often have to revert back to strings
+to use other file system methods.
 
-These extensions started so I could leverage FileInfo and DirectoryInfo objects;
-rather than string paths.
+For example
+``` cs
+FileInfo file;
+System.IO.File.AppendAllText(file.FullName, "some data");
+```
+
+These extension improve readability by working directly with the 
+IFileInfo object.
+```cs
+FileInfo file;
+file.AppendAllText("some data");
+```
 
 In addition, the extensions are also implemented with
 [System.IO.Abstractions](https://github.com/TestableIO/System.IO.Abstractions)
-
-For example
 ```cs
-using System.IO;
-
-var file = new FileInfo("c:/tmp");
-
-//Using System.IO.File utility
-var text = File.ReadAllText(file.FullName);
-Path.ChangeExtension(text.FullName, ".xxx");
-
-//Using System.IO.FileInfo extension
-var text2 = file.ReadAllText();
-file.ChangeExtension(".xxx");
+System.IO.IFileInfo file;
+file.AppendAllText("some data");
 ```
-**FromFileExtensions** 
+
+The extensions are grouped by the static System.IO.XXX they map in.
+
+**FromFileExtensions.cs** 
 maps System.IO.File methods to corresponding 
 FileInfo and DirectoryInfo extensions.
 
-**FromDirectoryExtensions**
+**FromDirectoryExtensions.cs**
 maps System.IO.Directory to corresponding DirectoryInfo extensions.
 e.g Directory.SetCurrentDirectory maps naturally to DirectoryInfo.SetCurrentDirectory
 
-**FromPathExtensions**
+**FromPathExtensions.cs**
 Map System.IO.Path methods to FileInfo and DirectoryInfo extension. e.g
 Path.GetExtension map to FileInfo.GetExtension.
 
@@ -47,7 +49,7 @@ A mixed bag of simple helpers.
 
 | Extension | Description |
 | --------- | ----------- |
-| **DirectoryInfo**|
+| For **DirectoryInfo**|
 |Touch    | Update the LastWriteTime of a directory         |
 |GetFile  | Get a file using a series of sub-path strings   |
 |GetFolder| Get a folder using a series of sub path strings |
@@ -56,16 +58,16 @@ A mixed bag of simple helpers.
 |Touch | Update the LastWriteTime of a file |
 | For **FileSystemInfo**|
 |Exists() | Calls refresh, then returns result from Exist |
-|AsUri    | Converts item to Uri. Directories have a trailing '/'  |
+|AsUri()    | Converts item to file:// Uri. Directories have a trailing '/'  |
 
 ## Overload Extensions
-These provide overload's on standard FileInfo / Directory info
+These provide overload's on standard FileInfo / DirectoryInfo
 methods so they take FileInfo or DirectoryInfo objects rather than 
 strings.
 
 The Destination item is refreshed and returned.
 
-If needed, destination directory is created.
+If needed; destination directory is created.
 
 | Extension | Description |
 | --------- | ----------- |
@@ -90,6 +92,7 @@ Assert.IsTrue(f.Exists);
 
 | Extension | Description |
 | --------- | ----------- |
+| For **FileInfo** and **DirectoryInfo**|
 |EnsureDelete| Delete _file_ or _directory_; return refreshed object       |
 |EnsureExists| Create _file_ or _directory_; return refreshed object       |
 |EnsureEmpty | Ensures _file_ or _directory_ exists as is currently empty |
@@ -100,6 +103,7 @@ Some extensions that operate on items in a Directory
 
 | Extension | Description |
 | --- | --- |
+| **DirectoryInfo**|
 |Prune| Recursive remove empty directories |
 | TreeDiff | Compare two directories returning the **C**reated **U**pdated and **D**eleted matching relative paths.|
 | TreeSameFiles | Find files in other directory that have same relative path |
@@ -109,7 +113,7 @@ Some extensions that operate on items in a Directory
 ## Resolve Path
 Things to help with path strings inside file system elements.
 
-Includes an appraoch to determine if the file system is cases sensitive
+Includes an approach to determine if the file system is cases sensitive
 
 | Extension      | Description |
 | -------------- | ----------- |

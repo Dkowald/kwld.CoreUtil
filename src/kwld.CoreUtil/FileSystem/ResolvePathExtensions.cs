@@ -14,6 +14,12 @@ namespace kwld.CoreUtil.FileSystem
         /// <summary>
         /// Test if <see cref="DirectoryInfo"/> is case-sensitive.
         /// </summary>
+        /// <remarks>
+        /// This is NOT a bullet-proof test;
+        /// though it should work fine in most real-world situations.
+        /// It mangles the case for the given folder name; and
+        /// returns true if not found.
+        /// </remarks>
         /// <exception cref="ArgumentException">
         /// Raised if provided <paramref name="dir"/> doesn't exist,
         /// or doesn't contain a letter.
@@ -28,7 +34,7 @@ namespace kwld.CoreUtil.FileSystem
                 throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
             }
 
-            var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
+            var altPath = CaseDifferingPath(fullPath);
 
             return !Directory.Exists(altPath);
         }
@@ -44,9 +50,10 @@ namespace kwld.CoreUtil.FileSystem
                 throw new ArgumentException("Test directory must exist, and have a letter in the name", nameof(dir));
             }
 
-            var altPath = fullPath.Any(char.IsUpper) ? fullPath.ToLower() : fullPath.ToUpper();
+            var altPath = CaseDifferingPath(fullPath);
 
-            return !Directory.Exists(altPath);
+            var x = dir.FileSystem.Directory.Exists(altPath);
+            return !dir.FileSystem.Directory.Exists(altPath);
         }
 
         /// <summary>
@@ -252,5 +259,12 @@ namespace kwld.CoreUtil.FileSystem
         /// <inheritdoc cref="Expand(IFileInfo,bool)"/>
         public static DirectoryInfo Expand(this DirectoryInfo item, bool replaceEnvironment = true)
             => Expand(item, new DirectoryInfo(Directory.GetCurrentDirectory()), replaceEnvironment);
+
+        internal static string CaseDifferingPath(string path)
+        {
+            var result = path.Any(char.IsUpper) ? path.ToLower() : path.ToUpper();
+
+            return result;
+        }
     }
 }

@@ -79,7 +79,7 @@ namespace kwld.CoreUtil.Tests.FileSystem
 
             other.GetFile("created.txt").EnsureExists();
 
-            var (created, updated, deleted) = src.TreeCUD(other);
+            var (created, updated, deleted) = src.TreeDiff(other);
 
             Assert.AreEqual("created.txt", created.Single().Name);
             Assert.AreEqual("updated.txt", updated.Single().Name);
