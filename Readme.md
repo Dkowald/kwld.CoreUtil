@@ -8,6 +8,7 @@ See [Docs](docs/Home.md) for details
 - Better implementation for IDirectoryInfo.IsCaseSensitive()
 - Renamed TreeCUD to TreeDiff
 - IsCaseSensitive now available on Directory; Files and IFileSystem
+- EnsureEmpty now usable if selected folder is current directory.
 ## Features
 
 ### Global Usings

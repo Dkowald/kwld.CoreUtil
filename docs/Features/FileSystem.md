@@ -17,7 +17,7 @@ System.IO.File.AppendAllText(file.FullName, "some data");
 ```
 
 These extension improve readability by working directly with the 
-IFileInfo object.
+FileInfo object.
 ```cs
 FileInfo file;
 file.AppendAllText("some data");
@@ -49,14 +49,14 @@ A mixed bag of simple helpers.
 
 | Extension | Description |
 | --------- | ----------- |
-| For **DirectoryInfo**|
+| **DirectoryInfo**|
 |Touch    | Update the LastWriteTime of a directory         |
 |GetFile  | Get a file using a series of sub-path strings   |
 |GetFolder| Get a folder using a series of sub path strings |
 |MoveTo   | Overloads for MoveTo                            |
-| For **FileInfo**|
+| **FileInfo**|
 |Touch | Update the LastWriteTime of a file |
-| For **FileSystemInfo**|
+| **FileSystemInfo**|
 |Exists() | Calls refresh, then returns result from Exist |
 |AsUri()    | Converts item to file:// Uri. Directories have a trailing '/'  |
 
@@ -71,11 +71,11 @@ If needed; destination directory is created.
 
 | Extension | Description |
 | --------- | ----------- |
-| For **FileInfo** |
+| **FileInfo** |
 | CopyTo | Copy file over another, or into a directory (creates parent directories as needed) |
 | MoveTo | Move source file to target file or target directory  (optional overwrite) |
 | Replace | Replace destination with source file, optional backup destination and ignoreErrors|
-| For **DirectoryInfo**|
+| **DirectoryInfo**|
 | MoveTo | Move source directory to target directory |
 
 ## Chain Extensions
@@ -92,9 +92,9 @@ Assert.IsTrue(f.Exists);
 
 | Extension | Description |
 | --------- | ----------- |
-| For **FileInfo** and **DirectoryInfo**|
-|EnsureDelete| Delete _file_ or _directory_; return refreshed object       |
-|EnsureExists| Create _file_ or _directory_; return refreshed object       |
+| **FileInfo** and **DirectoryInfo**|
+|EnsureDelete| Delete _file_ or _directory_; return refreshed object      |
+|EnsureExists| Create _file_ or _directory_; return refreshed object      |
 |EnsureEmpty | Ensures _file_ or _directory_ exists as is currently empty |
 |EnsureDirectory| Ensures the _directory_ for a file exists |
 
@@ -158,4 +158,4 @@ Small disposable wrappers.
 |Class | Description |
 |----|----|
 |PushD | Set the current directory, reverting on dispose. |
-|TempFile | Define a file or folder as temporary, deleting on dispose.|
+|TempFile | Declare a file or folder as temporary, deleting on dispose.|

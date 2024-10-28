@@ -131,18 +131,51 @@ namespace kwld.CoreUtil.FileSystem
         /// <inheritdoc cref="EnsureEmpty(IDirectoryInfo)"/>
         public static DirectoryInfo EnsureEmpty(this DirectoryInfo dir)
         {
-            dir.EnsureDelete();
             dir.EnsureExists();
+            try
+            {
+                dir.EnsureDelete();
+            }
+            catch (IOException ex)
+            {
+                //dir locked by process; try with delete children.
+                foreach(var item in dir.EnumerateFileSystemInfos()) {
+                    if(item is DirectoryInfo subFolder)
+                        subFolder.Delete(true);
+                    else
+                        item.Delete();
+                }
+            }
+
             return dir;
         }
 
         /// <summary>
         /// Ensure the directory exists, and is empty.
         /// </summary>
+        /// <remarks>
+        /// Attempts to delete the directory, failing that,
+        /// attempts to delete its children.
+        /// </remarks>
+        /// <param name="dir">Directory to remove</param>
         public static IDirectoryInfo EnsureEmpty(this IDirectoryInfo dir)
         {
-            dir.EnsureDelete();
             dir.EnsureExists();
+            try
+            {
+                dir.EnsureDelete();
+            }
+            catch (IOException ex)
+            {
+                //dir locked by process; try with delete children.
+                foreach(var item in dir.EnumerateFileSystemInfos()) {
+                    if(item is IDirectoryInfo subFolder)
+                        subFolder.Delete(true);
+                    else
+                        item.Delete();
+                }
+            }
+
             return dir;
         }
 
