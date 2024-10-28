@@ -59,6 +59,7 @@ A mixed bag of simple helpers.
 | **FileSystemInfo**|
 |Exists() | Calls refresh, then returns result from Exist |
 |AsUri()    | Converts item to file:// Uri. Directories have a trailing '/'  |
+|PushD()| Set the directory as current; for a file, uses its Directory. Returns a disposable PushD. |
 
 ## Overload Extensions
 These provide overload's on standard FileInfo / DirectoryInfo

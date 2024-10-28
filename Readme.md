@@ -9,6 +9,9 @@ See [Docs](docs/Home.md) for details
 - Renamed TreeCUD to TreeDiff
 - IsCaseSensitive now available on Directory; Files and IFileSystem
 - EnsureEmpty now usable if selected folder is current directory.
+- Disposable wrapper now support using System.IO objects.
+- New PushD extension.
+
 ## Features
 
 ### Global Usings

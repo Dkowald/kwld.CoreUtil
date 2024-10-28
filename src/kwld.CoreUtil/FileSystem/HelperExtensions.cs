@@ -156,5 +156,39 @@ namespace kwld.CoreUtil.FileSystem
                     dir.FullName +
                     (dir.FullName.EndsWith('/') ? string.Empty : "/")) :
                 new Uri(item.FullName);
+
+        /// <summary>
+        /// Set the current item as current directory.
+        /// If <paramref name="item"/> is a file, uses its containing directory.
+        /// </summary>
+        public static PushD PushD(this IFileSystemInfo item)
+        {
+            if (item is IDirectoryInfo dir)
+                return new PushD(dir);
+
+            if (item is IFileInfo file)
+            {
+                dir = file.Directory ??
+                      throw new Exception("File item has no containing directory");
+                return new PushD(dir);
+            }
+
+            throw new Exception("FileSystem item is neither a directory or file");
+        }
+
+        public static PushD PushD(this FileSystemInfo item)
+        {
+            if (item is DirectoryInfo dir)
+                return new PushD(dir);
+
+            if (item is FileInfo file)
+            {
+                dir = file.Directory ??
+                      throw new Exception("File item has no containing directory");
+                return new PushD(dir);
+            }
+
+            throw new Exception("FileSystem item is neither a directory or file");
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.IO.Abstractions;
 
 namespace kwld.CoreUtil.FileSystem
@@ -9,7 +10,8 @@ namespace kwld.CoreUtil.FileSystem
     /// </summary>
     public class PushD : IDisposable
     {
-        private readonly IDirectoryInfo _previous;
+        private readonly IDirectoryInfo? _previous;
+        private readonly string? _previousPath;
 
         /// <inheritdoc cref="PushD"/>
         public PushD(IDirectoryInfo folder)
@@ -19,11 +21,20 @@ namespace kwld.CoreUtil.FileSystem
             folder.SetCurrentDirectory();
         }
 
+        public PushD(DirectoryInfo folder)
+        {
+            _previousPath = Directory.GetCurrentDirectory();
+            folder.SetCurrentDirectory();
+        }
+
         /// <inheritdoc cref="IDisposable.Dispose"/>
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-            _previous.SetCurrentDirectory();
+            _previous?.SetCurrentDirectory();
+            
+            if(_previousPath != null)
+                Directory.SetCurrentDirectory(_previousPath);
         }
     }
 }
