@@ -41,6 +41,18 @@ namespace kwld.CoreUtil.Tests.FileSystem
         }
 
         [TestMethod]
+        public void Expand_MissingEnvVar()
+        {
+            var files = new MockFileSystem(o => o.SimulatingOperatingSystem(SimulationMode.Linux));
+
+            var target = files.DirectoryInfo.New("/temp/%NOT_A_THING_%");
+
+            var result = target.Expand(files.Current());
+
+            Assert.AreEqual("/temp/%NOT_A_THING_%", result.FullName);
+        }
+
+        [TestMethod]
         public void IsCaseSensitive_True()
         {
             var files = new MockFileSystem(o => o.SimulatingOperatingSystem(SimulationMode.Linux));

@@ -259,7 +259,8 @@ namespace kwld.CoreUtil.FileSystem
             var itemPath = replaceEnvironment ?
                 Environment.ExpandEnvironmentVariables(name) : name;
 
-            var expandedPath = Path.GetFullPath(Path.Combine(root.FullName, itemPath));
+            var expandedPath = item.FileSystem.Path.GetFullPath(
+                item.FileSystem.Path.Combine(root.FullName, itemPath));
             return item.FileSystem.DirectoryInfo.New(expandedPath);
         }
 

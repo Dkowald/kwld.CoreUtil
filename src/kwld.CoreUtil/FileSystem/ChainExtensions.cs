@@ -136,7 +136,7 @@ namespace kwld.CoreUtil.FileSystem
             {
                 dir.EnsureDelete();
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 //dir locked by process; try with delete children.
                 foreach(var item in dir.EnumerateFileSystemInfos()) {
@@ -165,7 +165,7 @@ namespace kwld.CoreUtil.FileSystem
             {
                 dir.EnsureDelete();
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 //dir locked by process; try with delete children.
                 foreach(var item in dir.EnumerateFileSystemInfos()) {

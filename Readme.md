@@ -11,6 +11,7 @@ See [Docs](docs/Home.md) for details
 - EnsureEmpty now usable if selected folder is current directory.
 - Disposable wrapper now support using System.IO objects.
 - New PushD extension.
+- New Dictionary.WithDefaults() extension.
 
 ## Features
 

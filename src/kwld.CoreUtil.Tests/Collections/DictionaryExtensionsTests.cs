@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using kwld.CoreUtil.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -15,7 +16,7 @@ namespace kwld.CoreUtil.Tests.Collections
             {
                 {"A", "1"}
             };
-
+            
             target.AddRange(("B", "2"));
 
             Assert.AreEqual(2, target.Count);
@@ -33,17 +34,35 @@ namespace kwld.CoreUtil.Tests.Collections
         {
             var target = new Dictionary<string, string>
             {
-                {"A", "1"}
+                {"A", "1"},
+                {"Other", "99"}
             };
 
-            target.AddRange(("B", "2"));
+            var rhs = new[]{("B", "2"),("A", "fred")};
 
-            var other = new Dictionary<string, string>
-                { { "B", "@" } };
+            target.Merge(rhs);
 
-            target.Merge(other);
+            Assert.IsFalse(target.ContainsKey("B"));
+            Assert.AreEqual("fred", target["A"]);
+            Assert.AreEqual("99", target["Other"]);
+        }
 
-            Assert.AreEqual("@", target["B"]);
+        [TestMethod]
+        public void DefaultWith_()
+        {
+            var lhs = new[]
+            {
+                ("red", 10),
+                ("blue", 5)
+            }.ToDictionary();
+
+            var defaults = new[]
+            { ("red", 5), ("green", 5), ("blue", 5) };
+
+            lhs.WithDefaults(defaults);
+
+            Assert.AreEqual(10, lhs["red"]);
+            Assert.AreEqual(5, lhs["green"]);
         }
     }
 }
