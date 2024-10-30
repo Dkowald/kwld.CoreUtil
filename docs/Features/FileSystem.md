@@ -91,6 +91,12 @@ var f = new FileInfo("c:/temp/Me").EnsureExists();
 Assert.IsTrue(f.Exists);
 ``` 
 
+Ensure* extensions account for various potential problems, 
+such as read-only files and locked directories.
+
+Both EnsureDelete and EnsureEmpty have flags to permit 
+delete of read-only files; on by default.
+
 | Extension | Description |
 | --------- | ----------- |
 | **FileInfo** and **DirectoryInfo**|
@@ -160,3 +166,17 @@ Small disposable wrappers.
 |----|----|
 |PushD | Set the current directory, reverting on dispose. |
 |TempFile | Declare a file or folder as temporary, deleting on dispose.|
+
+## Collections
+Wrappers to make it more conveniant when locating and acting on
+multiple items.
+
+**All*** methods take optional search pattern and an optional action.
+
+The pattern is limited to '*' and '?'.
+
+|Extension| Description|
+|**DirectoryInfo**|
+|All| Returns all items recursivly|
+|AllFiles|Returns all chiled files recursivly |
+|AllFolders| Returns all child directories recursivly|

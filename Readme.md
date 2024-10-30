@@ -9,9 +9,11 @@ See [Docs](docs/Home.md) for details
 - Renamed TreeCUD to TreeDiff
 - IsCaseSensitive now available on Directory; Files and IFileSystem
 - EnsureEmpty now usable if selected folder is current directory.
+- EnsureEmpty and EnsureDelete both include option to delete readonly files.
 - Disposable wrapper now support using System.IO objects.
 - New PushD extension.
 - New Dictionary.WithDefaults() extension.
+- New IDirectoryInfo.All extenions making it easy to find and perfrom an action recursivly
 
 ## Features
 

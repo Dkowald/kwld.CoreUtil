@@ -73,11 +73,14 @@ namespace kwld.CoreUtil.FileSystem
         /// <summary>
         /// Removes the directory and all its content (files and directories).
         /// </summary>
-        public static DirectoryInfo EnsureDelete(this DirectoryInfo dir)
+        public static DirectoryInfo EnsureDelete(this DirectoryInfo dir, bool deleteReadOnly = true)
         {
             dir.Refresh();
             if (dir.Exists)
             {
+                if (deleteReadOnly)
+                    dir.AllFiles(forEach: x => x.IsReadOnly = false);
+
                 dir.Delete(true);
                 dir.Refresh();
             }
@@ -86,11 +89,14 @@ namespace kwld.CoreUtil.FileSystem
         }
 
         /// <inheritdoc cref="EnsureDelete(DirectoryInfo)"/>
-        public static IDirectoryInfo EnsureDelete(this IDirectoryInfo dir)
+        public static IDirectoryInfo EnsureDelete(this IDirectoryInfo dir, bool deleteReadOnly = true)
         {
             dir.Refresh();
             if (dir.Exists)
             {
+                if (deleteReadOnly)
+                    dir.AllFiles(forEach: x => x.IsReadOnly = false);
+
                 dir.Delete(true);
                 dir.Refresh();
             }
@@ -118,7 +124,7 @@ namespace kwld.CoreUtil.FileSystem
         public static IFileInfo EnsureDelete(this IFileInfo file)
         {
             file.Refresh();
-
+            
             if (file.Exists)
             {
                 file.Delete();
@@ -129,9 +135,13 @@ namespace kwld.CoreUtil.FileSystem
         }
 
         /// <inheritdoc cref="EnsureEmpty(IDirectoryInfo)"/>
-        public static DirectoryInfo EnsureEmpty(this DirectoryInfo dir)
+        public static DirectoryInfo EnsureEmpty(this DirectoryInfo dir, bool deleteReadOnly = true)
         {
             dir.EnsureExists();
+
+            if (deleteReadOnly)
+                dir.AllFiles(forEach: x => x.IsReadOnly = false);
+
             try
             {
                 dir.EnsureDelete();
@@ -158,9 +168,14 @@ namespace kwld.CoreUtil.FileSystem
         /// attempts to delete its children.
         /// </remarks>
         /// <param name="dir">Directory to remove</param>
-        public static IDirectoryInfo EnsureEmpty(this IDirectoryInfo dir)
+        /// <param name="deleteReadOnly">When true (default); removes any files with readonly attribute set</param>
+        public static IDirectoryInfo EnsureEmpty(this IDirectoryInfo dir, bool deleteReadOnly = true)
         {
             dir.EnsureExists();
+
+            if (deleteReadOnly)
+                dir.AllFiles(forEach: x => x.IsReadOnly = false);
+
             try
             {
                 dir.EnsureDelete();
