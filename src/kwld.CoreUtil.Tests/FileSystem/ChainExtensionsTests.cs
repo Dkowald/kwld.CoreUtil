@@ -16,7 +16,7 @@ namespace kwld.CoreUtil.Tests.FileSystem
             target.GetFile("a.txt").Touch();
             
             //lock via set current dir.
-            target.SetCurrentDirectory();
+            using var _ = target.PushD();
             
             target.EnsureEmpty();
 

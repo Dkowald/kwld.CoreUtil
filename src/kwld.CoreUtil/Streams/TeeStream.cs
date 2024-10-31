@@ -175,7 +175,7 @@ namespace kwld.CoreUtil.Streams
                     idx++;
                 }
 
-                if(errors.Any())
+                if(errors.Count > 0)
                     throw new AggregateException(errors);
             }
 
@@ -208,11 +208,13 @@ namespace kwld.CoreUtil.Streams
                     idx++;
                 }
 
-                if (errors.Any())
+                if (errors.Count > 0)
                     throw new AggregateException(errors);
             }
 
             _disposed = true;
+            GC.SuppressFinalize(this);
+
             await base.DisposeAsync();
         }
     }

@@ -18,7 +18,10 @@
 		<PackageReleaseNotes>
       Tree Extensions rename TreeCUD to TreeDiff.
       Use transitive build assets
-      .NET 7 removed.
+      EnsureEmpty now usable if selected directory is curent directory.
+			EnsureEmpty / EnsureDelete can now delete read-only files.
+			Dictionary.WithDefaults() can now merge default values for dictionaries.
+      Directory recursive All, AllFile and AllFolders for simpler usage.
     </PackageReleaseNotes>
 	</PropertyGroup>
 

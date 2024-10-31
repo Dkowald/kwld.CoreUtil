@@ -14,6 +14,7 @@ See [Docs](docs/Home.md) for details
 - New PushD extension.
 - New Dictionary.WithDefaults() extension.
 - New IDirectoryInfo.All extenions making it easy to find and perfrom an action recursivly
+- Dictionary.DefaultTo() replaced by WithDefaults()
 
 ## Features
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using kwld.CoreUtil.FileSystem;
@@ -49,10 +50,10 @@ namespace kwld.CoreUtil.Tests.FileSystem
     [TestMethod]
     public void GetFullPath_()
     {
-      var sysRoot = Directories.Current().Root;
+      var sysRoot = Directories.Project().Root;
 
-      Directories.Temp().SetCurrentDirectory();
-
+      using var tmp = Directories.Temp().PushD();
+      
       var target = new FileInfo("../other");
 
       var root = sysRoot.GetFolder("./user/home");

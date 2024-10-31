@@ -1,7 +1,0 @@
-* [[Home|Home]]
-  * [[FileSystem|FileSystem]]
-  * [[Streams|Streams]]
-  * [[Strings|Strings]]
-  * [[Collections|Collections]]
-  * [[Dictionary|Dictionary]]
-  * [[Build|Build]]

@@ -47,18 +47,21 @@ namespace kwld.CoreUtil.Tests.FileSystem
 
             src.GetFile("other", "same.txt").EnsureExists();
 
-            var oldFileDate = DateTime.UtcNow.AddDays(-1);
-            dest.GetFile("other", "same.txt").Touch(() => oldFileDate);
+            var oldFile = dest.GetFile("other", "same.txt").EnsureExists();
+            oldFile.WriteAllText("original");
+            oldFile.Touch(() => DateTime.UtcNow.AddDays(-1));
 
             dest.GetFile("existingFile.txt").EnsureExists();
+
             src.Merge(dest, false);
 
             Assert.IsTrue(dest.GetFile("existingFile.txt").Exists, "Keeps my current file");
 
             Assert.IsTrue(dest.GetFile("newFile.txt").Exists, "Got new file");
 
-            Assert.AreEqual(oldFileDate, dest.GetFile("other/same.txt").LastWriteTimeUtc,
-                "Keep my old copy");
+            var orgContent = dest.GetFile("other/same.txt").ReadAllText();
+            
+            Assert.AreEqual("original", orgContent, "Keep my old copy");
         }
 
         [TestMethod]

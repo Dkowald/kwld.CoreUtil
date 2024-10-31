@@ -8,14 +8,14 @@ namespace kwld.CoreUtil.Tests.FileSystem
     public class CollectionsTests
     {
         private readonly IDirectoryInfo _root =
-            (new System.IO.Abstractions.FileSystem())
+            new System.IO.Abstractions.FileSystem()
             .Project().GetFolder("App_Data", nameof(CollectionsTests));
 
         [TestMethod]
         public void AllFiles_()
         {
             var root = _root.GetFolder(nameof(AllFiles_))
-                .EnsureExists();
+                .EnsureEmpty();
 
             var dir = root.GetFolder("ReadOnlyFiles");
           
@@ -37,12 +37,13 @@ namespace kwld.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void AllFolders_()
         {
-            var files = _root.GetFolder(nameof(AllFolders_));
+            var files = _root.GetFolder(nameof(AllFolders_))
+                .EnsureDelete();
 
-            files.GetFolder("Proj1", "bin", "unit_tests").EnsureExists();
+            files.GetFolder("Proj1", "bin", "unit_Tests").EnsureExists();
             files.GetFolder("other", "sample", "Tests", "subTests").EnsureExists();
             
-            var testFolders = files.AllFolders("*test*");
+            var testFolders = files.AllFolders("*Test*");
 
             Assert.AreEqual(3, testFolders.Length);
         }

@@ -197,7 +197,7 @@ namespace kwld.CoreUtil.FileSystem
                     RecursivePrune(subSubDir);
                 }
 
-                if (!subDir.GetFileSystemInfos().Any()) { subDir.Delete();}
+                if (subDir.GetFileSystemInfos().Length == 0) { subDir.Delete();}
             }
 
             RecursivePrune(dir);
@@ -218,7 +218,7 @@ namespace kwld.CoreUtil.FileSystem
                     RecursivePrune(subSubDir);
                 }
 
-                if (!subDir.GetFileSystemInfos().Any()) { subDir.Delete(); }
+                if (subDir.GetFileSystemInfos().Length == 0) { subDir.Delete(); }
             }
 
             RecursivePrune(dir);

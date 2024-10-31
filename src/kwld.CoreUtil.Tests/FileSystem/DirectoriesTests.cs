@@ -22,7 +22,7 @@ namespace kwld.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void Home_PreferHomeEnvironmentVariable()
         {
-            var tmp = new DirectoryInfo("c:/temp/test");
+            var tmp = Directories.Project();
             Environment.SetEnvironmentVariable("USERPROFILE", tmp.GetFile("other").FullName);
             Environment.SetEnvironmentVariable("HOME", tmp.FullName);
             

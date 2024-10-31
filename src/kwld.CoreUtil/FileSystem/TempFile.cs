@@ -49,6 +49,8 @@ namespace kwld.CoreUtil.FileSystem
 
             _fileSys?.EnsureDelete();
             _folderSys?.EnsureDelete();
+
+            GC.SuppressFinalize(this);
         }
     }
 }

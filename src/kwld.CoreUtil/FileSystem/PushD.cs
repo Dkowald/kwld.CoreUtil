@@ -21,6 +21,7 @@ namespace kwld.CoreUtil.FileSystem
             folder.SetCurrentDirectory();
         }
 
+        /// <inheritdoc cref="PushD"/>
         public PushD(DirectoryInfo folder)
         {
             _previousPath = Directory.GetCurrentDirectory();

@@ -15,7 +15,7 @@ namespace kwld.CoreUtil.FileSystem
         /// </summary>
         public static FileInfo GetFile(this DirectoryInfo dir, params string[] subPath)
         {
-            if (subPath.Any() != true)
+            if (subPath.Length == 0)
             {
                 throw new ArgumentException("Sub path cannot be empty", nameof(subPath));
             }
@@ -40,7 +40,7 @@ namespace kwld.CoreUtil.FileSystem
         /// </summary>
         public static DirectoryInfo GetFolder(this DirectoryInfo dir, params string[] subPath)
         {
-            if (!subPath.Any()) { return dir; }
+            if (subPath.Length == 0) { return dir; }
 
             var path = Path.Combine(dir.FullName, Path.Combine(subPath));
 
@@ -50,7 +50,7 @@ namespace kwld.CoreUtil.FileSystem
         /// <inheritdoc cref="GetFolder(DirectoryInfo,string[])"/>
         public static IDirectoryInfo GetFolder(this IDirectoryInfo dir, params string[] subPath)
         {
-            if (!subPath.Any()) { return dir; }
+            if (subPath.Length == 0) { return dir; }
 
             var path = dir.FileSystem.Path.Combine(dir.FullName, dir.FileSystem.Path.Combine(subPath));
 
@@ -176,6 +176,7 @@ namespace kwld.CoreUtil.FileSystem
             throw new Exception("FileSystem item is neither a directory or file");
         }
 
+        /// <inheritdoc cref="PushD(IFileSystemInfo)"/>
         public static PushD PushD(this FileSystemInfo item)
         {
             if (item is DirectoryInfo dir)

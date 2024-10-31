@@ -70,40 +70,21 @@ namespace kwld.CoreUtil.Collections
         }
 
         /// <inheritdoc cref="WithDefaults{TKey,TValue}(System.Collections.Generic.IDictionary{TKey,TValue},System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{TKey,TValue}})"/>
-        public static IDictionary<TKey, TValue> WithDefaults<TKey, TValue>(this IDictionary<TKey, TValue> lhs,
-            params (TKey Key, TValue Value)[] rhs) =>
+        public static IDictionary<TKey, TValue> WithDefaults<TKey, TValue>(
+            this IDictionary<TKey, TValue> lhs, params (TKey Key, TValue Value)[] rhs) =>
             lhs.WithDefaults(rhs.Select(x => KeyValuePair.Create(x.Key, x.Value)));
         
         /// <summary>
         /// Sugar to create dictionary from set of key-value data.
         /// <see cref="Dictionary{TKey,TValue}(IEnumerable{KeyValuePair{TKey,TValue}})"/>
         /// </summary>
-        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<KeyValuePair<TKey, TValue>> data)
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> data)
             where TKey : notnull => new Dictionary<TKey, TValue>(data);
 
         /// <inheritdoc cref="ToDictionary{TKey,TValue}(IEnumerable{KeyValuePair{TKey,TValue}})"/>
-        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey Key, TValue Value)> data)
+        public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(
+            this IEnumerable<(TKey Key, TValue Value)> data)
             where TKey : notnull => new Dictionary<TKey, TValue>(data.Select(x => KeyValuePair.Create(x.Key, x.Value)));
-
-        
-        /// <summary>
-        /// If <paramref name="key"/> is null, assign <paramref name="value"/>
-        /// </summary>
-        public static IDictionary<string, string> DefaultTo(this IDictionary<string, string> lhs, string key, string value)
-        {
-            if (lhs.ContainsKey(key))
-            {
-                if (lhs[key] != value)
-                    throw new Exception("Key value already set");
-            }
-            else
-            {
-                lhs[key] = value;
-            }
-
-            return lhs;
-        }
-
-        
     }
 }

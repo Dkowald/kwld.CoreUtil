@@ -88,7 +88,7 @@ namespace kwld.CoreUtil.FileSystem
             return dir;
         }
 
-        /// <inheritdoc cref="EnsureDelete(DirectoryInfo)"/>
+        /// <inheritdoc cref="EnsureDelete(DirectoryInfo, bool)"/>
         public static IDirectoryInfo EnsureDelete(this IDirectoryInfo dir, bool deleteReadOnly = true)
         {
             dir.Refresh();
@@ -134,9 +134,10 @@ namespace kwld.CoreUtil.FileSystem
             return file;
         }
 
-        /// <inheritdoc cref="EnsureEmpty(IDirectoryInfo)"/>
+        /// <inheritdoc cref="EnsureEmpty(IDirectoryInfo,bool)"/>
         public static DirectoryInfo EnsureEmpty(this DirectoryInfo dir, bool deleteReadOnly = true)
         {
+            if (!dir.Exists()) return dir.EnsureExists();
             dir.EnsureExists();
 
             if (deleteReadOnly)
@@ -145,6 +146,7 @@ namespace kwld.CoreUtil.FileSystem
             try
             {
                 dir.EnsureDelete();
+                dir.EnsureExists();
             }
             catch (IOException)
             {
@@ -171,14 +173,15 @@ namespace kwld.CoreUtil.FileSystem
         /// <param name="deleteReadOnly">When true (default); removes any files with readonly attribute set</param>
         public static IDirectoryInfo EnsureEmpty(this IDirectoryInfo dir, bool deleteReadOnly = true)
         {
-            dir.EnsureExists();
-
+            if (!dir.Exists()) return dir.EnsureExists();
+            
             if (deleteReadOnly)
                 dir.AllFiles(forEach: x => x.IsReadOnly = false);
 
             try
             {
                 dir.EnsureDelete();
+                dir.EnsureExists();
             }
             catch (IOException)
             {

@@ -13,7 +13,6 @@ IDictionary&lt;TKey, TItem&gt;
 |lhs.Merge(rhs) | Any item found in lhs is replaced with value from rhs (if exists)|
 |lhs.WithDefaults(rhs)| Any item in rhs not found in lhs is added to lhs.|
 |ToDictionary| Convert a enumerable of KeyValuePair (or tupple) to dictionary |
-|DefaultTo| Set a key default value if none exists.|
 
 ## (net6+) RecordArray
 An collection specificly for records.

@@ -25,7 +25,7 @@ namespace kwld.CoreUtil.Tests.FileSystem
         [TestMethod]
         public void AsUri_FolderEnding()
         {
-            var target = new DirectoryInfo("c:/temp");
+            var target = Directories.AssemblyFolder(typeof(HelperExtensionsTests));
 
             var result = target.AsUri();
 
